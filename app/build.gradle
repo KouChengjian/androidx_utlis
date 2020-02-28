@@ -24,7 +24,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     def androidDependencies = rootProject.ext.androidDependencies
-    api androidDependencies.appcompat
-    api androidDependencies.material
-    api androidDependencies.constraintlayout
+    implementation androidDependencies.appcompat
+    implementation androidDependencies.material
+    implementation androidDependencies.constraintlayout
+
+    def uiDependencies = rootProject.ext.uiDependencies
+    implementation uiDependencies.refresh_core
+    implementation uiDependencies.refresh_footer
+    implementation uiDependencies.refresh_header
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.0.0'
 }

@@ -1,0 +1,155 @@
+package com.example.test.widget.recycle;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
+
+import com.example.test.R;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.MaterialHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+public class RefreshRecyclerView extends FrameLayout {
+
+    protected LayoutInflater layoutInflater;
+    protected SmartRefreshLayout smartRefreshLayout;
+    protected RecyclerView recyclerView;
+    protected MaterialHeader materialHeader;
+    protected ClassicsFooter classicsFooter;
+
+    public RefreshRecyclerView(@NonNull Context context) {
+        this(context, null);
+    }
+
+    public RefreshRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public RefreshRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        layoutInflater = LayoutInflater.from(context);
+        View view = layoutInflater.inflate(R.layout.include_recyclerview, this);
+
+        smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        materialHeader = view.findViewById(R.id.materialHeader);
+        classicsFooter = view.findViewById(R.id.classicsFooter);
+    }
+
+    public LinearLayoutManager initLinearLayoutManager() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        setLayoutManager(layoutManager);
+        return layoutManager;
+    }
+
+    public LinearLayoutManager initHorizontalLayoutManager() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        setLayoutManager(layoutManager);
+        return layoutManager;
+    }
+
+    public StaggeredGridLayoutManager initStaggeredGridLayoutManager(int sum) {
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(sum, StaggeredGridLayoutManager.VERTICAL);
+        setLayoutManager(staggeredGridLayoutManager);
+        return staggeredGridLayoutManager;
+    }
+
+    public void setLayoutManager(RecyclerView.LayoutManager layout) {
+        recyclerView.setLayoutManager(layout);
+    }
+
+    public void setAdapter(RecyclerView.Adapter adapter) {
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
+        smartRefreshLayout.setOnRefreshListener(onRefreshListener);
+    }
+
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        smartRefreshLayout.setOnLoadMoreListener(onLoadMoreListener);
+    }
+
+    public void setOnReloadListener(OnReloadListener onReloadListener) {
+    }
+
+    public void addOnItemTouchListener(RecyclerView.OnItemTouchListener onItemTouchListener) {
+        recyclerView.addOnItemTouchListener(onItemTouchListener);
+    }
+
+    public void addOnScrollListener(RecyclerView.OnScrollListener listener) {
+        recyclerView.addOnScrollListener(listener);
+    }
+
+    public void removeOnScrollListener(RecyclerView.OnScrollListener listener) {
+        recyclerView.removeOnScrollListener(listener);
+    }
+
+    public void setOnTouchListener(View.OnTouchListener onTouchListener) {
+        recyclerView.setOnTouchListener(onTouchListener);
+    }
+
+//    public void setOnItemClickListener(final ItemClickSupport.OnItemClickListener mPresenter) {
+//        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+//            @Override
+//            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+//                //之所以再用ItemClickSupport.OnItemClickListener报装一层就是为了不能点到FooterView(目前是加载更多提示)
+//                if (position < headerOffset + adapter.getItemCount()) {
+//                    if (mPresenter != null){
+//                        mPresenter.onItemClicked(recyclerView, position, v);
+//                    }
+//                }
+//            }
+//        });
+//    }
+
+//    public void setOnItemLongClickListener(final ItemClickSupport.OnItemLongClickListener mPresenter) {
+//        ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
+//                //之所以再用ItemClickSupport.OnItemClickListener报装一层就是就是为了不能点到FooterView(目前是加载更多提示)
+//                if (position < headerOffset + adapter.getItemCount()) {
+//                    if (mPresenter != null) {
+//                        return mPresenter.onItemLongClicked(recyclerView, position, v);
+//                    }
+//                }
+//                return false;
+//            }
+//        });
+//    }
+
+    public void finishRefresh() {
+        smartRefreshLayout.finishRefresh();
+    }
+
+    public void finishRefresh(int delayed) {
+        smartRefreshLayout.finishRefresh(delayed);
+    }
+
+    public void finishRefresh(final int delayed, final boolean success, final Boolean noMoreData) {
+        smartRefreshLayout.finishRefresh(delayed, success, noMoreData);
+        smartRefreshLayout.setEnableRefresh(false);
+    }
+
+    public void finishLoadMore() {
+        smartRefreshLayout.finishLoadMore();
+    }
+
+    public void finishLoadMore(int delayed) {
+        smartRefreshLayout.finishLoadMore(delayed);
+        smartRefreshLayout.setNoMoreData(true); // 提示没有更多数据
+//        smartRefreshLayout.setEnableLoadMore(false); // 禁止滑动
+    }
+}

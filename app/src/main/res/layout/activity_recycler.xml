@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_recycler"
+    <com.example.test.widget.recycle.RefreshRecyclerView
+        android:id="@+id/refreshRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="recycler重构" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
