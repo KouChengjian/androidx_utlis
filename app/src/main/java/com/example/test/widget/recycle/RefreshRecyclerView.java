@@ -18,16 +18,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class RefreshRecyclerView extends FrameLayout {
 
-    protected LayoutInflater layoutInflater;
-    protected SmartRefreshLayout smartRefreshLayout;
-    protected RecyclerView recyclerView;
-    protected MaterialHeader materialHeader;
-    protected ClassicsFooter classicsFooter;
-    protected TipLayoutView tipLayoutView;
+    private View mHeaderView;
+    private View mFooterView;
+    private LayoutInflater layoutInflater;
+    private SmartRefreshLayout smartRefreshLayout;
+    private RecyclerView recyclerView;
+    private MaterialHeader materialHeader;
+    private ClassicsFooter classicsFooter;
+    private TipLayoutView tipLayoutView;
+    private IWrapAdapter wrapAdapter;
 
     public RefreshRecyclerView(@NonNull Context context) {
         this(context, null);
@@ -73,8 +77,59 @@ public class RefreshRecyclerView extends FrameLayout {
         recyclerView.setLayoutManager(layout);
     }
 
+    public void addHeader(View view) {
+        addHeader(view, true);
+    }
+
+    public void addHeader(View view, boolean isShow) {
+        mHeaderView = view;
+        if (!isShow) { // 初始化是否隐藏
+            mHeaderView.setVisibility(View.GONE);
+        }
+    }
+
     public void setAdapter(RecyclerView.Adapter adapter) {
-        recyclerView.setAdapter(adapter);
+        wrapAdapter = new IWrapAdapter(mHeaderView, mFooterView, adapter);
+        recyclerView.setAdapter(wrapAdapter);
+    }
+
+    public void setEnabelItemAnima(boolean enable) {
+        if (enable) {
+            openDefaultAnimator();
+        } else {
+            closeDefaultAnimator();
+        }
+    }
+
+    public void setRefreshEnabled(boolean enabled) {
+        smartRefreshLayout.setEnableRefresh(enabled);
+    }
+
+    public void setLoadMoreEnabled(boolean enabled) {
+        smartRefreshLayout.setEnableLoadMore(enabled);
+    }
+
+    public void finishRefresh() {
+        smartRefreshLayout.finishRefresh();
+    }
+
+    public void finishRefresh(int delayed) {
+        smartRefreshLayout.finishRefresh(delayed);
+    }
+
+    public void finishRefresh(final int delayed, final boolean success, final Boolean noMoreData) {
+        smartRefreshLayout.finishRefresh(delayed, success, noMoreData);
+        smartRefreshLayout.setEnableRefresh(false);
+    }
+
+    public void finishLoadMore() {
+        smartRefreshLayout.finishLoadMore();
+    }
+
+    public void finishLoadMore(int delayed) {
+        smartRefreshLayout.finishLoadMore(delayed);
+        smartRefreshLayout.setNoMoreData(true); // 提示没有更多数据
+//        smartRefreshLayout.setEnableLoadMore(false); // 禁止滑动
     }
 
     public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
@@ -104,55 +159,62 @@ public class RefreshRecyclerView extends FrameLayout {
         recyclerView.setOnTouchListener(onTouchListener);
     }
 
-//    public void setOnItemClickListener(final ItemClickSupport.OnItemClickListener mPresenter) {
-//        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-//            @Override
-//            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-//                //之所以再用ItemClickSupport.OnItemClickListener报装一层就是为了不能点到FooterView(目前是加载更多提示)
-//                if (position < headerOffset + adapter.getItemCount()) {
-//                    if (mPresenter != null){
-//                        mPresenter.onItemClicked(recyclerView, position, v);
-//                    }
-//                }
-//            }
-//        });
-//    }
-
-//    public void setOnItemLongClickListener(final ItemClickSupport.OnItemLongClickListener mPresenter) {
-//        ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
-//                //之所以再用ItemClickSupport.OnItemClickListener报装一层就是就是为了不能点到FooterView(目前是加载更多提示)
-//                if (position < headerOffset + adapter.getItemCount()) {
-//                    if (mPresenter != null) {
-//                        return mPresenter.onItemLongClicked(recyclerView, position, v);
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-//    }
-
-    public void finishRefresh() {
-        smartRefreshLayout.finishRefresh();
+    public void setOnItemClickListener(final ItemClickSupport.OnItemClickListener mPresenter) {
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                //之所以再用ItemClickSupport.OnItemClickListener报装一层就是为了不能点到FooterView(目前是加载更多提示)
+                if (position <wrapAdapter.getItemCount() - wrapAdapter.getHeadersCount()) {
+                    if (mPresenter != null){
+                        mPresenter.onItemClicked(recyclerView, position, v);
+                    }
+                }
+            }
+        });
     }
 
-    public void finishRefresh(int delayed) {
-        smartRefreshLayout.finishRefresh(delayed);
+    public void setOnItemLongClickListener(final ItemClickSupport.OnItemLongClickListener mPresenter) {
+        ItemClickSupport.addTo(recyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
+                //之所以再用ItemClickSupport.OnItemClickListener报装一层就是就是为了不能点到FooterView(目前是加载更多提示)
+                if (position <wrapAdapter.getItemCount() - wrapAdapter.getHeadersCount()) {
+                    if (mPresenter != null) {
+                        return mPresenter.onItemLongClicked(recyclerView, position, v);
+                    }
+                }
+                return false;
+            }
+        });
     }
 
-    public void finishRefresh(final int delayed, final boolean success, final Boolean noMoreData) {
-        smartRefreshLayout.finishRefresh(delayed, success, noMoreData);
-        smartRefreshLayout.setEnableRefresh(false);
+
+
+
+
+
+
+
+
+    /**
+     * 打开默认局部刷新动画
+     */
+    private void openDefaultAnimator() {
+        this.recyclerView.getItemAnimator().setAddDuration(120);
+        this.recyclerView.getItemAnimator().setChangeDuration(250);
+        this.recyclerView.getItemAnimator().setMoveDuration(250);
+        this.recyclerView.getItemAnimator().setRemoveDuration(120);
+        ((SimpleItemAnimator) this.recyclerView.getItemAnimator()).setSupportsChangeAnimations(true);
     }
 
-    public void finishLoadMore() {
-        smartRefreshLayout.finishLoadMore();
-    }
-
-    public void finishLoadMore(int delayed) {
-        smartRefreshLayout.finishLoadMore(delayed);
-        smartRefreshLayout.setNoMoreData(true); // 提示没有更多数据
-//        smartRefreshLayout.setEnableLoadMore(false); // 禁止滑动
+    /**
+     * 关闭默认局部刷新动画
+     */
+    private void closeDefaultAnimator() {
+        this.recyclerView.getItemAnimator().setAddDuration(0);
+        this.recyclerView.getItemAnimator().setChangeDuration(0);
+        this.recyclerView.getItemAnimator().setMoveDuration(0);
+        this.recyclerView.getItemAnimator().setRemoveDuration(0);
+        ((SimpleItemAnimator) this.recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 }
