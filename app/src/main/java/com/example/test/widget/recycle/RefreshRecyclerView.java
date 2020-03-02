@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.test.R;
+import com.example.test.widget.TipLayoutView;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -26,6 +27,7 @@ public class RefreshRecyclerView extends FrameLayout {
     protected RecyclerView recyclerView;
     protected MaterialHeader materialHeader;
     protected ClassicsFooter classicsFooter;
+    protected TipLayoutView tipLayoutView;
 
     public RefreshRecyclerView(@NonNull Context context) {
         this(context, null);
@@ -44,6 +46,7 @@ public class RefreshRecyclerView extends FrameLayout {
         recyclerView = view.findViewById(R.id.recyclerView);
         materialHeader = view.findViewById(R.id.materialHeader);
         classicsFooter = view.findViewById(R.id.classicsFooter);
+        tipLayoutView = view.findViewById(R.id.tip_layout_view);
     }
 
     public LinearLayoutManager initLinearLayoutManager() {
