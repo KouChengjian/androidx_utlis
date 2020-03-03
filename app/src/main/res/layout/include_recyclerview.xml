@@ -29,6 +29,5 @@
     <com.example.test.widget.TipLayoutView
         android:id="@+id/tip_layout_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:layout_height="match_parent" />
 </RelativeLayout>

@@ -2,7 +2,6 @@ package com.example.test.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
@@ -24,18 +23,18 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
 
     private Context context;
     private ViewStub mLayoutLoading, mLayoutError;
-    private LinearLayout mLLTipViewLoading, mLLTipViewError ;
+    private LinearLayout mLLTipViewLoading, mLLTipViewError;
     private ImageView mTvTipViewErrorPic;
     private TextView mTvTipViewErrorMsg;
     private BGButton mReloadButton;
     private OnReloadClick mOnReloadClick;
 
     public TipLayoutView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public TipLayoutView(Context context, AttributeSet attrs) {
-        this(context, attrs ,0);
+        this(context, attrs, 0);
     }
 
     public TipLayoutView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -51,6 +50,15 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
         mLayoutLoading = findViewById(R.id.layout_loading);
         mLayoutError = findViewById(R.id.layout_error);
         showLoading();
+    }
+
+    public void resetStatus() {
+        if (mLLTipViewError != null) {
+            mLLTipViewError.setVisibility(View.GONE);
+        }
+        if (mLLTipViewLoading != null) {
+            mLLTipViewLoading.setVisibility(View.GONE);
+        }
     }
 
     public void showContent() {
