@@ -1,2 +1,4 @@
-include ':app'
+//include ':app'
+//include ':module_dagger'
+include ':library'
 //rootProject.name='My Application'
