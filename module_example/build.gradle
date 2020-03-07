@@ -10,9 +10,6 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -28,5 +25,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 //    implementation 'androidx.appcompat:appcompat:1.0.2'
 
-    implementation 'com.mvp:core:1.0.0'
+    implementation 'com.yiciyuan:core:1.0.0.0'
 }

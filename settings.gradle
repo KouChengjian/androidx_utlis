@@ -1,5 +1,5 @@
 //include ':app'
 //include ':module_dagger'
 //include ':library'
-include ':module_example'
+include ':module_example', ':library-core'
 //rootProject.name='My Application'
