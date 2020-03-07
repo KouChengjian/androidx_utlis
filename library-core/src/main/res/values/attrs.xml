@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ViewRootDelayed">
+        <attr name="root_layout" format="reference" />
+        <attr name="root_background" format="integer" />
+    </declare-styleable>
+
+</resources>
