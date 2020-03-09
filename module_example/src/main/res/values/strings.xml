@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">module_example</string>
+    <string name="app_name">mvp示例</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_recycler">RecyclerActivity</string>
 </resources>
