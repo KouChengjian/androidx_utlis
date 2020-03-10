@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mvp" >
+    package="com.yiciyuan.kernel" >
     <application
         android:allowBackup="false"
         android:label="@string/app_name">

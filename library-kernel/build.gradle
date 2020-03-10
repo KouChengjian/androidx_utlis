@@ -1,22 +1,22 @@
 apply plugin: 'com.android.library'
 
-//apply plugin: 'com.novoda.bintray-release'//添加
+apply plugin: 'com.novoda.bintray-release'//添加
 
-//publish{
-//    userOrg = 'hui793114465'//bintray.com的用户名
-//    repoName = 'framwork-dagger'//远程仓库名字,不指明，默认是上传到maven
-//    groupId = 'com.mvp'//一个唯一值，默认包名,生成的gradle依赖前缀
-//    artifactId = 'core'//远程仓库包名称
-//    publishVersion = '1.0.0'//版本号
-//    desc = '简单的项目框架'//描述，不重要
-//    website = 'https://github.com/KouChengjian/androidx_utlis'//引用github主页
-//}
-//
-//tasks.withType(Javadoc) {//防止编码问题
-//    options.addStringOption('Xdoclint:none', '-quiet')
-//    options.addStringOption('encoding', 'UTF-8')
-//    options.addStringOption('charSet', 'UTF-8')
-//}
+publish{
+    userOrg = 'hui793114465'//bintray.com的用户名
+    repoName = 'yiciyuan'//远程仓库名字,不指明，默认是上传到maven
+    groupId = 'com.yiciyuan'//一个唯一值，默认包名,生成的gradle依赖前缀
+    artifactId = 'kernel'//远程仓库包名称
+    publishVersion = '1.0.0'//版本号
+    desc = '简单的项目框架'//描述，不重要
+    website = 'https://github.com/KouChengjian/androidx_utlis'//引用github主页
+}
+
+tasks.withType(Javadoc) {//防止编码问题
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
 
 android {
     compileSdkVersion 29
@@ -44,11 +44,27 @@ android {
         abortOnError false
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-}
+    api 'androidx.appcompat:appcompat:1.0.2'
 
-//apply from: '../bintray.gradle'
+    api 'com.squareup.okhttp3:okhttp:3.11.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.0'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    api 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:2.2.2'
+
+    api 'com.jakewharton:butterknife:8.4.0'
+    api 'com.google.dagger:dagger:2.16'
+    api 'com.google.dagger:dagger-android:2.16'
+    api 'com.google.dagger:dagger-android-support:2.16'
+}
