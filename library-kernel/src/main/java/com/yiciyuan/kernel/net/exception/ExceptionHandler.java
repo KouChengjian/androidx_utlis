@@ -3,12 +3,14 @@ package com.yiciyuan.kernel.net.exception;
 
 import android.util.MalformedJsonException;
 
+import com.google.gson.JsonParseException;
 import com.yiciyuan.kernel.app.BaseApp;
 import com.yiciyuan.kernel.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.HttpException;
 
 
 /**
