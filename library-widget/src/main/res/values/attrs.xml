@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="BGButton">
+        <!--圆角-->
+        <attr name="topLeftRadius" format="dimension" />
+        <attr name="topRightRadius" format="dimension" />
+        <attr name="bottomLeftRadius" format="dimension" />
+        <attr name="bottomRightRadius" format="dimension" />
+        <attr name="radii" format="dimension" />
+        <!--正常填充色-->
+        <attr name="normalSolid" format="color" />
+        <!--按下填充色-->
+        <attr name="pressedSolid" format="color" />
+        <!--边框颜色，大小-->
+        <attr name="normalStrokeWidth" format="dimension" />
+        <attr name="normalStrokeColor" format="color" />
+        <attr name="pressedStrokeWidth" format="dimension" />
+        <attr name="pressedStrokeColor" format="color" />
+        <!--文字按下颜色-->
+        <attr name="pressedTextColor" format="color" />
+        <attr name="normalTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundTextView">
+        <attr name="rv_backgroundColor" />
+        <attr name="rv_backgroundPressColor" />
+        <attr name="rv_cornerRadius" />
+        <attr name="rv_strokeWidth" />
+        <attr name="rv_strokeColor" />
+        <attr name="rv_strokePressColor" />
+        <attr name="rv_textPressColor" />
+        <attr name="rv_isRadiusHalfHeight" />
+        <attr name="rv_isWidthHeightEqual" />
+        <attr name="rv_cornerRadius_TL" />
+        <attr name="rv_cornerRadius_TR" />
+        <attr name="rv_cornerRadius_BL" />
+        <attr name="rv_cornerRadius_BR" />
+        <attr name="rv_isRippleEnable" />
+    </declare-styleable>
+    <!-- RoundTriangleView -->
+    <declare-styleable name="RoundTriangleView">
+        <attr name="rt_fillColor" format="color" />
+        <attr name="rt_textColor" format="color" />
+        <attr name="rt_textSize" format="dimension" />
+        <attr name="rt_text" format="string" />
+        <attr name="rt_roundRadius" format="integer" />
+        <attr name="rt_type" format="enum">
+            <enum name="leftTop" value="0" />
+            <enum name="rightTop" value="1" />
+            <enum name="rightBottom" value="2" />
+            <enum name="leftBottom" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>
