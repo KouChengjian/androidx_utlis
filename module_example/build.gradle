@@ -23,6 +23,38 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    signingConfigs {
+        debug {
+            keyAlias 'test001'
+            keyPassword '>-&f3Bz03g'
+            storeFile file('../release/example.jks')
+            storePassword '9sQN#k-KS?'
+        }
+        release {
+            keyAlias 'test001'
+            keyPassword '>-&f3Bz03g'
+            storeFile file('../release/example.jks')
+            storePassword '9sQN#k-KS?'
+        }
+    }
+
+    buildTypes {
+        debug {
+//            manifestPlaceholders = [app_name: "上医帮手dev" , app_icon: "@mipmap/ic_launcher"]
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
 }
 
 dependencies {
