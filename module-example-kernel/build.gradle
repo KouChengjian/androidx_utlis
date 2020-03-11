@@ -19,11 +19,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     signingConfigs {
         debug {
             keyAlias 'test001'
@@ -41,8 +36,7 @@ android {
 
     buildTypes {
         debug {
-//            manifestPlaceholders = [app_name: "上医帮手dev" , app_icon: "@mipmap/ic_launcher"]
-            applicationIdSuffix ".debug"
+            applicationIdSuffix ".kernel"
             minifyEnabled false
             shrinkResources false
             signingConfig signingConfigs.release
@@ -56,11 +50,25 @@ android {
         }
     }
 }
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.yiciyuan:core:1.0.0.0'
 
-//    implementation 'com.yiciyuan:kernel:1.0.0'
-
+    implementation project(':library-kernel')
+//    def androidDependencies = rootProject.ext.androidDependencies
+//    implementation androidDependencies.appcompat
+//    implementation androidDependencies.material
+//    implementation androidDependencies.constraintlayout
+//
+//    def httpDependencies = rootProject.ext.httpDependencies
+//    implementation httpDependencies.okhttp3
+//
+//    def toolDependencies = rootProject.ext.toolDependencies
+//    implementation toolDependencies.glide
+//    annotationProcessor toolDependencies.glide_compiler
+//
+//    def uiDependencies = rootProject.ext.uiDependencies
+//    implementation uiDependencies.refresh_core
+//    implementation uiDependencies.refresh_footer
+//    implementation uiDependencies.refresh_header
 }
-
