@@ -49,6 +49,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def httpDependencies = rootProject.ext.httpDependencies
+    api httpDependencies.okhttp3
+
+    def toolDependencies = rootProject.ext.toolDependencies
+    api toolDependencies.glide
+    annotationProcessor toolDependencies.glide_compiler
+
 //    def androidDependencies = rootProject.ext.androidDependencies
 //    api androidDependencies.appcompat
 //    api androidDependencies.recyclerview

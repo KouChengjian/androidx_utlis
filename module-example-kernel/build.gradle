@@ -49,6 +49,11 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -63,9 +68,7 @@ dependencies {
 //    def httpDependencies = rootProject.ext.httpDependencies
 //    implementation httpDependencies.okhttp3
 //
-//    def toolDependencies = rootProject.ext.toolDependencies
-//    implementation toolDependencies.glide
-//    annotationProcessor toolDependencies.glide_compiler
+
 //
 //    def uiDependencies = rootProject.ext.uiDependencies
 //    implementation uiDependencies.refresh_core

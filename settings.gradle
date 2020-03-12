@@ -1,6 +1,5 @@
 //rootProject.name='My Application'
 
-//include ':module_dagger'
 //include ':library-core' // 核心代码一  选择其中一个就可以了
 include ':library-kernel' // 核心代码二
 //include ':library-utils'
