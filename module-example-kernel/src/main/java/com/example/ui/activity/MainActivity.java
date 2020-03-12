@@ -2,8 +2,10 @@ package com.example.ui.activity;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 
-import com.example.R;
+import com.example.databinding.ActivityMainBinding;
 import com.example.ui.base.BaseMvpActivity;
 import com.example.ui.contract.MainContract;
 import com.example.ui.presenter.MainPresenter;
@@ -15,17 +17,25 @@ import com.yiciyuan.kernel.utils.LogUtil;
  * Date 2020/03/11
  * Description: 自动生成
  */
-public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContract.View {
+public class MainActivity extends BaseMvpActivity<MainPresenter, ActivityMainBinding> implements MainContract.View {
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
+    protected View getLayoutView() {
+        viewBinding = ActivityMainBinding.inflate(LayoutInflater.from(this));
+        return viewBinding.getRoot();
     }
 
     @Override
     protected void created(Bundle savedInstanceState) {
         super.created(savedInstanceState);
+        viewBinding.btnRecycler.setText("sdfkiljasjdlaskj");
         mPresenter.test();
+    }
+
+    @Override
+    protected void bindEvent() {
+        super.bindEvent();
+//        activityMainBinding
     }
 
     @Override

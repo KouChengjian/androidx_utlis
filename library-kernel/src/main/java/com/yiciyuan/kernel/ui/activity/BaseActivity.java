@@ -41,6 +41,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
         if (getLayoutId() != 0) {
             setContentView(getLayoutId());
         }
+        if (getLayoutView() != null) {
+            setContentView(getLayoutView());
+        }
         unbinder = ButterKnife.bind(this);
 
         TypedArray activityStyle = getTheme().obtainStyledAttributes(new int[]{android.R.attr.windowAnimationStyle});
@@ -113,9 +116,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
     protected abstract void create(Bundle savedInstanceState);
 
     /**
-     * bind layout resource file
+     * bind layout resource id
      */
     protected abstract int getLayoutId();
+
+    /**
+     * bind layout resource view
+     */
+    protected abstract View getLayoutView();
 
     /**
      * init views and events here

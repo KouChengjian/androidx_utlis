@@ -1,6 +1,8 @@
 package com.example.ui.base;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.yiciyuan.kernel.net.exception.ExceptionHandler;
 import com.yiciyuan.kernel.ui.activity.BaseDaggerActivity;
@@ -9,7 +11,7 @@ import com.yiciyuan.kernel.ui.base.BasePresenter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import javax.inject.Inject;
+import androidx.viewbinding.ViewBinding;
 
 /**
  * Created with Android Studio.
@@ -17,10 +19,15 @@ import javax.inject.Inject;
  * Date: 2019-06-19 17:09
  * Description:
  */
-public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseDaggerActivity {
+public abstract class BaseMvpActivity<P extends BasePresenter , V extends ViewBinding> extends BaseDaggerActivity {
 
-    @Inject
     protected P mPresenter;
+    protected V viewBinding;
+
+    @Override
+    protected int getLayoutId() {
+        return 0;
+    }
 
     @Override
     protected void create(Bundle savedInstanceState) {
