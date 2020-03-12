@@ -13,7 +13,6 @@ import com.yiciyuan.kernel.utils.DoubleClickUtil;
 import com.yiciyuan.kernel.utils.Toastor;
 import com.yiciyuan.kernel.widget.LoadingProgressDialog;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -52,7 +51,7 @@ public abstract class BaseFragment extends Fragment implements IView, View.OnCli
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         created(savedInstanceState);

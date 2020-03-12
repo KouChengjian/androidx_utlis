@@ -5,7 +5,6 @@ import android.os.Bundle;
 import com.yiciyuan.kernel.net.exception.ExceptionHandler;
 import com.yiciyuan.kernel.ui.activity.BaseDaggerActivity;
 import com.yiciyuan.kernel.ui.base.BasePresenter;
-import com.yiciyuan.kernel.utils.LogUtil;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

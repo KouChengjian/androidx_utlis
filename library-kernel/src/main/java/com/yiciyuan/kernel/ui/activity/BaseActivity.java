@@ -15,7 +15,6 @@ import com.yiciyuan.kernel.utils.DoubleClickUtil;
 import com.yiciyuan.kernel.utils.Toastor;
 import com.yiciyuan.kernel.widget.LoadingProgressDialog;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -35,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
     protected int activityCloseExitAnimation;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         create(savedInstanceState); // dagger2注解
         super.onCreate(savedInstanceState);
         AppManager.get().addActivity(this);
