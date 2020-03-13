@@ -1,10 +1,10 @@
 package com.yiciyuan.kernel.net.exception;
 
 
+import android.util.Log;
 import android.util.MalformedJsonException;
 
 import com.google.gson.JsonParseException;
-import com.yiciyuan.kernel.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,6 @@ public enum ExceptionHandler {
     public void addIntercept(Interceptor interceptor) {
         if (interceptor == null) throw new IllegalArgumentException("interceptor == null");
         interceptors.add(interceptor);
-        LogUtil.e("addIntercept: " + interceptors.size());
     }
 
     /**
@@ -51,7 +50,6 @@ public enum ExceptionHandler {
         throwable.printStackTrace();
         for (Interceptor interceptor : interceptors) {
             if (interceptor.intercept(throwable)) {
-                LogUtil.e("intercept: " + interceptor + "拦截了" + throwable);
                 return true;
             }
         }
@@ -62,7 +60,7 @@ public enum ExceptionHandler {
      * 将异常转换成Toast提示
      */
     public String transToReason(Throwable throwable) {
-        LogUtil.e("transToReason: " + throwable);
+        Log.e("transToReason: ", throwable.toString());
 
         // 网络错误
         if (throwable instanceof retrofit2.adapter.rxjava2.HttpException) {

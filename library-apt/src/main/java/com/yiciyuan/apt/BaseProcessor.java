@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
@@ -25,26 +24,6 @@ public abstract class BaseProcessor<T extends Annotation> extends AbstractProces
     protected Elements mElements; //元素相关的辅助类
     protected final Class<T> mSupportedAnnotation;
 
-    protected void printMessage(Kind kind, String format, Object... arguments) {
-        String message = String.format(format, arguments);
-        processingEnv.getMessager().printMessage(kind, message);
-    }
-
-    protected void printMessage(Kind kind, Element element, String format, Object... arguments) {
-        String message = String.format(format, arguments);
-        processingEnv.getMessager().printMessage(kind, message, element);
-    }
-
-    protected void printMessage(Kind kind, Element element, AnnotationMirror annotation, String format, Object... arguments) {
-        String message = String.format(format, arguments);
-        processingEnv.getMessager().printMessage(kind, message, element, annotation);
-    }
-
-    protected void printMessage(Kind kind, Element element, AnnotationMirror annotation, AnnotationValue annotationValue, String format, Object... arguments) {
-        String message = String.format(format, arguments);
-        processingEnv.getMessager().printMessage(kind, message, element, annotation, annotationValue);
-    }
-
     public BaseProcessor(Class<T> supportedAnnotation) {
         mSupportedAnnotation = supportedAnnotation;
     }
@@ -61,16 +40,20 @@ public abstract class BaseProcessor<T extends Annotation> extends AbstractProces
         if (roundEnvironment.processingOver()) {
             return false;
         }
-        printMessage(Kind.NOTE, " %s START -------------------------",mSupportedAnnotation.getName());
+        printMessage(Kind.NOTE, " %s START -------------------------", mSupportedAnnotation.getName());
         Set<TypeElement> allTypeElements = new HashSet<>();
         for (Iterator<? extends TypeElement> iterator = annotations.iterator(); iterator.hasNext(); ) {
-            Set<? extends Element> set = roundEnvironment.getElementsAnnotatedWith(iterator.next());
+            TypeElement typeElement = iterator.next();
+//            printMessage(Kind.NOTE, "typeElement = " + typeElement.toString() + "");
+            Set<? extends Element> set = roundEnvironment.getElementsAnnotatedWith(typeElement);
             allTypeElements.addAll(ElementFilter.typesIn(set));
         }
         for (Iterator<TypeElement> iterator = allTypeElements.iterator(); iterator.hasNext(); ) {
             TypeElement element = iterator.next();
+//            printMessage(Kind.NOTE, "element = " + element.toString() + "");
             try {
                 T annotation = element.getAnnotation(mSupportedAnnotation);
+//                printMessage(Kind.NOTE, "annotation = " + annotation.toString() + "");
                 handleEach(element, annotation);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,4 +83,24 @@ public abstract class BaseProcessor<T extends Annotation> extends AbstractProces
     protected abstract void handleEach(TypeElement element, T annotation);
 
     protected abstract boolean processComplete();
+
+    protected void printMessage(Kind kind, String format, Object... arguments) {
+        String message = String.format(format, arguments);
+        processingEnv.getMessager().printMessage(kind, message);
+    }
+
+    protected void printMessage(Kind kind, Element element, String format, Object... arguments) {
+        String message = String.format(format, arguments);
+        processingEnv.getMessager().printMessage(kind, message, element);
+    }
+
+    protected void printMessage(Kind kind, Element element, AnnotationMirror annotation, String format, Object... arguments) {
+        String message = String.format(format, arguments);
+        processingEnv.getMessager().printMessage(kind, message, element, annotation);
+    }
+
+    protected void printMessage(Kind kind, Element element, AnnotationMirror annotation, AnnotationValue annotationValue, String format, Object... arguments) {
+        String message = String.format(format, arguments);
+        processingEnv.getMessager().printMessage(kind, message, element, annotation, annotationValue);
+    }
 }
