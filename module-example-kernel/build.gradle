@@ -11,6 +11,12 @@ android {
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode globalConfiguration.getAt("androidVersionCode")
         versionName globalConfiguration.getAt("androidVersionName")
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
     buildTypes {
         release {
@@ -58,12 +64,24 @@ android {
     viewBinding {
         enabled = true
     }
+
+    lintOptions {
+        //即使有lint报错也不停止打包
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+//    dexOptions {
+//        incremental false
+//    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'], exclude: '*.bak')
 
     implementation project(':library-kernel')
+    implementation project(':library-apt')
+//    annotationProcessor(':library-apt')
 //    def androidDependencies = rootProject.ext.androidDependencies
 //    implementation androidDependencies.appcompat
 //    implementation androidDependencies.material

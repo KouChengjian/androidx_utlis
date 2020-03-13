@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.R;
+import com.yiciyuan.apt.annotation.Router;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+@Router("dasdsadsas")
 public class RecyclerActivity extends AppCompatActivity {
 
 //    private int pager = 1;

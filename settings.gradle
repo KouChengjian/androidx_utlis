@@ -6,4 +6,4 @@ include ':library-kernel' // 核心代码二
 //include ':library-widget'
 //include ':module_example'
 include ':module-example-kernel'
-
+include ':library-apt'

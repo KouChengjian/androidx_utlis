@@ -27,6 +27,7 @@ import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.yiciyuan.utils.R;
+import com.yiciyuan.utils.Util;
 import com.yiciyuan.utils.glide.transform.BlurTransformation;
 import com.yiciyuan.utils.glide.transform.MatrixTransformation;
 
@@ -37,17 +38,21 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 
 
-public abstract class GlideUtil   {
+public abstract class GlideUtil {
 
     private static RequestOptions mRequestOptions = new RequestOptions()
-        .diskCacheStrategy(DiskCacheStrategy.ALL)
-        .placeholder(R.mipmap.bg_default_image)
-        .error(R.mipmap.bg_default_load_error);
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .placeholder(R.mipmap.bg_default_image)
+            .error(R.mipmap.bg_default_load_error);
 
 
-//    public static Context getContext(){
-//        return BaseApp.app();
-//    }
+    public static Context getContext() {
+        Context context = Util.INSTANCE.getContext();
+        if (context == null) {
+            throw new NullPointerException("library-utils context is null ,please setContext()");
+        }
+        return context;
+    }
 
     public static RequestManager getRequestManager() {
         return Glide.with(getContext());
@@ -80,10 +85,10 @@ public abstract class GlideUtil   {
     //预加载图片
     public static void preload1(String url) {
         RequestOptions requestOptions = mRequestOptions
-            .clone();
+                .clone();
         loadAsDrawable(url)
-            .apply(requestOptions)
-            .preload();
+                .apply(requestOptions)
+                .preload();
     }
 
     //预加载图片
@@ -107,40 +112,40 @@ public abstract class GlideUtil   {
     public static void load(String url, ImageView imageView) {
         RequestOptions requestOptions = getDefaultRequestOptions();
         loadAsDrawable(url)
-            .apply(requestOptions)
-            .into(imageView);
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     public static void load(String url, ImageView imageView, int placeholderResId, int errorResId) {
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .placeholder(placeholderResId)
-            .error(errorResId);
+                .placeholder(placeholderResId)
+                .error(errorResId);
         loadAsDrawable(url)
-            .apply(requestOptions)
-            .into(imageView);
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     public static void load(String url, ImageView imageView, int placeholderResId, int errorResId, RequestListener requestCallBack) {
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .placeholder(placeholderResId)
-            .error(errorResId);
+                .placeholder(placeholderResId)
+                .error(errorResId);
         loadAsDrawable(url)
-            .apply(requestOptions)
-            .listener(requestCallBack)
-            .into(imageView);
+                .apply(requestOptions)
+                .listener(requestCallBack)
+                .into(imageView);
     }
 
     public static void load(int resId, ImageView imageView) {
         DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory
-            .Builder(300)
-            .setCrossFadeEnabled(true)
-            .build();
+                .Builder(300)
+                .setCrossFadeEnabled(true)
+                .build();
         RequestOptions requestOptions = getDefaultRequestOptions();
         getRequestManager()
-            .load(resId)
-            .apply(requestOptions)
-            .transition(DrawableTransitionOptions.withCrossFade(drawableCrossFadeFactory))
-            .into(imageView);
+                .load(resId)
+                .apply(requestOptions)
+                .transition(DrawableTransitionOptions.withCrossFade(drawableCrossFadeFactory))
+                .into(imageView);
     }
 
     //加载图片为drawable并回调
@@ -156,16 +161,16 @@ public abstract class GlideUtil   {
     public static void loadBitmapToTarget(String url, BitmapImageViewTarget target) {
         RequestOptions requestOptions = getDefaultRequestOptions();
         loadAsBitmap(url)
-            .apply(requestOptions)
-            .into(target);
+                .apply(requestOptions)
+                .into(target);
     }
 
     public static void loadBitmapToTarget(String url, SimpleTarget<Bitmap> target) {
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .format(DecodeFormat.PREFER_ARGB_8888);
+                .format(DecodeFormat.PREFER_ARGB_8888);
         loadAsBitmap(url)
-            .apply(requestOptions)
-            .into(target);
+                .apply(requestOptions)
+                .into(target);
     }
 
     public static void loadGifToTarget(final String path, final ImageView gifView) {
@@ -176,40 +181,40 @@ public abstract class GlideUtil   {
         RequestOptions requestOptions = getDefaultRequestOptions().diskCacheStrategy(diskCacheStrategy).priority(Priority.HIGH);
 
         getRequestManager()
-            .asGif()
-            .load(path)
-            .apply(requestOptions)
-            //imageView即 PhotoView对象
-            .into(gifView);
+                .asGif()
+                .load(path)
+                .apply(requestOptions)
+                //imageView即 PhotoView对象
+                .into(gifView);
     }
 
     public static void loadGifToTarget(final int rid, final ImageView gifView) {
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH);
         getRequestManager()
-            .asGif()
-            .load(rid)
-            .apply(requestOptions)
-            //imageView即 PhotoView对象
-            .into(gifView);
+                .asGif()
+                .load(rid)
+                .apply(requestOptions)
+                //imageView即 PhotoView对象
+                .into(gifView);
     }
 
     //加载圆型的图片
     public static void loadCirclePicture(String url, ImageView imageView) {
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .bitmapTransform(new CircleCrop());
+                .bitmapTransform(new CircleCrop());
         getRequestManager()
-            .load(getModel(url))
-            .apply(requestOptions)
-            .into(imageView);
+                .load(getModel(url))
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     public static void loadCirclePicture(int resId, ImageView imageView) {
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .bitmapTransform(new CircleCrop());
+                .bitmapTransform(new CircleCrop());
         getRequestManager()
-            .load(resId)
-            .apply(requestOptions)
-            .into(imageView);
+                .load(resId)
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     //加载圆角图片
@@ -228,7 +233,7 @@ public abstract class GlideUtil   {
 //            corners = Math.max(corners, getContext().getResources().getDimensionPixelOffset(R.dimen.px6dp));
         }
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .bitmapTransform(new RoundedCorners(corners));
+                .bitmapTransform(new RoundedCorners(corners));
         getRequestManager()
                 .load(url)
                 .apply(requestOptions)
@@ -236,7 +241,7 @@ public abstract class GlideUtil   {
     }
 
 
-    public static void loadRoundPictureNoSan(int mipmap, ImageView imageView){
+    public static void loadRoundPictureNoSan(int mipmap, ImageView imageView) {
         ViewGroup.LayoutParams p = imageView.getLayoutParams();
         int corners = (int) (0.15f * Math.min(p.width, p.height));
 //        corners = Math.max(corners, getContext().getResources().getDimensionPixelOffset(R.dimen.px6dp));
@@ -244,7 +249,7 @@ public abstract class GlideUtil   {
 //            corners = Math.max(corners, getContext().getResources().getDimensionPixelOffset(R.dimen.px6dp));
         }
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .bitmapTransform(new RoundedCorners(corners));
+                .bitmapTransform(new RoundedCorners(corners));
         getRequestManager()
                 .load(mipmap)
                 .apply(requestOptions)
@@ -256,10 +261,10 @@ public abstract class GlideUtil   {
 //            corners = Math.max(corners, getContext().getResources().getDimensionPixelOffset(R.dimen.px6dp));
         }
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .bitmapTransform(new RoundedCorners(corners));
+                .bitmapTransform(new RoundedCorners(corners));
         loadAsDrawable(url)
-            .apply(requestOptions)
-            .into(imageView);
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     public static void loadRoundPicture(Drawable res, ImageView imageView) {
@@ -281,12 +286,12 @@ public abstract class GlideUtil   {
 //            corners = Math.max(corners, getContext().getResources().getDimensionPixelOffset(R.dimen.px6dp));
         }
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .bitmapTransform(new RoundedCorners(corners));
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .bitmapTransform(new RoundedCorners(corners));
         getRequestManager()
-            .load(res)
-            .apply(requestOptions)
-            .into(imageView);
+                .load(res)
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     public static void loadRoundPicture(Drawable res, ImageView imageView, int corners) {
@@ -294,12 +299,12 @@ public abstract class GlideUtil   {
 //            corners = Math.max(corners, getContext().getResources().getDimensionPixelOffset(R.dimen.px6dp));
         }
         RequestOptions requestOptions = getDefaultRequestOptions()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .bitmapTransform(new RoundedCorners(corners));
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .bitmapTransform(new RoundedCorners(corners));
         getRequestManager()
-            .load(res)
-            .apply(requestOptions)
-            .into(imageView);
+                .load(res)
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     //加载高斯模糊图片
@@ -319,8 +324,8 @@ public abstract class GlideUtil   {
             }
             requestOptions = requestOptions.dontAnimate().bitmapTransform(new BlurTransformation(getContext(), 20, 1));// “23”：设置模糊度(在0.0到25.0之间)，默认”25";"4":图片缩放比例,默认“1”。
             loadAsDrawable(url)
-                .apply(requestOptions)
-                .into(imageView);
+                    .apply(requestOptions)
+                    .into(imageView);
         }
     }
 
@@ -336,8 +341,8 @@ public abstract class GlideUtil   {
         RequestOptions requestOptions;
         if (placeholder != R.mipmap.bg_default_image || error != R.mipmap.bg_default_image) {
             requestOptions = new RequestOptions()
-                .placeholder(placeholder)
-                .error(error);
+                    .placeholder(placeholder)
+                    .error(error);
         } else {
             requestOptions = getDefaultRequestOptions();
         }
@@ -351,8 +356,8 @@ public abstract class GlideUtil   {
         MatrixTransformation transformation = new MatrixTransformation(imageView);
         RequestOptions requestOptions = getDefaultRequestOptions().placeholder(null);
         loadAsBitmap(url)
-            .apply(requestOptions)
-            .into(transformation);
+                .apply(requestOptions)
+                .into(transformation);
     }
 
     public static void releaseImageViewResource(ImageView imageView) {

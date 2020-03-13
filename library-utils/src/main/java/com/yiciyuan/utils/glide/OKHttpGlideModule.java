@@ -19,6 +19,7 @@ import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.util.ContentLengthInputStream;
 import com.yiciyuan.utils.CacheUtil;
+import com.yiciyuan.utils.Util;
 import com.yiciyuan.utils.glide.progress.ProgressInterceptor;
 
 import java.io.File;
@@ -115,7 +116,7 @@ public class OKHttpGlideModule extends AppGlideModule {
             if (OK_HTTP_CLIENT == null) {
                 OK_HTTP_CLIENT = new Call.Factory[MAX_OK_HTTP_CLIENT_COUNT];
 
-                File dir = CacheUtil.getExternalCacheDirectory(BaseApp.app() ,"sy_img_cache");
+                File dir = CacheUtil.getExternalCacheDirectory(Util.INSTANCE.getContext(),"sy_img_cache");
                 int cacheSize = 100 * 1024 * 1024; // 100 MiB
                 Cache cache = new Cache(dir, cacheSize);
 
