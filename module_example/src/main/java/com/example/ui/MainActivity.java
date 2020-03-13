@@ -6,9 +6,11 @@ import android.view.View;
 
 import com.example.R;
 import com.example.ui.core.activity.MvpCoreExampleActivity;
+import com.yiciyuan.apt.annotation.Router;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+@Router("dasdada")
 public class MainActivity extends AppCompatActivity {
 
     @Override

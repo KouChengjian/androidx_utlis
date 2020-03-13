@@ -3,10 +3,11 @@ package com.example.ui.core.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.R;
 import com.example.ui.core.view.MvpCoreExampleView;
+import com.yiciyuan.apt.annotation.Router;
 import com.yiciyuan.core.ui.activity.PresenterActivityImpl;
 
+@Router("xxxxxxxxxx")
 public class MvpCoreExampleActivity extends PresenterActivityImpl<MvpCoreExampleView> {
 
     @Override
