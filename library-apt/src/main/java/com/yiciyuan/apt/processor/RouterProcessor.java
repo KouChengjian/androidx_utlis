@@ -38,7 +38,6 @@ import static javax.lang.model.element.Modifier.VOLATILE;
 
 @AutoService(Processor.class)//自动生成 javax.annotation.processing.IProcessor 文件
 @SupportedSourceVersion(SourceVersion.RELEASE_8)//java版本支持
-@SupportedAnnotationTypes("com.yiciyuan.apt.annotation.Router")
 public class RouterProcessor extends BaseProcessor<Router> {
     private static final Class<Router> Router = Router.class;
     List<ClassName> mList = new ArrayList<>();
