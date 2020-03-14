@@ -49,6 +49,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -57,18 +61,18 @@ dependencies {
     api androidDependencies.appcompat
 
     def httpDependencies = rootProject.ext.httpDependencies
-    api httpDependencies.okhttp3
-    api httpDependencies.okhttp3_logging
-    api httpDependencies.retrofit2
-    api httpDependencies.retrofit2_gson
-    api httpDependencies.retrofit2_adapter
-    api httpDependencies.rxjava
-    api httpDependencies.rxandroid
+//    api httpDependencies.okhttp3
+//    api httpDependencies.okhttp3_logging
+//    api httpDependencies.retrofit2
+//    api httpDependencies.retrofit2_gson
+//    api httpDependencies.retrofit2_adapter
+//    api httpDependencies.rxjava
+//    api httpDependencies.rxandroid
     api httpDependencies.rxlifecycle
 
     def toolDependencies = rootProject.ext.toolDependencies
     api toolDependencies.butterKnife
-    api toolDependencies.dagger
-    api toolDependencies.dagger_android
-    api toolDependencies.dagger_android_support
+//    api toolDependencies.dagger
+//    api toolDependencies.dagger_android
+//    api toolDependencies.dagger_android_support
 }

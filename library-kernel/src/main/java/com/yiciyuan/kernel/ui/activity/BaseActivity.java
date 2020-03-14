@@ -38,12 +38,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
         create(savedInstanceState); // dagger2注解
         super.onCreate(savedInstanceState);
         AppManager.get().addActivity(this);
-        if (getLayoutId() != 0) {
+        if (getLayoutId() != 0 && getLayoutView() == null) {
             setContentView(getLayoutId());
-        }
-        if (getLayoutView() != null) {
+        } else if (getLayoutId() == 0 && getLayoutView() != null) {
             setContentView(getLayoutView());
+        } else {
+            throw new RuntimeException("getLayoutId() and getLayoutView() must be empty");
         }
+
         unbinder = ButterKnife.bind(this);
 
         TypedArray activityStyle = getTheme().obtainStyledAttributes(new int[]{android.R.attr.windowAnimationStyle});

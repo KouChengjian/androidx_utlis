@@ -43,10 +43,12 @@ public abstract class BaseFragment extends Fragment implements IView, View.OnCli
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (getLayoutId() != 0) {
+        if (getLayoutId() != 0 && getLayoutView() == null) {
             return inflater.inflate(getLayoutId(), container, false);
+        } else if (getLayoutId() == 0 && getLayoutView() != null) {
+            return getLayoutView();
         } else {
-            return super.onCreateView(inflater, container, savedInstanceState);
+            throw new RuntimeException("getLayoutId() and getLayoutView() must be empty");
         }
     }
 
@@ -110,6 +112,11 @@ public abstract class BaseFragment extends Fragment implements IView, View.OnCli
      * override this method to return content view id of the fragment
      */
     protected abstract int getLayoutId();
+
+    /**
+     * bind layout resource view
+     */
+    protected abstract View getLayoutView();
 
     /**
      * override this method to do operation in the fragment
