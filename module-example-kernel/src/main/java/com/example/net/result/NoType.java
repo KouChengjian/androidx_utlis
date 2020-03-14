@@ -1,4 +1,4 @@
-package com.yiciyuan.kernel.net.result;
+package com.example.net.result;
 
 /**
  * Create by AItsuki on 2018/7/19.

@@ -1,16 +1,15 @@
-package com.yiciyuan.kernel.ui.fragment;
+package com.example.ui.base;
+
+import android.os.Bundle;
 
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle2.LifecycleProvider;
+import com.yiciyuan.kernel.ui.activity.BaseMvpActivity;
+import com.yiciyuan.kernel.ui.base.BasePresenter;
 import com.yiciyuan.kernel.ui.base.BaseView;
 
-import javax.inject.Inject;
-
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
+import androidx.viewbinding.ViewBinding;
 
 /**
  * Created with Android Studio.
@@ -18,20 +17,23 @@ import dagger.android.support.HasSupportFragmentInjector;
  * Date: 2019-06-19 17:06
  * Description:
  */
-public abstract class BaseDaggerFragment extends BaseFragment implements BaseView, HasSupportFragmentInjector {
+public abstract class BaseDaggerFragment<P extends BasePresenter, V extends ViewBinding> extends BaseMvpActivity<P, V> implements BaseView {
 
-    @Inject
-    DispatchingAndroidInjector<Fragment> childFragmentInjector;
     private final LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(this);
 
     @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return childFragmentInjector;
+    protected void created(Bundle savedInstanceState) {
+
     }
 
     @Override
     public LifecycleProvider<Lifecycle.Event> getLifeCycleProvider() {
         return provider;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
 

@@ -1,11 +1,11 @@
-package com.yiciyuan.kernel.net.transformer;
+package com.example.net.transformer;
 
-import com.yiciyuan.kernel.net.exception.ApiException;
-import com.yiciyuan.kernel.net.exception.ResultCode;
-import com.yiciyuan.kernel.net.result.Taker;
-import com.yiciyuan.kernel.utils.JsonParse;
 
-import org.json.JSONArray;
+import com.example.net.exception.ApiException;
+import com.example.net.exception.ResultCode;
+import com.example.net.result.Taker;
+import com.example.net.result.JsonParse;
+
 import org.json.JSONObject;
 
 import io.reactivex.Single;
@@ -18,22 +18,22 @@ import okhttp3.ResponseBody;
 
 /**
  * Created with Android Studio.
- * User: kcj
- * Date: 2019-12-20 16:59
+ * UserEntity: kcj
+ * Date: 2019/1/10 17:30
  * Description:
  */
-public class ResultJsonListTransformer <T> implements SingleTransformer<ResponseBody, Taker<JSONArray>> {
+public class ResultJsonTransformer<T> implements SingleTransformer<ResponseBody, Taker<JSONObject>> {
 
     @Override
-    public SingleSource<Taker<JSONArray>> apply(Single<ResponseBody> upstream) {
+    public SingleSource<Taker<JSONObject>> apply(Single<ResponseBody> upstream) {
         return upstream
                 .subscribeOn(Schedulers.io())
-                .flatMap((Function<ResponseBody, SingleSource<Taker<JSONArray>>>) result -> {
+                .flatMap((Function<ResponseBody, SingleSource<Taker<JSONObject>>>) result -> {
                     JSONObject jsonObject = JsonParse.createJSONObject(result.string());
                     int code = JsonParse.getInt(jsonObject ,"resCode");
                     String msg = JsonParse.getString(jsonObject ,"resMsg");
                     if (code == ResultCode.SUCCESS) { // 请求成功，服务器返回了数据
-                        JSONArray data = JsonParse.getJSONArray(jsonObject , "data");
+                        JSONObject data = JsonParse.getJSONObject(jsonObject , "data");
                         return Single.just(Taker.ofNullable(data));
                     } else { // 请求失败，服务器返回约定的Code --> ApiException
                         return Single.error(new ApiException(code, msg));

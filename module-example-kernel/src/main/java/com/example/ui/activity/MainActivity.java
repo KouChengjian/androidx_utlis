@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.databinding.ActivityMainBinding;
-import com.example.ui.base.BaseMvpActivity;
+import com.example.ui.base.BaseDaggerActivity;
 import com.example.ui.contract.MainContract;
 import com.example.ui.presenter.MainPresenter;
 import com.yiciyuan.apt.annotation.Router;
@@ -19,7 +19,7 @@ import com.yiciyuan.kernel.utils.LogUtil;
  * Description: 自动生成
  */
 @Router("xxxx")
-public class MainActivity extends BaseMvpActivity<MainPresenter, ActivityMainBinding> implements MainContract.View {
+public class MainActivity extends BaseDaggerActivity<MainPresenter, ActivityMainBinding> implements MainContract.View {
 
     @Override
     protected View getLayoutView() {
@@ -32,13 +32,11 @@ public class MainActivity extends BaseMvpActivity<MainPresenter, ActivityMainBin
         super.created(savedInstanceState);
         viewBinding.btnRecycler.setText("sdfkiljasjdlaskj");
         mPresenter.test();
-//        TRouter
     }
 
     @Override
     protected void bindEvent() {
         super.bindEvent();
-//        activityMainBinding
     }
 
     @Override

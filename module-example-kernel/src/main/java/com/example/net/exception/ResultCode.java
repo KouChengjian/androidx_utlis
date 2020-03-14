@@ -1,4 +1,4 @@
-package com.yiciyuan.kernel.net.exception;
+package com.example.net.exception;
 
 /**
  * Create by AItsuki on 2018/7/14.

@@ -1,4 +1,4 @@
-package com.yiciyuan.kernel.net.result;
+package com.example.net.result;
 
 /**
  * 返回结果处理基类

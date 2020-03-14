@@ -1,6 +1,7 @@
 package com.yiciyuan.kernel.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.yiciyuan.kernel.ui.base.BasePresenter;
 import com.yiciyuan.kernel.utils.PresenterHelper;
@@ -24,6 +25,11 @@ public abstract class BaseMvpActivity<P extends BasePresenter, V extends ViewBin
     @Override
     protected int getLayoutId() {
         return 0;
+    }
+
+    @Override
+    protected View getLayoutView() {
+        return null;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.yiciyuan.kernel.net.result;
+package com.example.net.result;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;

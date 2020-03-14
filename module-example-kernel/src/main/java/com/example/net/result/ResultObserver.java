@@ -1,7 +1,7 @@
-package com.yiciyuan.kernel.net.result;
+package com.example.net.result;
 
 
-import com.yiciyuan.kernel.net.exception.ExceptionHandler;
+import com.example.net.exception.ExceptionHandler;
 import com.yiciyuan.kernel.utils.LogUtil;
 import com.yiciyuan.kernel.utils.Toastor;
 

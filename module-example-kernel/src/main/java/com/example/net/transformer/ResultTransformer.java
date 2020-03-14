@@ -1,9 +1,5 @@
-package com.yiciyuan.kernel.net.transformer;
+package com.example.net.transformer;
 
-import com.yiciyuan.kernel.net.exception.ApiException;
-import com.yiciyuan.kernel.net.exception.ResultCode;
-import com.yiciyuan.kernel.net.result.HttpResult;
-import com.yiciyuan.kernel.net.result.Taker;
 
 import io.reactivex.Single;
 import io.reactivex.SingleSource;

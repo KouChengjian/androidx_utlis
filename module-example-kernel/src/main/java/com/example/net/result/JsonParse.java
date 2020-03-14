@@ -1,4 +1,4 @@
-package com.yiciyuan.kernel.utils;
+package com.example.net.result;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
