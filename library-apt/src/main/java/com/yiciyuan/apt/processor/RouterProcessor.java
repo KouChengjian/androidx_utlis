@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.processing.Processor;
-import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
@@ -54,7 +53,7 @@ public class RouterProcessor extends BaseProcessor<Router> {
     @Override
     protected void handleEach(TypeElement element, Router annotation) {
         ClassName currentType = ClassName.get(element);
-        printMessage(Diagnostic.Kind.NOTE, currentType.toString(),"");
+        printMessage(Diagnostic.Kind.NOTE, currentType.toString(), "");
         if (mList.contains(currentType)) {
             return;
         }
@@ -80,7 +79,7 @@ public class RouterProcessor extends BaseProcessor<Router> {
         routerActivityModel.setExtraElementKeys(mExtraElementKeys);
         routerActivityModel.setExtraElements(mExtraElements);
         boolean isNeedBind = (mExtraElementKeys != null && mExtraElementKeys.size() > 0
-            || routerActivityModel.getSceneTransitionElement() != null);
+                || routerActivityModel.getSceneTransitionElement() != null);
         routerActivityModel.setNeedBind(isNeedBind);
         mRouterActivityModels.add(routerActivityModel);
     }
@@ -160,11 +159,11 @@ public class RouterProcessor extends BaseProcessor<Router> {
                 .addStatement("go(url, 0)")
                 .addStatement("return")
                 .endControlFlow()
-                . addStatement("String[] str = url.split(\"\\\\?\")")
+                .addStatement("String[] str = url.split(\"\\\\?\")")
                 .addStatement("String name = str[0]")
-                . addStatement("String params = str[1]")
-                . addStatement("Bundle bundle = new Bundle()")
-                . addStatement("Map<String, String> hashMap = toMap(params)")
+                .addStatement("String params = str[1]")
+                .addStatement("Bundle bundle = new Bundle()")
+                .addStatement("Map<String, String> hashMap = toMap(params)")
                 .addCode("go(name, bundle);\n");
         tb.addMethod(goMethodBuilder1.build());
 
@@ -233,11 +232,11 @@ public class RouterProcessor extends BaseProcessor<Router> {
                 .addModifiers(PRIVATE)
                 .addParameter(ClassName.get("java.lang", "String"), "string")
                 .beginControlFlow("try")
-                .addStatement("return $T.decode(string, \"utf-8\")" ,mURLDecoderClassName)
-                .nextControlFlow("catch($T e)",mExceptionClassName)
+                .addStatement("return $T.decode(string, \"utf-8\")", mURLDecoderClassName)
+                .nextControlFlow("catch($T e)", mExceptionClassName)
                 .addStatement("e.printStackTrace()")
                 .endControlFlow()
-                .addStatement("return \"\"" ,mURLDecoderClassName);
+                .addStatement("return \"\"", mURLDecoderClassName);
         tb.addMethod(decodeMethodBuilder.build());
 
         MethodSpec.Builder isIgnoreMethodBuilder = MethodSpec.methodBuilder("isIgnore")
@@ -286,7 +285,7 @@ public class RouterProcessor extends BaseProcessor<Router> {
                 .returns(Map.class)
                 .addModifiers(PRIVATE)
                 .addParameter(String.class, "url")
-                .addStatement("$T<String, String> map = new $T<>()" ,Map.class , HashMap.class)
+                .addStatement("$T<String, String> map = new $T<>()", Map.class, HashMap.class)
                 .beginControlFlow("if (url != null && url.contains(\"=\"))")
                 .addStatement("String[] arrTemp = url.split(\"&\")")
                 .beginControlFlow("for (String str : arrTemp)")

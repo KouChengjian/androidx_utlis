@@ -2,6 +2,7 @@ package com.example.net.api;
 
 
 
+import com.example.net.result.Empty;
 import com.example.net.result.HttpListResult;
 import com.example.net.result.HttpResult;
 import com.yiciyuan.apt.annotation.ApiFactory;
@@ -26,7 +27,7 @@ public interface UserApi {
 
     @FormUrlEncoded
     @POST("api/restPwd")
-    Single<HttpResult<String>> restPwd(@Field("username") String username, @Field("password") String password, @Field("verify") String verify);
+    Single<HttpResult<Empty>> restPwd(@Field("username") String username, @Field("password") String password, @Field("verify") String verify);
 //
     @Headers("Content-Type:application/json")
     @POST("/manager/product/getListVenue")

@@ -22,8 +22,8 @@ public class ApiHelper {
     private final int READ_TIMEOUT = 10;
     private final int WRITE_TIMEOUT = 10;
 
-    private UserApi userApi;
-    public Retrofit retrofit;
+    private Retrofit retrofit;
+    public UserApi userApi;
 
     private static class SingletonHolder {
         private static final ApiHelper INSTANCE = new ApiHelper();

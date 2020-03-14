@@ -1,6 +1,11 @@
 package com.example.net.transformer;
 
 
+import com.example.net.exception.ApiException;
+import com.example.net.exception.ResultCode;
+import com.example.net.result.HttpResult;
+import com.example.net.result.Taker;
+
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.SingleTransformer;

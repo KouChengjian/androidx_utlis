@@ -2,8 +2,8 @@ package com.example.net.transformer;
 
 import com.example.net.exception.ApiException;
 import com.example.net.exception.ResultCode;
-import com.example.net.result.Taker;
 import com.example.net.result.JsonParse;
+import com.example.net.result.Taker;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
