@@ -1,4 +1,4 @@
-package com.yiciyuan.apt.annotation;
+package com.yiciyuan.annotation.apt;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

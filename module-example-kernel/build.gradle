@@ -80,8 +80,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'], exclude: '*.bak')
 
     implementation project(':library-kernel')
-    implementation project(':library-apt')
-//    annotationProcessor(':library-apt')
+//    implementation project(':library-apt')
+//    implementation 'com.yiciyuan:apt:1.0.0'
+    annotationProcessor project(':library-apt')
 //    def androidDependencies = rootProject.ext.androidDependencies
 //    implementation androidDependencies.appcompat
 //    implementation androidDependencies.material
@@ -96,11 +97,6 @@ dependencies {
     implementation httpDependencies.rxjava
     implementation httpDependencies.rxandroid
 
-//    def httpDependencies = rootProject.ext.httpDependencies
-//    implementation httpDependencies.okhttp3
-//
-
-//
 //    def uiDependencies = rootProject.ext.uiDependencies
 //    implementation uiDependencies.refresh_core
 //    implementation uiDependencies.refresh_footer

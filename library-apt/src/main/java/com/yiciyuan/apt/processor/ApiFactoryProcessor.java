@@ -8,8 +8,8 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import com.yiciyuan.annotation.apt.ApiFactory;
 import com.yiciyuan.apt.BaseProcessor;
-import com.yiciyuan.apt.annotation.ApiFactory;
 import com.yiciyuan.apt.helper.ApiFactoryModel;
 import com.yiciyuan.apt.utils.Utils;
 
@@ -35,7 +35,7 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 @AutoService(Processor.class)//自动生成 javax.annotation.processing.IProcessor 文件
 @SupportedSourceVersion(SourceVersion.RELEASE_8)//java版本支持
-public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
+public class ApiFactoryProcessor extends BaseProcessor<com.yiciyuan.annotation.apt.ApiFactory> {
 
     private static final Class<ApiFactory> ApiFactory = ApiFactory.class;
     private List<ClassName> mList = new ArrayList<>();

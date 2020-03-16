@@ -1,6 +1,7 @@
 package com.example.kernel.ui.activity;
 
-import com.yiciyuan.apt.annotation.Router;
+
+import com.yiciyuan.annotation.apt.Router;
 
 import androidx.appcompat.app.AppCompatActivity;
 

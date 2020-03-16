@@ -2,12 +2,13 @@ package com.example.kernel.net.api;
 
 
 
+import com.example.kernel.BuildConfig;
 import com.example.kernel.entity.po.UserEntity;
 import com.example.kernel.net.result.Empty;
 import com.example.kernel.net.result.HttpListResult;
 import com.example.kernel.net.result.HttpResult;
-import com.yiciyuan.apt.annotation.ApiFactory;
-import com.example.kernel.BuildConfig;
+import com.yiciyuan.annotation.apt.ApiFactory;
+
 import java.util.List;
 
 import io.reactivex.Single;
