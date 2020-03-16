@@ -61,8 +61,8 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
             apiFactoryModel.setAnnotationValue(annotation.value());
             apiFactoryModel.setChildElement(childElement);
 //            printMessage(Diagnostic.Kind.NOTE, childElement.toString(), "");
-            ExecutableElement executableElement = (ExecutableElement) childElement;
-            printMessage(Diagnostic.Kind.NOTE, TypeName.get(executableElement.getReturnType()).toString(), "");
+//            ExecutableElement executableElement = (ExecutableElement) childElement;
+//            printMessage(Diagnostic.Kind.NOTE, TypeName.get(executableElement.getReturnType()).toString(), "");
 //            for (AnnotationMirror annotationMirror :TypeName.get(executableElement.getReturnType()).getClass().getSimpleName()){
 //                printMessage(Diagnostic.Kind.NOTE, annotationMirror.toString(), "");
 //            }
@@ -110,7 +110,7 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
         ClassName[] classNames = new ClassName[returnTypes.length - 2];
         for (int i = 0; i < returnTypes.length; i++) {
             String re = returnTypes[i];
-            printMessage(Diagnostic.Kind.NOTE, re, "");
+//            printMessage(Diagnostic.Kind.NOTE, re, "");
             if (re.contains("HttpResult")) {
                 continue;
             }
@@ -156,6 +156,14 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
                     .addJavadoc("@此方法由apt自动生成")
                     .addModifiers(PUBLIC, STATIC);
 
+            // 请求参数
+            String paramsString = "";
+            for (VariableElement ep : executableElement.getParameters()) {
+                methodBuilder.addParameter(TypeName.get(ep.asType()), ep.getSimpleName().toString());
+                paramsString += ep.getSimpleName().toString() + ",";
+                printMessage(Diagnostic.Kind.NOTE, TypeName.get(ep.asType()).toString(), "");
+            }
+
             // 处理返回内容
             String returnType = TypeName.get(executableElement.getReturnType()).toString();
             if (returnType.contains("HttpResult")) {
@@ -163,20 +171,17 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
 
 //                methodBuilder.addStatement(
 //                        "return $T.getInstance()" +
-//                                ".service.$L($L)" +
+//                                ".get$L().$L($L)" +
 //                                ".compose($T.io_main())"
-//                        , ClassName.get("com.api", "Api")
-//                        , e.getSimpleName().toString()
-//                        , blockBuilder.build().toString()
+//                        , ClassName.get(apiFactoryModel.getAnnotationValue()+".net", "ApiHelper")
+//                        , apiFactoryModel.getElement().getSimpleName().toString()
+//                        ,apiFactoryModel.getChildElement().getSimpleName().toString()
+//                        , paramsString.substring(0, paramsString.length() - 1)
 //                        , ClassName.get("com.base.util.helper", "RxSchedulers"));
             } else {
 //                methodBuilder.returns(TypeName.get(executableElement.getReturnType()));
             }
-            // 请求参数
-            for (VariableElement ep : executableElement.getParameters()) {
-                methodBuilder.addParameter(TypeName.get(ep.asType()), ep.getSimpleName().toString());
-//                paramsString += ep.getSimpleName().toString() + ",";
-            }
+
 
             if (returnType.contains("HttpResult")) {
 
