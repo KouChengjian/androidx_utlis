@@ -5,8 +5,8 @@ package com.yiciyuan.apt.test;
 //import android.content.Intent;
 //import android.os.Bundle;
 //
-//import com.example.ui.activity.MainActivity;
-//import com.example.ui.activity.RecyclerActivity;
+//import com.example.kernel.ui.activity.MainActivity;
+//import com.example.kernel.ui.activity.RecyclerActivity;
 //
 //import java.io.UnsupportedEncodingException;
 //import java.net.URLDecoder;

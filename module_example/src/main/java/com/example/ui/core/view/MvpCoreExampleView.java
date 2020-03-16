@@ -1,9 +1,9 @@
-package com.example.ui.core.view;
+package com.example.kernel.ui.core.view;
 
 import android.view.View;
 
 import com.example.R;
-import com.example.ui.core.fragment.MvpCoreExampleTestFragment;
+import com.example.kernel.ui.core.fragment.MvpCoreExampleTestFragment;
 import com.example.utils.FragmentUtil;
 import com.yiciyuan.core.ui.base.ViewImpl;
 

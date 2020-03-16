@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.kernel.app;
 
 import android.app.Application;
 

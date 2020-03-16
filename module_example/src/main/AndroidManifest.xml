@@ -4,16 +4,16 @@
     package="com.example">
 
     <application
-        android:name=".app.AppApplication"
+        android:name=".kernel.app.AppApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialSheetFab">
 
-        <activity android:name=".ui.core.activity.MvpCoreExampleActivity"></activity>
+        <activity android:name=".kernel.ui.core.activity.MvpCoreExampleActivity"></activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".kernel.ui.MainActivity"
             android:theme="@style/Theme.MaterialSheetFab">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

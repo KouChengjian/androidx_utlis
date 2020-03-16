@@ -1,9 +1,9 @@
-package com.example.ui.core.activity;
+package com.example.kernel.ui.core.activity;
 
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.ui.core.view.MvpCoreExampleView;
+import com.example.kernel.ui.core.view.MvpCoreExampleView;
 import com.yiciyuan.apt.annotation.Router;
 import com.yiciyuan.core.ui.activity.PresenterActivityImpl;
 

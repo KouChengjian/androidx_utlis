@@ -5,7 +5,7 @@ import javax.lang.model.element.TypeElement;
 
 public class ApiFactoryModel {
 
-    private TypeElement element; // com.example.net.api.UserApi
+    private TypeElement element; // com.example.kernel.net.api.UserApi
     private String annotationValue;
     private Element childElement;
 

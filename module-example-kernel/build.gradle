@@ -42,7 +42,7 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".kernel"
+//            applicationIdSuffix ".kernel"
             minifyEnabled false
             shrinkResources false
             signingConfig signingConfigs.release

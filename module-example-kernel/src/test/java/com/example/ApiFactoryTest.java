@@ -1,13 +1,12 @@
 package com.example;
 
-import com.example.net.ApiHelper;
-import com.example.net.result.Empty;
-import com.example.net.result.HttpListResult;
-import com.example.net.result.HttpResult;
-import com.example.net.result.JsonParse;
-import com.example.net.result.Taker;
-import com.example.net.transformer.ResultJsonTransformer;
-import com.example.net.transformer.ResultTransformer;
+import com.example.kernel.net.ApiHelper;
+import com.example.kernel.net.result.Empty;
+import com.example.kernel.net.result.HttpListResult;
+import com.example.kernel.net.result.JsonParse;
+import com.example.kernel.net.result.Taker;
+import com.example.kernel.net.transformer.ResultJsonTransformer;
+import com.example.kernel.net.transformer.ResultTransformer;
 
 import org.json.JSONObject;
 

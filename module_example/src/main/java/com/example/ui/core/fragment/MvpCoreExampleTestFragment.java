@@ -1,8 +1,8 @@
-package com.example.ui.core.fragment;
+package com.example.kernel.ui.core.fragment;
 
 import android.os.Bundle;
 
-import com.example.ui.core.view.MvpCoreExampleTestView;
+import com.example.kernel.ui.core.view.MvpCoreExampleTestView;
 import com.yiciyuan.core.ui.fragment.PresenterFragmentImpl;
 
 import androidx.fragment.app.Fragment;

@@ -1,11 +1,11 @@
-package com.example.ui;
+package com.example.kernel.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.R;
-import com.example.ui.core.activity.MvpCoreExampleActivity;
+import com.example.kernel.ui.core.activity.MvpCoreExampleActivity;
 import com.yiciyuan.apt.annotation.Router;
 
 import androidx.appcompat.app.AppCompatActivity;
