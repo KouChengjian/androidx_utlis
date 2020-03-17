@@ -18,8 +18,10 @@ import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 @ApiFactory(BuildConfig.APPLICATION_ID)
 public interface UserApi {
@@ -29,11 +31,18 @@ public interface UserApi {
     @ApiParams(paramName = {"username", "password"})
     Single<ResponseBody> login(@Body RequestBody body);
 
+    @Headers("Content-Type:application/json")
+    @POST("/manager/user/login")
+    @ApiParams(paramName = {"username", "password"},result = ApiResultType.Array)
+    Single<ResponseBody> loginWeixin(@Body RequestBody body);
+
     @FormUrlEncoded
     @POST("api/restPwd")
     Single<HttpResult<Empty>> restPwd(@Field("username") String username, @Field("password") String password, @Field("verify") String verify);
 
-    //
+    @GET("/manager/product/getListVenue")
+    Single<HttpResult<HttpListResult<String>>> test1(@Query("username") String username);
+
     @Headers("Content-Type:application/json")
     @POST("/manager/product/getListVenue")
     Single<HttpResult<HttpListResult<List<String>>>> getAuctionTypeList(@Body RequestBody body);

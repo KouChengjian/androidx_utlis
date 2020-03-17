@@ -58,14 +58,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api project(':library-annotation')
-
+//    api project(':library-annotation')
 
     def androidDependencies = rootProject.ext.androidDependencies
     api androidDependencies.appcompat
     api androidDependencies.recyclerview
 
-    def httpDependencies = rootProject.ext.httpDependencies
+//    def httpDependencies = rootProject.ext.httpDependencies
 //    api httpDependencies.okhttp3
 //    api httpDependencies.okhttp3_logging
 //    api httpDependencies.retrofit2
@@ -73,9 +72,10 @@ dependencies {
 //    api httpDependencies.retrofit2_adapter
 //    api httpDependencies.rxjava
 //    api httpDependencies.rxandroid
-    api httpDependencies.rxlifecycle
+//    api httpDependencies.rxlifecycle
 
     def toolDependencies = rootProject.ext.toolDependencies
+    api toolDependencies.ycy_annotation
     api toolDependencies.butterKnife
 //    api toolDependencies.dagger
 //    api toolDependencies.dagger_android

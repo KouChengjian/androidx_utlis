@@ -82,7 +82,7 @@ dependencies {
     implementation project(':library-kernel')
 //    implementation project(':library-apt')
 //    implementation 'com.yiciyuan:apt:1.0.0'
-    annotationProcessor project(':library-apt')
+//    annotationProcessor project(':library-apt')
 //    def androidDependencies = rootProject.ext.androidDependencies
 //    implementation androidDependencies.appcompat
 //    implementation androidDependencies.material
@@ -96,6 +96,10 @@ dependencies {
     implementation httpDependencies.retrofit2_adapter
     implementation httpDependencies.rxjava
     implementation httpDependencies.rxandroid
+    implementation httpDependencies.rxlifecycle
+
+    def toolDependencies = rootProject.ext.toolDependencies
+    annotationProcessor toolDependencies.ycy_apt
 
 //    def uiDependencies = rootProject.ext.uiDependencies
 //    implementation uiDependencies.refresh_core

@@ -6,9 +6,6 @@ import android.view.View;
 import com.yiciyuan.kernel.ui.base.BasePresenter;
 import com.yiciyuan.kernel.utils.PresenterHelper;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
 import androidx.viewbinding.ViewBinding;
 
 /**
