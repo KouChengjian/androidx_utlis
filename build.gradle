@@ -16,7 +16,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://dl.bintray.com/hui793114465/framwork-dagger" }
         maven { url "https://dl.bintray.com/hui793114465/yiciyuan" }
 
     }

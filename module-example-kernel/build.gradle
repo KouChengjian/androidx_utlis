@@ -100,9 +100,4 @@ dependencies {
 
     def toolDependencies = rootProject.ext.toolDependencies
     annotationProcessor toolDependencies.ycy_apt
-
-//    def uiDependencies = rootProject.ext.uiDependencies
-//    implementation uiDependencies.refresh_core
-//    implementation uiDependencies.refresh_footer
-//    implementation uiDependencies.refresh_header
 }
