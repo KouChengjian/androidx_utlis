@@ -1,13 +1,14 @@
 package com.example.kernel.net.api;
 
 
-
 import com.example.kernel.BuildConfig;
 import com.example.kernel.entity.po.UserEntity;
 import com.example.kernel.net.result.Empty;
 import com.example.kernel.net.result.HttpListResult;
 import com.example.kernel.net.result.HttpResult;
 import com.yiciyuan.annotation.apt.ApiFactory;
+import com.yiciyuan.annotation.apt.ApiParams;
+import com.yiciyuan.annotation.enums.ApiResultType;
 
 import java.util.List;
 
@@ -25,16 +26,14 @@ public interface UserApi {
 
     @Headers("Content-Type:application/json")
     @POST("/manager/user/login")
+    @ApiParams(paramName = {"username", "password"})
     Single<ResponseBody> login(@Body RequestBody body);
-
-    @Headers("Content-Type:application/json")
-    @POST("/manager/user/login")
-    Single<ResponseBody> login1(@Body UserEntity userEntity);
 
     @FormUrlEncoded
     @POST("api/restPwd")
     Single<HttpResult<Empty>> restPwd(@Field("username") String username, @Field("password") String password, @Field("verify") String verify);
-//
+
+    //
     @Headers("Content-Type:application/json")
     @POST("/manager/product/getListVenue")
     Single<HttpResult<HttpListResult<List<String>>>> getAuctionTypeList(@Body RequestBody body);

@@ -9,13 +9,18 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.yiciyuan.annotation.apt.ApiFactory;
+import com.yiciyuan.annotation.apt.ApiParams;
+import com.yiciyuan.annotation.enums.ApiResultType;
 import com.yiciyuan.apt.BaseProcessor;
 import com.yiciyuan.apt.helper.ApiFactoryModel;
 import com.yiciyuan.apt.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.SupportedSourceVersion;
@@ -24,6 +29,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.MirroredTypesException;
+import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
@@ -35,7 +42,7 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 @AutoService(Processor.class)//自动生成 javax.annotation.processing.IProcessor 文件
 @SupportedSourceVersion(SourceVersion.RELEASE_8)//java版本支持
-public class ApiFactoryProcessor extends BaseProcessor<com.yiciyuan.annotation.apt.ApiFactory> {
+public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
 
     private static final Class<ApiFactory> ApiFactory = ApiFactory.class;
     private List<ClassName> mList = new ArrayList<>();
@@ -49,18 +56,24 @@ public class ApiFactoryProcessor extends BaseProcessor<com.yiciyuan.annotation.a
     @Override
     protected void handleEach(TypeElement element, ApiFactory annotation) {
         ClassName currentType = ClassName.get(element);
+
         printMessage(Diagnostic.Kind.NOTE, currentType.toString(), "");
         if (mList.contains(currentType)) {
             return;
         }
         mIsNewCode = true;
         mList.add(currentType);
+        try {
+            printMessage(Diagnostic.Kind.NOTE, Utils.getPackageName(mElements, element), "");
+        } catch (Exception e) {
+
+        }
+
         for (Element childElement : element.getEnclosedElements()) {
             ApiFactoryModel apiFactoryModel = new ApiFactoryModel();
             apiFactoryModel.setElement(element);
             apiFactoryModel.setAnnotationValue(annotation.value());
             apiFactoryModel.setChildElement(childElement);
-//            printMessage(Diagnostic.Kind.NOTE, childElement.toString(), "");
 //            ExecutableElement executableElement = (ExecutableElement) childElement;
 //            printMessage(Diagnostic.Kind.NOTE, TypeName.get(executableElement.getReturnType()).toString(), "");
 //            for (AnnotationMirror annotationMirror :TypeName.get(executableElement.getReturnType()).getClass().getSimpleName()){
@@ -114,21 +127,22 @@ public class ApiFactoryProcessor extends BaseProcessor<com.yiciyuan.annotation.a
             if (re.contains("HttpResult")) {
                 continue;
             }
-            String prefix = "", suffix = "";
-            String[] packages = re.split("\\.");
-            for (int j = 0; j < packages.length; j++) {
-                String pack = packages[j];
-                if (j != packages.length - 1) {
-                    if (prefix == "") {
-                        prefix = pack;
-                    } else {
-                        prefix += "." + pack;
-                    }
-                } else {
-                    suffix = pack;
-                }
-            }
-            ClassName className = ClassName.get(prefix, suffix);
+//            String prefix = "", suffix = "";
+//            String[] packages = re.split("\\.");
+//            for (int j = 0; j < packages.length; j++) {
+//                String pack = packages[j];
+//                if (j != packages.length - 1) {
+//                    if (prefix == "") {
+//                        prefix = pack;
+//                    } else {
+//                        prefix += "." + pack;
+//                    }
+//                } else {
+//                    suffix = pack;
+//                }
+//            }
+//            ClassName className = ClassName.get(prefix, suffix);
+            ClassName className = Utils.getType(re);
             if (i == 0) {
                 classNameHeader = className;
             } else {
@@ -158,35 +172,88 @@ public class ApiFactoryProcessor extends BaseProcessor<com.yiciyuan.annotation.a
 
             // 请求参数
             String paramsString = "";
-            for (VariableElement ep : executableElement.getParameters()) {
-                methodBuilder.addParameter(TypeName.get(ep.asType()), ep.getSimpleName().toString());
-                paramsString += ep.getSimpleName().toString() + ",";
-                printMessage(Diagnostic.Kind.NOTE, TypeName.get(ep.asType()).toString(), "");
-            }
+            ApiParams apiParams = childElement.getAnnotation(ApiParams.class);
+            if (apiParams != null) {
+                List<String> paramNames = Arrays.asList(apiParams.paramName());
+                List<? extends TypeMirror> paramTypes = new ArrayList<>();
+                try {
+                    apiParams.paramType();
+                } catch (MirroredTypesException mte) {
+                    paramTypes = mte.getTypeMirrors();
+                }
 
-            // 处理返回内容
+                for (int i = 0; i < paramNames.size(); i++) {
+                    String paramName = paramNames.get(i);
+                    paramsString += paramName + ",";
+                    if (paramNames.size() == paramTypes.size()) {
+                        String paramType = paramTypes.get(i).toString();
+                        methodBuilder.addParameter(Utils.getType(paramType), paramName);
+                    } else if (paramTypes.size() == 1) {
+                        String paramType = paramTypes.get(0).toString();
+                        methodBuilder.addParameter(Utils.getType(paramType), paramName);
+                    } else {
+                        methodBuilder.addParameter(Utils.getType("java.lang.String"), paramName);
+                    }
+                }
+            } else {
+                for (VariableElement ep : executableElement.getParameters()) {
+                    methodBuilder.addParameter(TypeName.get(ep.asType()), ep.getSimpleName().toString());
+                    paramsString += ep.getSimpleName().toString() + ",";
+                }
+            }
+            printMessage(Diagnostic.Kind.NOTE, paramsString, "paramsString = ");
+
+            // 返回内容
             String returnType = TypeName.get(executableElement.getReturnType()).toString();
             if (returnType.contains("HttpResult")) {
-//                methodBuilder.returns(getHttpResultReturn(returnType));
-
-//                methodBuilder.addStatement(
-//                        "return $T.getInstance()" +
-//                                ".get$L().$L($L)" +
-//                                ".compose($T.io_main())"
-//                        , ClassName.get(apiFactoryModel.getAnnotationValue()+".net", "ApiHelper")
-//                        , apiFactoryModel.getElement().getSimpleName().toString()
-//                        ,apiFactoryModel.getChildElement().getSimpleName().toString()
-//                        , paramsString.substring(0, paramsString.length() - 1)
-//                        , ClassName.get("com.base.util.helper", "RxSchedulers"));
+                methodBuilder.returns(getHttpResultReturn(returnType));
             } else {
-//                methodBuilder.returns(TypeName.get(executableElement.getReturnType()));
+                if (apiParams != null) {
+                    ClassName className = apiParams.result() == ApiResultType.Object ?
+                            ClassName.get("org.json", "JSONObject") :
+                            ClassName.get("org.json", "JSONArray");
+                    ParameterizedTypeName typeName = ParameterizedTypeName.get(ClassName.get("io.reactivex", "Single"), className);
+                    methodBuilder.returns(typeName);
+                } else {
+                    methodBuilder.returns(TypeName.get(executableElement.getReturnType()));
+                }
             }
 
-
-            if (returnType.contains("HttpResult")) {
-
+            // 执行函数
+            if (apiParams != null) {
+                methodBuilder.addStatement("$T<String, Object> params = new $T<>()", Map.class, HashMap.class);
+                List<String> paramsList = Arrays.asList(paramsString.split(","));
+                for (String str : paramsList) {
+                    if (str != null && str != "") {
+                        methodBuilder.addStatement("params.put(\"" + str + "\"," + str + ")");
+                    }
+                }
+                methodBuilder.addStatement("$T requestBody = ApiHelper.getInstance().createRequestBody(params)", Utils.getType("okhttp3.RequestBody"));
+                methodBuilder.addStatement(
+                        "return $T.getInstance()" +
+                                ".get$L().$L($L)" +
+                                ".compose(new $T<>())" +
+                                ".map($T::get)"
+                        , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net", "ApiHelper")
+                        , apiFactoryModel.getElement().getSimpleName().toString()
+                        , apiFactoryModel.getChildElement().getSimpleName().toString()
+                        , "requestBody"
+                        , apiParams.result() == ApiResultType.Object ?
+                                ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.transformer", "ResultJsonTransformer") :
+                                ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.transformer", "ResultJsonListTransformer")
+                        , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.result", "Taker"));
             } else {
-
+                methodBuilder.addStatement(
+                        "return $T.getInstance()" +
+                                ".get$L().$L($L)" +
+                                ".compose(new $T<>())" +
+                                ".map($T::get)"
+                        , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net", "ApiHelper")
+                        , apiFactoryModel.getElement().getSimpleName().toString()
+                        , apiFactoryModel.getChildElement().getSimpleName().toString()
+                        , paramsString.substring(0, paramsString.length() - 1)
+                        , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.transformer", "ResultTransformer")
+                        , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.result", "Taker"));
             }
 
             tb.addMethod(methodBuilder.build());
