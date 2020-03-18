@@ -32,7 +32,7 @@ ext {
     toolDependencies = [
             ycy_kernel              : "com.yiciyuan:kernel:1.0.1",
             ycy_annotation          : "com.yiciyuan:annotation:1.0.1",
-            ycy_apt                 : "com.yiciyuan:apt:1.0.1",
+            ycy_apt                 : "com.yiciyuan:apt:1.0.2",
             eventbus                : "org.greenrobot:eventbus:3.1.1",
             eventbus_apt            : "org.greenrobot:eventbus-annotation-processor:3.1.1",
             butterKnife             : "com.jakewharton:butterknife:8.4.0",

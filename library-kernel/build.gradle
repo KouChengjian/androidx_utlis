@@ -58,21 +58,15 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    api project(':library-annotation')
 
-//    def androidDependencies = rootProject.ext.androidDependencies
-//    api androidDependencies.appcompat
-//    api androidDependencies.recyclerview
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'androidx.recyclerview:recyclerview:1.1.0'
+    def androidDependencies = rootProject.ext.androidDependencies
+    api androidDependencies.appcompat
+    api androidDependencies.recyclerview
 
-//    def httpDependencies = rootProject.ext.httpDependencies
-////    api httpDependencies.rxlifecycle
-    api 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:2.2.2'
+    def httpDependencies = rootProject.ext.httpDependencies
+    api httpDependencies.rxlifecycle
 
-//    def toolDependencies = rootProject.ext.toolDependencies
-//    api toolDependencies.ycy_annotation
-//    api toolDependencies.butterKnife
-    api 'com.yiciyuan:annotation:1.0.1'
-    api 'com.jakewharton:butterknife:8.4.0'
+    def toolDependencies = rootProject.ext.toolDependencies
+    api toolDependencies.ycy_annotation
+    api toolDependencies.butterKnife
 }

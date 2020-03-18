@@ -70,16 +70,12 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-
-//    dexOptions {
-//        incremental false
-//    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'], exclude: '*.bak')
 
-    implementation project(':library-kernel')
+//    implementation project(':library-kernel')
 //    implementation project(':library-apt')
 //    implementation 'com.yiciyuan:apt:1.0.0'
 //    annotationProcessor project(':library-apt')
@@ -99,6 +95,6 @@ dependencies {
     implementation httpDependencies.rxlifecycle
 
     def toolDependencies = rootProject.ext.toolDependencies
-
+    implementation toolDependencies.ycy_kernel
     annotationProcessor toolDependencies.ycy_apt
 }
