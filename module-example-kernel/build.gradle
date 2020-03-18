@@ -99,5 +99,6 @@ dependencies {
     implementation httpDependencies.rxlifecycle
 
     def toolDependencies = rootProject.ext.toolDependencies
+
     annotationProcessor toolDependencies.ycy_apt
 }
