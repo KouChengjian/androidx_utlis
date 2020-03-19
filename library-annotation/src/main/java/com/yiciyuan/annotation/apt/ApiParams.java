@@ -1,6 +1,7 @@
 package com.yiciyuan.annotation.apt;
 
-import com.yiciyuan.annotation.enums.ApiResultType;
+import com.yiciyuan.annotation.enums.ApiRequestType;
+import com.yiciyuan.annotation.enums.ApiResponseType;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -22,5 +23,13 @@ public @interface ApiParams {
 
     Class<?>[] paramType() default {};
 
-    ApiResultType result() default ApiResultType.Object;
+    /**
+     * Single<HttpResult> 此参数无效
+     */
+    ApiRequestType request() default ApiRequestType.FORMDATA;
+
+    /**
+     * Single<HttpResult> 此参数无效  Single<ResponseBody> 有效
+     */
+    ApiResponseType response() default ApiResponseType.NONE;
 }
