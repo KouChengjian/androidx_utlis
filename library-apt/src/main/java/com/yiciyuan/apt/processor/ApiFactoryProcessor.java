@@ -10,7 +10,8 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.yiciyuan.annotation.apt.ApiFactory;
 import com.yiciyuan.annotation.apt.ApiParams;
-import com.yiciyuan.annotation.enums.ApiResultType;
+import com.yiciyuan.annotation.enums.ApiRequestType;
+import com.yiciyuan.annotation.enums.ApiResponseType;
 import com.yiciyuan.apt.BaseProcessor;
 import com.yiciyuan.apt.helper.ApiFactoryModel;
 import com.yiciyuan.apt.utils.Utils;
@@ -123,25 +124,9 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
         ClassName[] classNames = new ClassName[returnTypes.length - 2];
         for (int i = 0; i < returnTypes.length; i++) {
             String re = returnTypes[i];
-//            printMessage(Diagnostic.Kind.NOTE, re, "");
             if (re.contains("HttpResult")) {
                 continue;
             }
-//            String prefix = "", suffix = "";
-//            String[] packages = re.split("\\.");
-//            for (int j = 0; j < packages.length; j++) {
-//                String pack = packages[j];
-//                if (j != packages.length - 1) {
-//                    if (prefix == "") {
-//                        prefix = pack;
-//                    } else {
-//                        prefix += "." + pack;
-//                    }
-//                } else {
-//                    suffix = pack;
-//                }
-//            }
-//            ClassName className = ClassName.get(prefix, suffix);
             ClassName className = Utils.getType(re);
             if (i == 0) {
                 classNameHeader = className;
@@ -175,33 +160,40 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
             ApiParams apiParams = childElement.getAnnotation(ApiParams.class);
             if (apiParams != null) {
                 List<String> paramNames = Arrays.asList(apiParams.paramName());
-                List<? extends TypeMirror> paramTypes = new ArrayList<>();
-                try {
-                    apiParams.paramType();
-                } catch (MirroredTypesException mte) {
-                    paramTypes = mte.getTypeMirrors();
-                }
+                if (paramNames.size() != 0) {
+                    List<? extends TypeMirror> paramTypes = new ArrayList<>();
+                    try {
+                        apiParams.paramType();
+                    } catch (MirroredTypesException mte) {
+                        paramTypes = mte.getTypeMirrors();
+                    }
 
-                for (int i = 0; i < paramNames.size(); i++) {
-                    String paramName = paramNames.get(i);
-                    paramsString += paramName + ",";
-                    if (paramNames.size() == paramTypes.size()) {
-                        String paramType = paramTypes.get(i).toString();
-                        methodBuilder.addParameter(Utils.getType(paramType), paramName);
-                    } else if (paramTypes.size() == 1) {
-                        String paramType = paramTypes.get(0).toString();
-                        methodBuilder.addParameter(Utils.getType(paramType), paramName);
-                    } else {
-                        methodBuilder.addParameter(Utils.getType("java.lang.String"), paramName);
+                    for (int i = 0; i < paramNames.size(); i++) {
+                        String paramName = paramNames.get(i);
+                        paramsString += paramName + ",";
+                        if (paramNames.size() == paramTypes.size()) {
+                            String paramType = paramTypes.get(i).toString();
+                            methodBuilder.addParameter(Utils.getType(paramType), paramName);
+                        } else if (paramTypes.size() == 1) {
+                            String paramType = paramTypes.get(0).toString();
+                            methodBuilder.addParameter(Utils.getType(paramType), paramName);
+                        } else {
+                            methodBuilder.addParameter(Utils.getType("java.lang.String"), paramName);
+                        }
+                    }
+                } else {
+                    for (VariableElement ep : executableElement.getParameters()) {
+                        methodBuilder.addParameter(TypeName.get(ep.asType()), ep.getSimpleName().toString());
+                        paramsString += ep.getSimpleName().toString() + ",";
                     }
                 }
+
             } else {
                 for (VariableElement ep : executableElement.getParameters()) {
                     methodBuilder.addParameter(TypeName.get(ep.asType()), ep.getSimpleName().toString());
                     paramsString += ep.getSimpleName().toString() + ",";
                 }
             }
-            printMessage(Diagnostic.Kind.NOTE, paramsString, "paramsString = ");
 
             // 返回内容
             String returnType = TypeName.get(executableElement.getReturnType()).toString();
@@ -209,7 +201,7 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
                 methodBuilder.returns(getHttpResultReturn(returnType));
             } else {
                 if (apiParams != null) {
-                    ClassName className = apiParams.result() == ApiResultType.Object ?
+                    ClassName className = apiParams.response() == ApiResponseType.JSONObject ?
                             ClassName.get("org.json", "JSONObject") :
                             ClassName.get("org.json", "JSONArray");
                     ParameterizedTypeName typeName = ParameterizedTypeName.get(ClassName.get("io.reactivex", "Single"), className);
@@ -221,27 +213,47 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
 
             // 执行函数
             if (apiParams != null) {
-                methodBuilder.addStatement("$T<String, Object> params = new $T<>()", Map.class, HashMap.class);
-                List<String> paramsList = Arrays.asList(paramsString.split(","));
-                for (String str : paramsList) {
-                    if (str != null && str != "") {
-                        methodBuilder.addStatement("params.put(\"" + str + "\"," + str + ")");
+                if (apiParams.request() == ApiRequestType.APPLICATIONJSON) {
+                    methodBuilder.addStatement("$T<String, Object> params = new $T<>()", Map.class, HashMap.class);
+                    List<String> paramsList = Arrays.asList(paramsString.split(","));
+                    for (String str : paramsList) {
+                        if (str != null && str != "") {
+                            methodBuilder.addStatement("params.put(\"" + str + "\"," + str + ")");
+                        }
                     }
+                    methodBuilder.addStatement("$T requestBody = ApiHelper.getInstance().createRequestBody(params)", Utils.getType("okhttp3.RequestBody"));
                 }
-                methodBuilder.addStatement("$T requestBody = ApiHelper.getInstance().createRequestBody(params)", Utils.getType("okhttp3.RequestBody"));
-                methodBuilder.addStatement(
-                        "return $T.getInstance()" +
-                                ".get$L().$L($L)" +
-                                ".compose(new $T<>())" +
-                                ".map($T::get)"
-                        , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net", "ApiHelper")
-                        , apiFactoryModel.getElement().getSimpleName().toString()
-                        , apiFactoryModel.getChildElement().getSimpleName().toString()
-                        , "requestBody"
-                        , apiParams.result() == ApiResultType.Object ?
-                                ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.transformer", "ResultJsonTransformer") :
-                                ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.transformer", "ResultJsonListTransformer")
-                        , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.result", "Taker"));
+
+                if (apiParams.response() == ApiResponseType.NONE) {
+                    methodBuilder.addStatement(
+                            "return $T.getInstance()" +
+                                    ".get$L().$L($L)" +
+                                    ".compose(new $T<>())" +
+                                    ".map($T::get)"
+                            , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net", "ApiHelper")
+                            , apiFactoryModel.getElement().getSimpleName().toString()
+                            , apiFactoryModel.getChildElement().getSimpleName().toString()
+                            , paramsString.substring(0, paramsString.length() - 1)
+                            , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.transformer", "ResultTransformer")
+                            , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.result", "Taker"));
+                } else {
+                    methodBuilder.addStatement(
+                            "return $T.getInstance()" +
+                                    ".get$L().$L($L)" +
+                                    ".compose(new $T<>())" +
+                                    ".map($T::get)"
+                            , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net", "ApiHelper")
+                            , apiFactoryModel.getElement().getSimpleName().toString()
+                            , apiFactoryModel.getChildElement().getSimpleName().toString()
+                            , apiParams.request() == ApiRequestType.APPLICATIONJSON ?
+                                    "requestBody" :
+                                    paramsString.substring(0, paramsString.length() - 1)
+                            , apiParams.response() == ApiResponseType.JSONObject ?
+                                    ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.transformer", "ResultJsonTransformer") :
+                                    ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.transformer", "ResultJsonListTransformer")
+                            , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.result", "Taker"));
+
+                }
             } else {
                 methodBuilder.addStatement(
                         "return $T.getInstance()" +
@@ -255,6 +267,7 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
                         , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.transformer", "ResultTransformer")
                         , ClassName.get(apiFactoryModel.getAnnotationValue() + ".net.result", "Taker"));
             }
+
 
             tb.addMethod(methodBuilder.build());
         }

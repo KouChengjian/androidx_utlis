@@ -20,7 +20,8 @@ apply plugin: 'java-library'
 
 dependencies {
     // auto-service这个和gradle版本有关 rc2需要3.1.4 4.6
-    implementation 'com.yiciyuan:annotation:1.0.1'
+    implementation project(':library-annotation')
+//    implementation 'com.yiciyuan:annotation:1.0.1'
     implementation 'com.squareup:javapoet:1.8.0'
     implementation 'com.google.auto.service:auto-service:1.0-rc6'
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
