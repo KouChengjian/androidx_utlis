@@ -19,11 +19,6 @@ public abstract class BaseMvpFragment<P extends BasePresenter, V extends ViewBin
     protected V viewBinding;
 
     @Override
-    protected int getLayoutId() {
-        return 0;
-    }
-
-    @Override
     protected void create(Bundle savedInstanceState) {
         try {
             mPresenter = getPresenterClass().newInstance();
@@ -42,16 +37,6 @@ public abstract class BaseMvpFragment<P extends BasePresenter, V extends ViewBin
     public Class<P> getPresenterClass() {
         return PresenterHelper.getViewClass(getClass());
     }
-
-//    public Observable<Object> eventClick(View view) {
-//        return eventClick(view, 1000);
-//    }
-//
-//    public Observable<Object> eventClick(View view, int milliseconds) {
-//        return RxView.clicks(view)
-//                .throttleFirst(milliseconds, TimeUnit.MILLISECONDS)
-//                .observeOn(AndroidSchedulers.mainThread());
-//    }
 
     @Override
     public void onDestroy() {

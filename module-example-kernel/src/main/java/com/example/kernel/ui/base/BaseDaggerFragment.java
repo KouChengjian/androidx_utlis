@@ -27,6 +27,7 @@ public abstract class BaseDaggerFragment<P extends BasePresenter, V extends View
 
     @Override
     protected void created(Bundle savedInstanceState) {
+        super.created(savedInstanceState);
     }
 
     @Override
@@ -38,6 +39,16 @@ public abstract class BaseDaggerFragment<P extends BasePresenter, V extends View
     public LifecycleProvider<Lifecycle.Event> getLifeCycleProvider() {
         return provider;
     }
+
+    //    public Observable<Object> eventClick(View view) {
+//        return eventClick(view, 1000);
+//    }
+//
+//    public Observable<Object> eventClick(View view, int milliseconds) {
+//        return RxView.clicks(view)
+//                .throttleFirst(milliseconds, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread());
+//    }
 
     @Override
     public ProgressDialog showProgressDialog(String msg) {

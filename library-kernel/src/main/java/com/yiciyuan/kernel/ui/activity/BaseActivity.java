@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.yiciyuan.kernel.ui.IView;
@@ -24,7 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
  * Description:
  */
 public abstract class BaseActivity extends AppCompatActivity implements IView, View.OnClickListener {
-
 
     protected int activityCloseEnterAnimation;
     protected int activityCloseExitAnimation;
@@ -113,6 +113,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
     protected void bindEvent() {
     }
 
+    protected LayoutInflater getInflater(){
+        return LayoutInflater.from(getContext());
+    }
+
     protected void startAnimActivity(Class<?> cls) {
         startAnimActivity(cls, null, -1, 0);
     }
@@ -133,18 +137,18 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
         AppStartUtil.startAnimActivity(this, cls, bundle, flag, code);
     }
 
-    public void finishResult(Bundle bundle) {
+    protected void finishResult(Bundle bundle) {
         Intent intent = new Intent();
         intent.putExtras(bundle);
         finishResult(intent);
     }
 
-    public void finishResult(Intent intent) {
+    protected void finishResult(Intent intent) {
         setResult(RESULT_OK, intent);
         this.finish();
     }
 
-    public void aminFinish() {
+    protected void aminFinish() {
         super.finish();
         overridePendingTransition(activityCloseEnterAnimation, activityCloseExitAnimation);
     }

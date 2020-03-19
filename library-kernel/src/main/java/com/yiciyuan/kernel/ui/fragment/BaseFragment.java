@@ -89,11 +89,6 @@ public abstract class BaseFragment extends Fragment implements IView, View.OnCli
     protected abstract void create(Bundle savedInstanceState);
 
     /**
-     * override this method to return content view id of the fragment
-     */
-    protected abstract int getLayoutId();
-
-    /**
      * bind layout resource view
      */
     protected abstract View getLayoutView();
@@ -107,6 +102,10 @@ public abstract class BaseFragment extends Fragment implements IView, View.OnCli
      * override this method to do operation in the fragment
      */
     protected void bindEvent() {
+    }
+
+    protected LayoutInflater getInflater(){
+        return LayoutInflater.from(getContext());
     }
 
     protected void startAnimActivity(Class<?> cls) {

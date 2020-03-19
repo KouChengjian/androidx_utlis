@@ -25,7 +25,7 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter, FragmentHome
 
     @Override
     protected View getLayoutView() {
-        viewBinding = FragmentHomeBinding.inflate(LayoutInflater.from(this));
+        viewBinding = FragmentHomeBinding.inflate(getInflater());
         return viewBinding.getRoot();
     }
 
