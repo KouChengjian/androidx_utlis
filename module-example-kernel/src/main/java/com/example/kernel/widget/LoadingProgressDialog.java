@@ -1,4 +1,4 @@
-package com.yiciyuan.kernel.widget;
+package com.example.kernel.widget;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
