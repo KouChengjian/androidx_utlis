@@ -15,3 +15,11 @@
 2、不喜欢都是缺点
 
 ## library-core-dagger
+
+## library-kernel
+#### 1.0.1
+viewbinding
+#### 1.0.2
+1、移除butterknife
+2、移除widget
+3、添加getLayoutInflater()

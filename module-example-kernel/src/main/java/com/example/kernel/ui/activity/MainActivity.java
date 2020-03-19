@@ -28,6 +28,11 @@ public class MainActivity extends BaseDaggerActivity<MainPresenter, ActivityMain
     }
 
     @Override
+    protected void create(Bundle savedInstanceState) {
+        super.create(savedInstanceState);
+    }
+
+    @Override
     protected void created(Bundle savedInstanceState) {
         super.created(savedInstanceState);
         viewBinding.btnRecycler.setText("sdfkiljasjdlaskj");

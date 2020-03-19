@@ -2,16 +2,17 @@ package com.example.kernel.net.api;
 
 
 import com.example.kernel.BuildConfig;
-import com.example.kernel.entity.po.UserEntity;
 import com.example.kernel.net.result.Empty;
 import com.example.kernel.net.result.HttpListResult;
 import com.example.kernel.net.result.HttpResult;
 import com.yiciyuan.annotation.apt.ApiFactory;
 import com.yiciyuan.annotation.apt.ApiParams;
-import com.yiciyuan.annotation.enums.ApiResultType;
+import com.yiciyuan.annotation.enums.ApiRequestType;
+import com.yiciyuan.annotation.enums.ApiResponseType;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -28,13 +29,18 @@ public interface UserApi {
 
     @Headers("Content-Type:application/json")
     @POST("/manager/user/login")
-    @ApiParams(paramName = {"username", "password"})
+    @ApiParams(paramName = {"username", "password"}, request = ApiRequestType.APPLICATIONJSON, response = ApiResponseType.JSONObject)
     Single<ResponseBody> login(@Body RequestBody body);
 
     @Headers("Content-Type:application/json")
     @POST("/manager/user/login")
-    @ApiParams(paramName = {"username", "password"},result = ApiResultType.Array)
+    @ApiParams(request = ApiRequestType.FORMDATA, response = ApiResponseType.JSONArray)
     Single<ResponseBody> loginWeixin(@Body RequestBody body);
+
+    @FormUrlEncoded
+    @POST("api/app/common/checkUpload.json")
+    @ApiParams(request = ApiRequestType.FORMDATA, response = ApiResponseType.JSONObject)
+    Single<ResponseBody> checkUpload(@Field("appType") int appType, @Field("versionCode") String versionCode, @Field("device") int device, @Field("userId") int userId);
 
     @FormUrlEncoded
     @POST("api/restPwd")

@@ -67,6 +67,6 @@ dependencies {
     api httpDependencies.rxlifecycle
 
     def toolDependencies = rootProject.ext.toolDependencies
-    api toolDependencies.ycy_annotation
+//    api toolDependencies.ycy_annotation
     api toolDependencies.butterKnife
 }
