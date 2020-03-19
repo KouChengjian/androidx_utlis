@@ -13,11 +13,8 @@ import com.yiciyuan.kernel.utils.AppManager;
 import com.yiciyuan.kernel.utils.AppStartUtil;
 import com.yiciyuan.kernel.utils.DoubleClickUtil;
 import com.yiciyuan.kernel.utils.Toastor;
-import com.yiciyuan.kernel.widget.LoadingProgressDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
 /**
@@ -28,26 +25,21 @@ import butterknife.Unbinder;
  */
 public abstract class BaseActivity extends AppCompatActivity implements IView, View.OnClickListener {
 
-    protected Unbinder unbinder;
-    protected LoadingProgressDialog mProgressDialog;
+
     protected int activityCloseEnterAnimation;
     protected int activityCloseExitAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        create(savedInstanceState); // dagger2注解
+        create(savedInstanceState);
         super.onCreate(savedInstanceState);
         AppManager.get().addActivity(this);
-        if (getLayoutId() != 0 && getLayoutView() == null) {
-            setContentView(getLayoutId());
-        } else if (getLayoutId() == 0 && getLayoutView() != null) {
-            setContentView(getLayoutView());
+        View view = getLayoutView();
+        if (view != null) {
+            setContentView(view);
         } else {
-            throw new RuntimeException("getLayoutId() and getLayoutView() must be empty");
+            throw new RuntimeException("getLayoutView() must be empty");
         }
-
-        unbinder = ButterKnife.bind(this);
-
         TypedArray activityStyle = getTheme().obtainStyledAttributes(new int[]{android.R.attr.windowAnimationStyle});
         int windowAnimationStyleResId = activityStyle.getResourceId(0, 0);
         activityStyle.recycle();
@@ -83,24 +75,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
 
     @Override
     public ProgressDialog showProgressDialog(String msg) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new LoadingProgressDialog(getContext());
-            mProgressDialog.setMessage(msg);
-            mProgressDialog.setCanceledOnTouchOutside(false);
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
-        } else {
-            mProgressDialog.setMessage(msg);
-            mProgressDialog.show();
-        }
-        return mProgressDialog;
+        return null;
     }
 
     @Override
     public void dismissProgressDialog() {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
     }
 
     @Override
@@ -108,6 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
         Toastor.showMsg(msg);
     }
 
+    @Override
     public void showMsg(int resId) {
         Toastor.showMsg(resId);
     }
@@ -116,11 +96,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
      * Dagger2 use in your application module(not used in 'base' module)
      */
     protected abstract void create(Bundle savedInstanceState);
-
-    /**
-     * bind layout resource id
-     */
-    protected abstract int getLayoutId();
 
     /**
      * bind layout resource view
@@ -191,9 +166,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView, V
 
     @Override
     protected void onDestroy() {
-        if (null != unbinder) {
-            unbinder.unbind();
-        }
         AppManager.get().removeActivity(this);
         super.onDestroy();
     }

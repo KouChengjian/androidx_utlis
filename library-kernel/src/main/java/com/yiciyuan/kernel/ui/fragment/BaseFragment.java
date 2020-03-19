@@ -11,11 +11,8 @@ import com.yiciyuan.kernel.ui.IView;
 import com.yiciyuan.kernel.utils.AppStartUtil;
 import com.yiciyuan.kernel.utils.DoubleClickUtil;
 import com.yiciyuan.kernel.utils.Toastor;
-import com.yiciyuan.kernel.widget.LoadingProgressDialog;
 
 import androidx.fragment.app.Fragment;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created with Android Studio.
@@ -26,8 +23,6 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment implements IView, View.OnClickListener {
 
     protected Context mContext;
-    protected Unbinder unbinder;
-    protected LoadingProgressDialog mProgressDialog;
 
     @Override
     public void onAttach(Context context) {
@@ -43,19 +38,17 @@ public abstract class BaseFragment extends Fragment implements IView, View.OnCli
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (getLayoutId() != 0 && getLayoutView() == null) {
-            return inflater.inflate(getLayoutId(), container, false);
-        } else if (getLayoutId() == 0 && getLayoutView() != null) {
-            return getLayoutView();
+        View view = getLayoutView();
+        if (view != null) {
+            return view;
         } else {
-            throw new RuntimeException("getLayoutId() and getLayoutView() must be empty");
+            throw new RuntimeException("getLayoutView() must be empty");
         }
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
         created(savedInstanceState);
         bindEvent();
     }
@@ -74,24 +67,11 @@ public abstract class BaseFragment extends Fragment implements IView, View.OnCli
 
     @Override
     public ProgressDialog showProgressDialog(String msg) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new LoadingProgressDialog(getContext());
-            mProgressDialog.setMessage(msg);
-            mProgressDialog.setCanceledOnTouchOutside(false);
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
-        } else {
-            mProgressDialog.setMessage(msg);
-            mProgressDialog.show();
-        }
-        return mProgressDialog;
+        return null;
     }
 
     @Override
     public void dismissProgressDialog() {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
     }
 
     @Override
@@ -147,9 +127,6 @@ public abstract class BaseFragment extends Fragment implements IView, View.OnCli
 
     @Override
     public void onDestroyView() {
-        if (null != unbinder) {
-            unbinder.unbind();
-        }
         super.onDestroyView();
     }
 }

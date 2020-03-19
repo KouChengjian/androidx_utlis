@@ -7,9 +7,7 @@ import androidx.lifecycle.Lifecycle;
 
 
 /**
- * Author  SLAN
- * <br>
- * 2018/9/5 20:18
+ * Created with Android Studio.
  */
 public interface BaseView extends IView {
     LifecycleProvider<Lifecycle.Event> getLifeCycleProvider();

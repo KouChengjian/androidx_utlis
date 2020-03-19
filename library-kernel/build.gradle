@@ -64,9 +64,8 @@ dependencies {
     api androidDependencies.recyclerview
 
     def httpDependencies = rootProject.ext.httpDependencies
-    api httpDependencies.rxlifecycle
+    api httpDependencies.rxlifecycle // okhttp请求生命周期
 
     def toolDependencies = rootProject.ext.toolDependencies
 //    api toolDependencies.ycy_annotation
-    api toolDependencies.butterKnife
 }

@@ -19,4 +19,6 @@ public interface IView {
     void dismissProgressDialog();
 
     void showMsg(String msg);
+
+    void showMsg(int resId);
 }
