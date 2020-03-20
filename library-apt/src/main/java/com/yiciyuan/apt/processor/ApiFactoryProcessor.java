@@ -64,12 +64,11 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
         }
         mIsNewCode = true;
         mList.add(currentType);
-        try {
-            printMessage(Diagnostic.Kind.NOTE, Utils.getPackageName(mElements, element), "");
-        } catch (Exception e) {
-
-        }
-
+//        try {
+//            printMessage(Diagnostic.Kind.NOTE, Utils.getPackageName(mElements, element), "");
+//        } catch (Exception e) {
+//
+//        }
         for (Element childElement : element.getEnclosedElements()) {
             ApiFactoryModel apiFactoryModel = new ApiFactoryModel();
             apiFactoryModel.setElement(element);
