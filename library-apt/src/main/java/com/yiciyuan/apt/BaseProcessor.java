@@ -41,7 +41,6 @@ public abstract class BaseProcessor<T extends Annotation> extends AbstractProces
             return false;
         }
         printMessage(Kind.NOTE, "------------------------- %s START -------------------------", mSupportedAnnotation.getName());
-//        test();
         Set<TypeElement> allTypeElements = new HashSet<>();
         for (Iterator<? extends TypeElement> iterator = annotations.iterator(); iterator.hasNext(); ) {
             TypeElement typeElement = iterator.next();
@@ -79,10 +78,6 @@ public abstract class BaseProcessor<T extends Annotation> extends AbstractProces
     @Override
     public SourceVersion getSupportedSourceVersion() {
         return SourceVersion.latestSupported();
-    }
-
-    protected void test(){
-
     }
 
     protected abstract void handleEach(TypeElement element, T annotation);

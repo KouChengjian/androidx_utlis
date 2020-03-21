@@ -62,22 +62,6 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
     }
 
     @Override
-    protected void test() {
-        createEmpty();
-        createHttpResult();
-        createHttpListResult();
-        createTaker();
-        createJsonParse();
-
-        createApiException();
-        createResultCode();
-
-        createResultTransformer();
-        createResultJsonTransformer();
-        createResultJsonListTransformer();
-    }
-
-    @Override
     protected void handleEach(TypeElement element, ApiFactory annotation) {
         ClassName currentType = ClassName.get(element);
 
@@ -92,8 +76,8 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
             apiFactoryModel.setElement(element);
             apiFactoryModel.setAnnotationValue(annotation.value());
             apiFactoryModel.setChildElement(childElement);
-            ExecutableElement executableElement = (ExecutableElement) childElement;
-            printMessage(Diagnostic.Kind.NOTE, executableElement.getReturnType().toString() + " " + executableElement.toString(), "");
+//            ExecutableElement executableElement = (ExecutableElement) childElement;
+//            printMessage(Diagnostic.Kind.NOTE, executableElement.getReturnType().toString() + " " + executableElement.toString(), "");
 //            printMessage(Diagnostic.Kind.NOTE, executableElement.getReturnType().toString(), "");
 //            for (AnnotationMirror annotationMirror :TypeName.get(executableElement.getReturnType()).getClass().getSimpleName()){
 //                printMessage(Diagnostic.Kind.NOTE, annotationMirror.toString(), "");
@@ -105,7 +89,7 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
     @Override
     protected boolean processComplete() {
         if (mIsNewCode) {
-//            grenCode();
+            grenCode();
             return true;
         }
         return false;
@@ -928,7 +912,7 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
 
     private void createEmpty() {
         String CLASS_NAME = "Empty";
-        TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ 全局路由器 此类由apt自动生成");
+        TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC).addJavadoc("@ 全局路由器 此类由apt自动生成");
 
         JavaFile javaFile = JavaFile.builder(Utils.PackageName + ".net.result", tb.build()).build();// 生成源代码
         createFile(javaFile);

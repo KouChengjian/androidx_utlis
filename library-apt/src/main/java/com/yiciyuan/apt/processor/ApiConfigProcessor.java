@@ -70,9 +70,9 @@ public class ApiConfigProcessor extends BaseProcessor<ApiConfig> {
     @Override
     protected boolean processComplete() {
         if (mIsNewCode) {
-            createEmpty();
-            createHttpResult();
-            createHttpListResult();
+//            createEmpty();
+//            createHttpResult();
+//            createHttpListResult();
             createTaker();
             createJsonParse();
 
@@ -223,7 +223,8 @@ public class ApiConfigProcessor extends BaseProcessor<ApiConfig> {
         ClassName singleTransformer = ClassName.get("io.reactivex", "SingleTransformer");
         ClassName singleSource = ClassName.get("io.reactivex", "SingleSource");
         ClassName single = ClassName.get("io.reactivex", "Single");
-        ClassName httpResult = ClassName.get(Utils.PackageName + ".net.result", "HttpResult");
+//        ClassName httpResult = ClassName.get(Utils.PackageName + ".net.result", "HttpResult");
+        ClassName httpResult = Utils.getType(mApiConfigModel.getElement().toString());
         ClassName taker = ClassName.get(Utils.PackageName + ".net.result", "Taker");
         ClassName apiException = ClassName.get(Utils.PackageName + ".net.exception", "ApiException");
         ClassName resultCode = ClassName.get(Utils.PackageName + ".net.exception", "ResultCode");
