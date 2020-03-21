@@ -67,5 +67,5 @@ dependencies {
     api httpDependencies.rxlifecycle // okhttp请求生命周期
 
     def toolDependencies = rootProject.ext.toolDependencies
-    api toolDependencies.ycy_annotation
+//    api toolDependencies.ycy_annotation
 }

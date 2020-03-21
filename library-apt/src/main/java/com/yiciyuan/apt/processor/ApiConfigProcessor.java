@@ -38,7 +38,7 @@ public class ApiConfigProcessor extends BaseProcessor<ApiConfig> {
 
     private static final Class<ApiConfig> ApiConfig = ApiConfig.class;
     private List<ClassName> mList = new ArrayList<>();
-    ApiConfigModel mApiConfigModel;
+    private ApiConfigModel mApiConfigModel;
     private boolean mIsNewCode = false;
 
     public ApiConfigProcessor() {
@@ -139,7 +139,7 @@ public class ApiConfigProcessor extends BaseProcessor<ApiConfig> {
                                 + ".observeOn($T.mainThread())"
                         , ClassName.get("io.reactivex.schedulers", "Schedulers")
                         , ClassName.get("io.reactivex.functions", "Function")
-                        ,JSONObject
+                        , JSONObject
                         , jsonParse
                         , mApiConfigModel.getResultCode()
                         , mApiConfigModel.getResultMsg()
@@ -256,7 +256,7 @@ public class ApiConfigProcessor extends BaseProcessor<ApiConfig> {
                                 + ".flatMap(($T<HttpResult<T>, SingleSource<Taker<T>>>) result -> {"
                                 + "int code = result." + mApiConfigModel.getResultCode() + ";"
                                 + "if (code == $T.SUCCESS) {"
-                                + "return Single.just(Taker.ofNullable(result.data));"
+                                + "return Single.just(Taker.ofNullable(result." + mApiConfigModel.getResultData() + "));"
                                 + "} else {"
                                 + "return Single.error(new $T(result." + mApiConfigModel.getResultCode() + ",  result." + mApiConfigModel.getResultMsg() + "));"
                                 + "}"

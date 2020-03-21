@@ -5,13 +5,13 @@ import javax.lang.model.element.TypeElement;
 public class ApiConfigModel {
 
     private TypeElement element; // com.example.kernel.net.api.UserApi
-    private int resultSucceed;
-    private String resultCode;
-    private String resultMsg;
-    private String resultData;
-    private String resultListTotal;
-    private String resultListPages;
-    private String resultListData;
+    private int resultSucceed = 200;
+    private String resultCode = "Code";
+    private String resultMsg = "Msg";
+    private String resultData = "Data";
+    private String resultListTotal = "Total";
+    private String resultListPages = "Pages";
+    private String resultListData = "Data";
 
     public TypeElement getElement() {
         return element;

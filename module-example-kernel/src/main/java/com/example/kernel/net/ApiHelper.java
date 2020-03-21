@@ -1,7 +1,6 @@
 package com.example.kernel.net;
 
 import com.example.kernel.conf.AppConfig;
-import com.example.kernel.net.api.CommonApi;
 import com.example.kernel.net.api.UserApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +23,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+//@ApiConfig
 public class ApiHelper {
 
     private final int CONNECT_TIMEOUT = 10;
@@ -32,7 +32,7 @@ public class ApiHelper {
 
     private Retrofit retrofit;
     private UserApi userApi;
-    private CommonApi commonApi;
+//    private CommonApi commonApi;
 
     private static class SingletonHolder {
         private static final ApiHelper INSTANCE = new ApiHelper();
@@ -68,7 +68,7 @@ public class ApiHelper {
                 .build();
 
         userApi = createApi(UserApi.class);
-        commonApi = createApi(CommonApi.class);
+//        commonApi = createApi(CommonApi.class);
     }
 
     private <T> T createApi(Class<T> tClass) {
@@ -94,9 +94,9 @@ public class ApiHelper {
         return userApi;
     }
 
-    public CommonApi getCommonApi() {
-        return commonApi;
-    }
+//    public CommonApi getCommonApi() {
+//        return commonApi;
+//    }
 
     public RequestBody createRequestBody(Map map) {
         JSONObject jsonObject = mapToJson(map);

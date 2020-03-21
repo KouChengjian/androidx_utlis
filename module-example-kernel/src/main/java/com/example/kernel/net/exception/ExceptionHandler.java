@@ -5,6 +5,7 @@ import android.util.Log;
 import android.util.MalformedJsonException;
 
 import com.google.gson.JsonParseException;
+//import com.yiciyuan.apt.net.exception.ApiException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,9 +83,9 @@ public enum ExceptionHandler {
 //        }
 
         // 和服务器约定的异常
-        if (throwable instanceof ApiException) {
-            return throwable.getMessage();
-        }
+//        if (throwable instanceof ApiException) {
+//            return throwable.getMessage();
+//        }
 
         // 未知错误， 先抛出去，以后一个个抓取
         return NETWORK_EXCEPTION;
@@ -94,9 +95,9 @@ public enum ExceptionHandler {
      * 将异常转换成Toast提示
      */
     public int transToCode(Throwable throwable) {
-        if (throwable instanceof ApiException) {
-            return ((ApiException) throwable).getCode();
-        }
+//        if (throwable instanceof ApiException) {
+//            return ((ApiException) throwable).getCode();
+//        }
         return -1000;
     }
 
