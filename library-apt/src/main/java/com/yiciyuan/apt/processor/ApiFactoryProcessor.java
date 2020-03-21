@@ -159,7 +159,6 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
 
         ClassName Taker = ClassName.get(Utils.PackageName + ".net.result", "Taker");
 
-
         String CLASS_NAME = "ApiFactory";
         TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ 全局路由器 此类由apt自动生成");
 
@@ -211,7 +210,6 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
             }
 
             // 返回内容
-            printMessage(Diagnostic.Kind.NOTE, executableElement.getReturnType().toString(), "================");
             String returnType = TypeName.get(executableElement.getReturnType()).toString();
             if (returnType.contains("HttpResult")) {
                 methodBuilder.returns(getHttpResultReturn(returnType));

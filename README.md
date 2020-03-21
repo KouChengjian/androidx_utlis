@@ -26,4 +26,6 @@ viewbinding
 1、移除butterknife
 2、移除widget
 3、添加getLayoutInflater()
+#### 1.0.3
+1、移除注解依赖
 

@@ -1,11 +1,10 @@
 //rootProject.name='My Application'
 
-include ':library-annotation'
-include ':library-apt'
+//include ':library-annotation'
+//include ':library-apt'
 //include ':library-core' // 核心代码一  选择其中一个就可以了
-include ':library-kernel' // 核心代码二
+//include ':library-kernel' // 核心代码二
 //include ':library-utils'
 //include ':library-widget'
 //include ':module_example'
 include ':module-example-kernel'
-
