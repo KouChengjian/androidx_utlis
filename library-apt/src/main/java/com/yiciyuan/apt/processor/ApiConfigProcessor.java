@@ -82,9 +82,243 @@ public class ApiConfigProcessor extends BaseProcessor<ApiConfig> {
             createResultTransformer();
             createResultJsonTransformer();
             createResultJsonListTransformer();
+
+            createLifecycleTransformer();
+            createDialogTransformer();
+            createLifeAndDialog();
             return true;
         }
         return false;
+    }
+
+    private void createLifeAndDialog() {
+        ClassName BaseView = ClassName.get("com.yiciyuan.kernel.ui.base", "BaseView");
+        ClassName DialogTransformer = ClassName.get(Utils.PackageName + ".net.transformer", "DialogTransformer");
+        ClassName LifecycleTransformer = ClassName.get(Utils.PackageName + ".net.transformer", "LifecycleTransformer");
+        ClassName SingleTransformer = ClassName.get("io.reactivex", "SingleTransformer");
+        ClassName SingleSource = ClassName.get("io.reactivex", "SingleSource");
+        ClassName Single = ClassName.get("io.reactivex", "Single");
+
+        // SingleTransformer<T, T>
+        ParameterizedTypeName parameterizedSingleTransformer = ParameterizedTypeName.get(SingleTransformer, TypeVariableName.get("T"), TypeVariableName.get("T"));
+        // SingleSource<T>
+        ParameterizedTypeName parameterizedSingleSource = ParameterizedTypeName.get(SingleSource, TypeVariableName.get("T"));
+        // Single<T>
+        ParameterizedTypeName parameterizedSingle = ParameterizedTypeName.get(Single, TypeVariableName.get("T"));
+
+        String CLASS_NAME = "LifeAndDialog";
+        TypeSpec.Builder tb = classBuilder(CLASS_NAME)
+                .addModifiers(PUBLIC)
+                .addTypeVariable(TypeVariableName.get("T"))
+                .addSuperinterface(parameterizedSingleTransformer)
+                .addJavadoc("@ 全局路由器 此类由apt自动生成");
+
+        FieldSpec baseViewField = FieldSpec.builder(BaseView, "baseView")
+                .addModifiers(PRIVATE)
+                .build();
+        tb.addField(baseViewField);
+
+        FieldSpec msgField = FieldSpec.builder(String.class, "msg")
+                .addModifiers(PRIVATE)
+                .build();
+        tb.addField(msgField);
+
+        MethodSpec.Builder initMethodBuilder1 = MethodSpec.constructorBuilder()
+                .addModifiers(PUBLIC)
+                .addParameter(BaseView, "baseView")
+                .addStatement("this(baseView, null)");
+        tb.addMethod(initMethodBuilder1.build());
+
+        MethodSpec.Builder initMethodBuilder2 = MethodSpec.constructorBuilder()
+                .addModifiers(PUBLIC)
+                .addParameter(BaseView, "baseView")
+                .addParameter(String.class, "msg")
+                .addStatement("this.baseView = baseView")
+                .addStatement("this.msg = msg");
+        tb.addMethod(initMethodBuilder2.build());
+
+        MethodSpec.Builder applyMethodBuilder1 = MethodSpec.methodBuilder("apply")
+                .addJavadoc("@此方法由apt自动生成")
+                .addModifiers(PUBLIC)
+                .addAnnotation(Override.class)
+                .returns(parameterizedSingleSource)
+                .addParameter(parameterizedSingle, "upstream")
+                .addStatement("return upstream"
+                                + ".compose(new $T<>(baseView ,msg))"
+                                + ".compose(new $T<>(baseView))"
+                        , DialogTransformer
+                        , LifecycleTransformer
+                );
+        tb.addMethod(applyMethodBuilder1.build());
+
+        JavaFile javaFile = JavaFile.builder(Utils.PackageName + ".net.transformer", tb.build()).build();// 生成源代码
+        createFile(javaFile);
+    }
+
+    private void createDialogTransformer() {
+        ClassName BaseView = ClassName.get("com.yiciyuan.kernel.ui.base", "BaseView");
+        ClassName TextUtils = ClassName.get("android.text", "TextUtils");
+        ClassName SingleTransformer = ClassName.get("io.reactivex", "SingleTransformer");
+        ClassName CompletableTransformer = ClassName.get("io.reactivex", "CompletableTransformer");
+        ClassName SingleSource = ClassName.get("io.reactivex", "SingleSource");
+        ClassName Single = ClassName.get("io.reactivex", "Single");
+        ClassName Completable = ClassName.get("io.reactivex", "Completable");
+        ClassName CompletableSource = ClassName.get("io.reactivex", "CompletableSource");
+
+        // SingleTransformer<T, T>
+        ParameterizedTypeName parameterizedSingleTransformer = ParameterizedTypeName.get(SingleTransformer, TypeVariableName.get("T"), TypeVariableName.get("T"));
+        // SingleSource<T>
+        ParameterizedTypeName parameterizedSingleSource = ParameterizedTypeName.get(SingleSource, TypeVariableName.get("T"));
+        // Single<T>
+        ParameterizedTypeName parameterizedSingle = ParameterizedTypeName.get(Single, TypeVariableName.get("T"));
+
+        String CLASS_NAME = "DialogTransformer";
+        TypeSpec.Builder tb = classBuilder(CLASS_NAME)
+                .addModifiers(PUBLIC)
+                .addTypeVariable(TypeVariableName.get("T"))
+                .addSuperinterface(parameterizedSingleTransformer)
+                .addSuperinterface(CompletableTransformer)
+                .addJavadoc("@ 全局路由器 此类由apt自动生成");
+
+        FieldSpec baseViewField = FieldSpec.builder(BaseView, "baseView")
+                .addModifiers(PRIVATE)
+                .build();
+        tb.addField(baseViewField);
+
+        FieldSpec msgField = FieldSpec.builder(String.class, "msg")
+                .addModifiers(PRIVATE)
+                .build();
+        tb.addField(msgField);
+
+        MethodSpec.Builder initMethodBuilder1 = MethodSpec.constructorBuilder()
+                .addModifiers(PUBLIC)
+                .addParameter(BaseView, "baseView")
+                .addStatement("this(baseView, null)");
+        tb.addMethod(initMethodBuilder1.build());
+
+        MethodSpec.Builder initMethodBuilder2 = MethodSpec.constructorBuilder()
+                .addModifiers(PUBLIC)
+                .addParameter(BaseView, "baseView")
+                .addParameter(String.class, "msg")
+                .addStatement("this.baseView = baseView")
+                .addStatement("this.msg = msg");
+        tb.addMethod(initMethodBuilder2.build());
+
+        MethodSpec.Builder applyMethodBuilder1 = MethodSpec.methodBuilder("apply")
+                .addJavadoc("@此方法由apt自动生成")
+                .addModifiers(PUBLIC)
+                .addAnnotation(Override.class)
+                .returns(parameterizedSingleSource)
+                .addParameter(parameterizedSingle, "upstream")
+                .addStatement("return upstream"
+                                + ".doOnSubscribe(disposable -> {"
+                                + "if ($T.isEmpty(msg)){"
+                                + "baseView.showProgressDialog(null);"
+                                + "}else{"
+                                + "baseView.showProgressDialog(msg);"
+                                + "}})"
+                                + ".doFinally(() -> baseView.dismissProgressDialog())"
+                        , TextUtils
+                );
+        tb.addMethod(applyMethodBuilder1.build());
+
+        MethodSpec.Builder applyMethodBuilder2 = MethodSpec.methodBuilder("apply")
+                .addJavadoc("@此方法由apt自动生成")
+                .addModifiers(PUBLIC)
+                .addAnnotation(Override.class)
+                .returns(CompletableSource)
+                .addParameter(Completable, "upstream")
+                .addStatement("return upstream"
+                                + ".doOnSubscribe(disposable -> {"
+                                + "if ($T.isEmpty(msg)){"
+                                + "baseView.showProgressDialog(null);"
+                                + "}else{"
+                                + "baseView.showProgressDialog(msg);"
+                                + "}})"
+                                + ".doFinally(() -> baseView.dismissProgressDialog())"
+                        , TextUtils
+                );
+        tb.addMethod(applyMethodBuilder2.build());
+
+        JavaFile javaFile = JavaFile.builder(Utils.PackageName + ".net.transformer", tb.build()).build();// 生成源代码
+        createFile(javaFile);
+    }
+
+    private void createLifecycleTransformer() {
+        ClassName BaseView = ClassName.get("com.yiciyuan.kernel.ui.base", "BaseView");
+        ClassName Lifecycle = ClassName.get("androidx.lifecycle", "Lifecycle");
+        ClassName Lifecycle_Event = ClassName.get("androidx.lifecycle", "Lifecycle.Event");
+        ClassName SingleTransformer = ClassName.get("io.reactivex", "SingleTransformer");
+        ClassName CompletableTransformer = ClassName.get("io.reactivex", "CompletableTransformer");
+        ClassName SingleSource = ClassName.get("io.reactivex", "SingleSource");
+        ClassName Single = ClassName.get("io.reactivex", "Single");
+        ClassName Completable = ClassName.get("io.reactivex", "Completable");
+        ClassName CompletableSource = ClassName.get("io.reactivex", "CompletableSource");
+
+        // SingleTransformer<T, T>
+        ParameterizedTypeName parameterizedSingleTransformer = ParameterizedTypeName.get(SingleTransformer, TypeVariableName.get("T"), TypeVariableName.get("T"));
+        // SingleSource<T>
+        ParameterizedTypeName parameterizedSingleSource = ParameterizedTypeName.get(SingleSource, TypeVariableName.get("T"));
+        // Single<T>
+        ParameterizedTypeName parameterizedSingle = ParameterizedTypeName.get(Single, TypeVariableName.get("T"));
+
+        String CLASS_NAME = "LifecycleTransformer";
+        TypeSpec.Builder tb = classBuilder(CLASS_NAME)
+                .addModifiers(PUBLIC)
+                .addTypeVariable(TypeVariableName.get("T"))
+                .addSuperinterface(parameterizedSingleTransformer)
+                .addSuperinterface(CompletableTransformer)
+                .addJavadoc("@ 全局路由器 此类由apt自动生成");
+
+        FieldSpec baseViewField = FieldSpec.builder(BaseView, "view")
+                .addModifiers(PRIVATE)
+                .build();
+        tb.addField(baseViewField);
+
+        FieldSpec lifecycleField = FieldSpec.builder(Lifecycle, "lifecycle")
+                .addModifiers(PRIVATE)
+                .build();
+        tb.addField(lifecycleField);
+
+        FieldSpec eventField = FieldSpec.builder(Lifecycle_Event, "event")
+                .addModifiers(PRIVATE)
+                .build();
+        tb.addField(eventField);
+
+        MethodSpec.Builder initMethodBuilder1 = MethodSpec.constructorBuilder()
+                .addModifiers(PUBLIC)
+                .addParameter(BaseView, "view")
+                .addStatement("this(view, Lifecycle.Event.ON_DESTROY)");
+        tb.addMethod(initMethodBuilder1.build());
+
+        MethodSpec.Builder initMethodBuilder2 = MethodSpec.constructorBuilder()
+                .addModifiers(PUBLIC)
+                .addParameter(BaseView, "view")
+                .addParameter(Lifecycle_Event, "event")
+                .addStatement("this.view = view")
+                .addStatement("this.event = event");
+        tb.addMethod(initMethodBuilder2.build());
+
+        MethodSpec.Builder applyMethodBuilder1 = MethodSpec.methodBuilder("apply")
+                .addJavadoc("@此方法由apt自动生成")
+                .addModifiers(PUBLIC)
+                .addAnnotation(Override.class)
+                .returns(parameterizedSingleSource)
+                .addParameter(parameterizedSingle, "upstream")
+                .addStatement("return upstream.compose(view.getLifeCycleProvider().bindUntilEvent(event))");
+        tb.addMethod(applyMethodBuilder1.build());
+
+        MethodSpec.Builder applyMethodBuilder2 = MethodSpec.methodBuilder("apply")
+                .addJavadoc("@此方法由apt自动生成")
+                .addModifiers(PUBLIC)
+                .addAnnotation(Override.class)
+                .returns(CompletableSource)
+                .addParameter(Completable, "upstream")
+                .addStatement("return upstream.compose(view.getLifeCycleProvider().bindUntilEvent(event))");
+        tb.addMethod(applyMethodBuilder2.build());
+
+        JavaFile javaFile = JavaFile.builder(Utils.PackageName + ".net.transformer", tb.build()).build();// 生成源代码
+        createFile(javaFile);
     }
 
     private void createResultJsonListTransformer() {
