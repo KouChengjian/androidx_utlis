@@ -235,47 +235,19 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
                     }
                     methodBuilder.addStatement("$T requestBody = ApiHelper.getInstance().createRequestBody(params)", Utils.getType("okhttp3.RequestBody"));
                 }
-
-                if (apiParams.response() == ApiResponseType.NONE) {
-                    methodBuilder.addStatement(
-                            "return $T.getInstance()" +
-                                    ".get$L().$L($L)" +
-                                    ".compose(new $T<>())" +
-                                    ".map($T::get)"
-                            , ApiHelper
-                            , apiFactoryModel.getElement().getSimpleName().toString()
-                            , apiFactoryModel.getChildElement().getSimpleName().toString()
-                            , paramsString.substring(0, paramsString.length() - 1)
-                            , ResultTransformer
-                            , Taker);
-                } else {
-                    methodBuilder.addStatement(
-                            "return $T.getInstance()" +
-                                    ".get$L().$L($L)" +
-                                    ".compose(new $T<>())" +
-                                    ".map($T::get)"
-                            , ApiHelper
-                            , apiFactoryModel.getElement().getSimpleName().toString()
-                            , apiFactoryModel.getChildElement().getSimpleName().toString()
-                            , apiParams.request() == ApiRequestType.APPLICATIONJSON ? "requestBody" : paramsString.substring(0, paramsString.length() - 1)
-                            , apiParams.response() == ApiResponseType.JSONObject ? ResultJsonTransformer : ResultJsonListTransformer
-                            , Taker);
-
-                }
-            } else {
-                methodBuilder.addStatement(
-                        "return $T.getInstance()" +
-                                ".get$L().$L($L)" +
-                                ".compose(new $T<>())" +
-                                ".map($T::get)"
-                        , ApiHelper
-                        , apiFactoryModel.getElement().getSimpleName().toString()
-                        , apiFactoryModel.getChildElement().getSimpleName().toString()
-                        , paramsString.substring(0, paramsString.length() - 1)
-                        , ResultTransformer
-                        , Taker);
             }
 
+            methodBuilder.addStatement(
+                    "return $T.getInstance()" +
+                            ".get$L().$L($L)" +
+                            ".compose(new $T<>())" +
+                            ".map($T::get)"
+                    , ApiHelper
+                    , apiFactoryModel.getElement().getSimpleName().toString()
+                    , apiFactoryModel.getChildElement().getSimpleName().toString()
+                    , apiParams == null ? paramsString.substring(0, paramsString.length() - 1) : apiParams.request() == ApiRequestType.APPLICATIONJSON ? "requestBody" : paramsString.substring(0, paramsString.length() - 1)
+                    , apiParams == null ? ResultTransformer : apiParams.response() == ApiResponseType.JSONObject ? ResultJsonTransformer : apiParams.response() == ApiResponseType.JSONArray ? ResultJsonListTransformer : ResultTransformer
+                    , Taker);
 
             tb.addMethod(methodBuilder.build());
         }
