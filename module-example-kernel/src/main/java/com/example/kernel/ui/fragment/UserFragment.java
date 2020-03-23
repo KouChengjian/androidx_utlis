@@ -1,32 +1,32 @@
 package com.example.kernel.ui.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 
-import com.example.kernel.databinding.FragmentHomeBinding;
-import com.example.kernel.ui.activity.RecyclerTestActivity;
+import com.example.kernel.R;
+import com.example.kernel.databinding.FragmentUserBinding;
 import com.example.kernel.ui.base.BaseDaggerFragment;
-import com.example.kernel.ui.contract.HomeContract;
-import com.example.kernel.ui.presenter.HomePresenter;
+import com.example.kernel.ui.contract.UserContract;
+import com.example.kernel.ui.presenter.UserPresenter;
+import com.yiciyuan.kernel.ui.fragment.BaseMvpFragment;
 
 
 /**
  * Created with Android Studio.
  * User kcj
- * Date 2020/03/14
+ * Date 2020/03/23
  * Description: 自动生成
  */
-public class HomeFragment extends BaseDaggerFragment<HomePresenter, FragmentHomeBinding> implements HomeContract.View {
+public class UserFragment extends BaseDaggerFragment<UserPresenter, FragmentUserBinding> implements UserContract.View {
 
-    public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
+    public static UserFragment newInstance() {
+        UserFragment fragment = new UserFragment();
         return fragment;
     }
 
     @Override
     protected View getLayoutView() {
-        viewBinding = FragmentHomeBinding.inflate(getInflater());
+        viewBinding = FragmentUserBinding.inflate(getInflater());
         return viewBinding.getRoot();
     }
 
@@ -38,9 +38,6 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter, FragmentHome
     @Override
     protected void bindEvent() {
         super.bindEvent();
-        viewBinding.btnRecycler.setOnClickListener(v -> {
-            startAnimActivity(RecyclerTestActivity.class);
-        });
     }
 
     @Override

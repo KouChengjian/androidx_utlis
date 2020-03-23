@@ -6,7 +6,7 @@ import com.yiciyuan.annotation.apt.Router;
 import androidx.appcompat.app.AppCompatActivity;
 
 @Router("dasdsadsas")
-public class RecyclerActivity extends AppCompatActivity {
+public class RecyclerTestActivity extends AppCompatActivity {
 
 //    private int pager = 1;
 //    RefreshRecyclerView refreshRecyclerView;

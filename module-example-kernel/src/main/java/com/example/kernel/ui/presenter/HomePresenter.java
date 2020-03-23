@@ -12,7 +12,7 @@ public class HomePresenter implements HomeContract.Presenter{
 
     private HomeContract.View view;
 
-    HomePresenter() {
+    public HomePresenter() {
     }
 
     @Override

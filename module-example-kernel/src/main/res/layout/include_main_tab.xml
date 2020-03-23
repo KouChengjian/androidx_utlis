@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_main_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableTop="@drawable/selector_main_tab_home"
+            android:drawablePadding="3dp"
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip"
+            android:scaleType="matrix"
+            android:stateListAnimator="@null"
+            android:text="上医帮手"
+            android:textColor="@drawable/selector_textview_color_one"
+            android:textSize="11dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_main_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableTop="@drawable/selector_main_tab_message"
+            android:drawablePadding="3dp"
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip"
+            android:scaleType="matrix"
+            android:stateListAnimator="@null"
+            android:text="消息"
+            android:textColor="@drawable/selector_textview_color_one"
+            android:textSize="11dp" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_conversation_unread_num"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="16dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="2dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:background="@drawable/bg_msg_point_1"-->
+<!--            android:gravity="center"-->
+<!--            android:minWidth="16dp"-->
+<!--            android:text="0"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="11sp"-->
+<!--            android:visibility="gone" />-->
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_main_mine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableTop="@drawable/selector_main_tab_mine"
+            android:drawablePadding="3dp"
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip"
+            android:scaleType="matrix"
+            android:stateListAnimator="@null"
+            android:text="我的"
+            android:textColor="@drawable/selector_textview_color_one"
+            android:textSize="11dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
