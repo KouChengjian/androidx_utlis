@@ -77,7 +77,7 @@ dependencies {
 
 //    implementation project(':library-annotation')
 //    implementation project(':library-kernel')
-    implementation project(':library-widget')
+//    implementation project(':library-widget')
 //    annotationProcessor project(':library-apt')
 
     def httpDependencies = rootProject.ext.httpDependencies
@@ -92,7 +92,7 @@ dependencies {
 
     def toolDependencies = rootProject.ext.toolDependencies
     implementation toolDependencies.ycy_kernel
+    implementation toolDependencies.ycy_widget
     implementation toolDependencies.ycy_annotation
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor toolDependencies.ycy_apt
 }

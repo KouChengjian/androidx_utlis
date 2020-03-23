@@ -199,7 +199,7 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         stopRefreshOrLoadMore(layoutStatus);
     }
 
-    private void stopRefreshOrLoadMore(LayoutStatus layoutStatus) {
+    public void stopRefreshOrLoadMore(LayoutStatus layoutStatus) {
         if (isRefreshing()) {
             finishRefresh();
         } else if (isLoading()) {
@@ -293,11 +293,10 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         });
     }
 
-
     @Override
     public void onReload() {
         if (onReloadListener != null) {
-
+            onReloadListener.onReload();
         }
     }
 

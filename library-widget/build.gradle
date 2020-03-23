@@ -54,7 +54,7 @@ dependencies {
     api androidDependencies.appcompat
     api androidDependencies.recyclerview
     def uiDependencies = rootProject.ext.uiDependencies
-    implementation uiDependencies.refresh_core
-    implementation uiDependencies.refresh_footer
-    implementation uiDependencies.refresh_header
+    api uiDependencies.refresh_core
+    api uiDependencies.refresh_footer
+    api uiDependencies.refresh_header
 }
