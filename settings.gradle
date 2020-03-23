@@ -7,4 +7,4 @@
 //include ':library-utils'
 //include ':library-widget'
 //include ':module_example'
-include ':module-example-kernel'
+//include ':module-example-kernel'
