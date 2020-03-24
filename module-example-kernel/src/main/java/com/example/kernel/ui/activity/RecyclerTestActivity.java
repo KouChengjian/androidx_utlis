@@ -16,6 +16,7 @@ import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.yiciyuan.annotation.apt.Router;
 import com.yiciyuan.widget.recycle.ItemClickSupport;
+import com.yiciyuan.widget.recycle.listener.OnReloadListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,12 @@ public class RecyclerTestActivity extends BaseDaggerActivity<RecyclerTestPresent
                 requestData();
             }
         });
-
+        viewBinding.refreshRecyclerView.setOnReloadListener(new OnReloadListener() {
+            @Override
+            public void onReload() {
+                requestData();
+            }
+        });
         viewBinding.refreshRecyclerView.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
@@ -107,12 +113,11 @@ public class RecyclerTestActivity extends BaseDaggerActivity<RecyclerTestPresent
         }
 
         viewBinding.refreshRecyclerView.notifyDataSetChanged();
+//        viewBinding.refreshRecyclerView.recycleException();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
-
-
 }
