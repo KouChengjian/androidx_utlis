@@ -74,9 +74,13 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
 
     public void showEmpty() {
         this.inflateErrorLayout();
+        mTvTipViewErrorPic.setImageResource(R.mipmap.bg_loading_data_null);
+        mTvTipViewErrorMsg.setText("");
+        mTvTipViewErrorMsg.setVisibility(View.GONE);
         if (mLLTipViewError.getVisibility() == View.GONE) {
             mLLTipViewError.setVisibility(View.VISIBLE);
         }
+
         mReloadButton.setVisibility(View.GONE);
     }
 
@@ -107,6 +111,9 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
 
     public void showNetError() {
         this.inflateErrorLayout();
+        mTvTipViewErrorPic.setImageResource(R.mipmap.bg_loading_no_wifi);
+        mTvTipViewErrorMsg.setText("加载失败，请检查网络");
+        mReloadButton.setText("点击加载");
         if (mLLTipViewError.getVisibility() == View.GONE) {
             mLLTipViewError.setVisibility(View.VISIBLE);
         }

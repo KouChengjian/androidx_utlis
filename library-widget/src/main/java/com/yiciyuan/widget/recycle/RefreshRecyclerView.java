@@ -61,6 +61,10 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         tipLayoutView.setOnReloadClick(this);
     }
 
+    public SmartRefreshLayout getRefreshLayout() {
+        return smartRefreshLayout;
+    }
+
     public LinearLayoutManager initLinearLayoutManager() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -207,7 +211,7 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         }
         if (wrapAdapter.getItemCount() != 0) {
             tipLayoutView.showContent();
-            if (mHeaderView.getVisibility() == View.GONE) {
+            if (mHeaderView != null) {
                 mHeaderView.setVisibility(View.VISIBLE);
             }
             return;
@@ -237,6 +241,12 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         }
     }
 
+    public void recycleException() {
+        finishRefresh();
+        finishLoadMore();
+        tipLayoutView.showNetError();
+    }
+
     public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
         smartRefreshLayout.setOnRefreshListener(onRefreshListener);
     }
@@ -246,6 +256,7 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
     }
 
     public void setOnReloadListener(OnReloadListener onReloadListener) {
+        this.onReloadListener = onReloadListener;
     }
 
     public void addOnItemTouchListener(RecyclerView.OnItemTouchListener onItemTouchListener) {
@@ -321,6 +332,4 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         this.recyclerView.getItemAnimator().setRemoveDuration(0);
         ((SimpleItemAnimator) this.recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
-
-
 }
