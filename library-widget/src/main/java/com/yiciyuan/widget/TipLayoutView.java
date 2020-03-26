@@ -2,6 +2,7 @@ package com.yiciyuan.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
@@ -50,15 +51,6 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
         showLoading();
     }
 
-    public void resetStatus() {
-        if (mLLTipViewError != null) {
-            mLLTipViewError.setVisibility(View.GONE);
-        }
-        if (mLLTipViewLoading != null) {
-            mLLTipViewLoading.setVisibility(View.GONE);
-        }
-    }
-
     public void showContent() {
         if (this.getVisibility() == View.VISIBLE) {
             this.setVisibility(GONE);
@@ -67,6 +59,7 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
 
     public void showLoading() {
         this.inflateLoadingLayout();
+        this.resetLoadingLayout();
         if (mLLTipViewLoading.getVisibility() == View.GONE) {
             mLLTipViewLoading.setVisibility(View.VISIBLE);
         }
@@ -74,13 +67,10 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
 
     public void showEmpty() {
         this.inflateErrorLayout();
+        this.resetErrorLayout();
         mTvTipViewErrorPic.setImageResource(R.mipmap.bg_loading_data_null);
         mTvTipViewErrorMsg.setText("");
         mTvTipViewErrorMsg.setVisibility(View.GONE);
-        if (mLLTipViewError.getVisibility() == View.GONE) {
-            mLLTipViewError.setVisibility(View.VISIBLE);
-        }
-
         mReloadButton.setVisibility(View.GONE);
     }
 
@@ -96,31 +86,29 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
      */
     public void showEmptyOrRefresh(boolean isTop) {
         this.inflateErrorLayout();
+        this.resetErrorLayout();
         if (isTop) {
-//            mLLTipViewError.setGravity(Gravity.CENTER | Gravity.TOP);
-//            mLLTipViewError.setPadding(0, ScreenUtil.dp2px(context, 50), 0, 0);
+            mLLTipViewError.setGravity(Gravity.CENTER | Gravity.TOP);
+            mLLTipViewError.setPadding(0, 100, 0, 0);
         }
         mTvTipViewErrorPic.setImageResource(R.mipmap.bg_loading_data_null);
         mTvTipViewErrorMsg.setText("");
         mTvTipViewErrorMsg.setVisibility(View.GONE);
         mReloadButton.setText("点击加载");
-        if (mLLTipViewError.getVisibility() == View.GONE) {
-            mLLTipViewError.setVisibility(View.VISIBLE);
-        }
     }
 
     public void showNetError() {
         this.inflateErrorLayout();
+        this.resetErrorLayout();
         mTvTipViewErrorPic.setImageResource(R.mipmap.bg_loading_no_wifi);
         mTvTipViewErrorMsg.setText("加载失败，请检查网络");
         mReloadButton.setText("点击加载");
-        if (mLLTipViewError.getVisibility() == View.GONE) {
-            mLLTipViewError.setVisibility(View.VISIBLE);
-        }
+        mReloadButton.setVisibility(View.VISIBLE);
     }
 
     public void showCustomError(int id, String msg, String btn) {
         this.inflateErrorLayout();
+        this.resetErrorLayout();
         mTvTipViewErrorPic.setImageResource(id);
         mTvTipViewErrorMsg.setText(msg);
         if (btn != null && !btn.isEmpty()) {
@@ -128,9 +116,6 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
             mReloadButton.setVisibility(View.VISIBLE);
         } else {
             mReloadButton.setVisibility(View.GONE);
-        }
-        if (mLLTipViewError.getVisibility() == View.GONE) {
-            mLLTipViewError.setVisibility(View.VISIBLE);
         }
     }
 
@@ -141,6 +126,24 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
                 showLoading();
                 mOnReloadClick.onReload();
             }
+        }
+    }
+
+    public void resetLoadingLayout() {
+        if (this.getVisibility() == View.GONE) {
+            this.setVisibility(VISIBLE);
+        }
+        if (mLLTipViewLoading.getVisibility() == View.GONE) {
+            mLLTipViewLoading.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void resetErrorLayout() {
+        if (this.getVisibility() == View.GONE) {
+            this.setVisibility(VISIBLE);
+        }
+        if (mLLTipViewError.getVisibility() == View.GONE) {
+            mLLTipViewError.setVisibility(View.VISIBLE);
         }
     }
 
