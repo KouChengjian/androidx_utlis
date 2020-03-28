@@ -1,6 +1,7 @@
 package com.yiciyuan.widget.recycle;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.FrameLayout;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.yiciyuan.widget.R;
@@ -24,12 +26,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.OnReloadClick {
 
+    private Context context;
     private View mHeaderView;
     private View mFooterView;
     private LayoutInflater layoutInflater;
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
-    private MaterialHeader materialHeader;
     private ClassicsFooter classicsFooter;
     private TipLayoutView tipLayoutView;
     private IWrapAdapter wrapAdapter;
@@ -39,6 +41,8 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
     private int customImage = R.mipmap.bg_loading_no_wifi;
     private String customMessage = "亲，出现异常咯";
     private String customBtn = "刷新看看";
+
+    private int mHeaderProgressColor = 0x000000;
 
     public RefreshRecyclerView(@NonNull Context context) {
         this(context, null);
@@ -50,15 +54,36 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
 
     public RefreshRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RefreshRecyclerView);
+        mHeaderProgressColor = ta.getColor(R.styleable.RefreshRecyclerView_rrv_header_progressColor, mHeaderProgressColor);
+        ta.recycle();
+        initViews();
+        initEvent();
+        initDatas();
+    }
+
+    private void initViews() {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.include_recycler_view, this);
 
         smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
-        materialHeader = view.findViewById(R.id.materialHeader);
         classicsFooter = view.findViewById(R.id.classicsFooter);
         tipLayoutView = view.findViewById(R.id.tip_layout_view);
+        RefreshHeader refreshHeader = smartRefreshLayout.getRefreshHeader();
+        if (refreshHeader instanceof MaterialHeader) {
+            ((MaterialHeader) refreshHeader).setColorSchemeColors(mHeaderProgressColor);
+        }
+
+    }
+
+    private void initEvent() {
         tipLayoutView.setOnReloadClick(this);
+    }
+
+    private void initDatas() {
+
     }
 
     public SmartRefreshLayout getRefreshLayout() {

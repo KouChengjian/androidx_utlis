@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <declare-styleable name="BGButton">
         <!--圆角-->
         <attr name="topLeftRadius" format="dimension" />
@@ -52,5 +51,10 @@
             <enum name="rightBottom" value="2" />
             <enum name="leftBottom" value="3" />
         </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RefreshRecyclerView">
+        <attr name="rrv_header_progressColor" format="color" />
+
     </declare-styleable>
 </resources>

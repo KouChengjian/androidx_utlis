@@ -60,9 +60,6 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
     public void showLoading() {
         this.inflateLoadingLayout();
         this.resetLoadingLayout();
-        if (mLLTipViewLoading.getVisibility() == View.GONE) {
-            mLLTipViewLoading.setVisibility(View.VISIBLE);
-        }
     }
 
     public void showEmpty() {
@@ -136,6 +133,11 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
         if (mLLTipViewLoading.getVisibility() == View.GONE) {
             mLLTipViewLoading.setVisibility(View.VISIBLE);
         }
+        if (mLLTipViewError != null) {
+            if (mLLTipViewError.getVisibility() == View.VISIBLE) {
+                mLLTipViewError.setVisibility(View.GONE);
+            }
+        }
     }
 
     public void resetErrorLayout() {
@@ -144,6 +146,11 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
         }
         if (mLLTipViewError.getVisibility() == View.GONE) {
             mLLTipViewError.setVisibility(View.VISIBLE);
+        }
+        if (mLLTipViewLoading != null) {
+            if (mLLTipViewLoading.getVisibility() == View.VISIBLE) {
+                mLLTipViewLoading.setVisibility(View.GONE);
+            }
         }
     }
 
