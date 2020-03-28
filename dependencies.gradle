@@ -30,10 +30,10 @@ ext {
     ]
 
     toolDependencies = [
-            ycy_kernel              : "com.yiciyuan:kernel:1.0.4",
-            ycy_widget              : "com.yiciyuan:widget:1.0.2",
-            ycy_annotation          : "com.yiciyuan:annotation:1.0.3",
-            ycy_apt                 : "com.yiciyuan:apt:1.0.7",
+            ycy_kernel              : "com.yiciyuan:kernel:latest.release",
+            ycy_widget              : "com.yiciyuan:widget:latest.release",
+            ycy_annotation          : "com.yiciyuan:annotation:latest.release",
+            ycy_apt                 : "com.yiciyuan:apt:latest.release",
             eventbus                : "org.greenrobot:eventbus:3.1.1",
             eventbus_apt            : "org.greenrobot:eventbus-annotation-processor:3.1.1",
             butterKnife             : "com.jakewharton:butterknife:8.4.0",

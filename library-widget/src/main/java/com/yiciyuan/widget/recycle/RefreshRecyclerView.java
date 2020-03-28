@@ -65,6 +65,10 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         return smartRefreshLayout;
     }
 
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
     public LinearLayoutManager initLinearLayoutManager() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -137,7 +141,7 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
 
     public void autoRefresh() {
         smartRefreshLayout.autoRefresh();
-        tipLayoutView.resetStatus();
+        tipLayoutView.showContent();
     }
 
     public void finishRefresh() {
@@ -306,6 +310,7 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
 
     @Override
     public void onReload() {
+        tipLayoutView.showLoading();
         if (onReloadListener != null) {
             onReloadListener.onReload();
         }
