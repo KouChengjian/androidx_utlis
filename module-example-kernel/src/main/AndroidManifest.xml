@@ -9,8 +9,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialSheetFab">
         <activity
+            android:name=".ui.activity.TiplayoutActivity"
+            android:theme="@style/Theme.MaterialSheetFab.SwipeBackLayout" />
+        <activity
             android:name=".ui.activity.RecyclerTestActivity"
-            android:theme="@style/Theme.MaterialSheetFab.SwipeBackLayout"></activity>
+            android:theme="@style/Theme.MaterialSheetFab.SwipeBackLayout" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:theme="@style/Theme.MaterialSheetFab.SwipeBackLayout">

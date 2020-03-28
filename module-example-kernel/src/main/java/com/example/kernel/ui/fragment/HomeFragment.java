@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.example.kernel.databinding.FragmentHomeBinding;
 import com.example.kernel.ui.activity.RecyclerTestActivity;
+import com.example.kernel.ui.activity.TiplayoutActivity;
 import com.example.kernel.ui.base.BaseDaggerFragment;
 import com.example.kernel.ui.contract.HomeContract;
 import com.example.kernel.ui.presenter.HomePresenter;
@@ -40,6 +41,9 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter, FragmentHome
         super.bindEvent();
         viewBinding.btnRecycler.setOnClickListener(v -> {
             startAnimActivity(RecyclerTestActivity.class);
+        });
+        viewBinding.btnTiplayout.setOnClickListener(v -> {
+            startAnimActivity(TiplayoutActivity.class);
         });
     }
 
