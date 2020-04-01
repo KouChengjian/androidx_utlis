@@ -28,6 +28,11 @@ public class TiplayoutActivity extends BaseDaggerActivity<TiplayoutPresenter, Ac
     @Override
     protected void created(Bundle savedInstanceState) {
         super.created(savedInstanceState);
+        viewBinding.toolBarView.setNavigationOrBreak("Tiplayout");
+        viewBinding.toolBarView.setToolbarRightMenus(R.menu.menu_main);
+        viewBinding.toolBarView.setNavigationOnClickListener(v -> {
+            finish();
+        });
 
         viewBinding.tipLayoutView.showNetError();
 

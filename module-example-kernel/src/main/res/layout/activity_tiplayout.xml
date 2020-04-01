@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <com.yiciyuan.widget.ToolBarView
+        android:id="@+id/toolBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <com.yiciyuan.widget.TipLayoutView
         android:id="@+id/tipLayoutView"
         android:layout_width="match_parent"

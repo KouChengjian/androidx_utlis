@@ -3,8 +3,10 @@ package com.example.kernel.ui.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
+import com.example.kernel.R;
 import com.example.kernel.databinding.ActivityRecyclerBinding;
 import com.example.kernel.databinding.IncludeExampleHeaderBinding;
 import com.example.kernel.ui.adapter.RecyclerTestAdapter;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 @Router("recyclerTest")
@@ -40,6 +43,17 @@ public class RecyclerTestActivity extends BaseDaggerActivity<RecyclerTestPresent
     @Override
     protected void created(Bundle savedInstanceState) {
         super.created(savedInstanceState);
+        viewBinding.toolBarView.setTitleOrBreak("recycle");
+        viewBinding.toolBarView.setToolbarRightMenus(R.menu.menu_main);
+        viewBinding.toolBarView.setNavigationOnClickListener(v -> {
+            finish();
+        });
+        viewBinding.toolBarView.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
 
         includeExampleHeaderBinding = IncludeExampleHeaderBinding.inflate(getInflater());
         View view = includeExampleHeaderBinding.getRoot();
