@@ -11,6 +11,7 @@ import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.yiciyuan.widget.R;
@@ -35,6 +36,8 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
     private ClassicsFooter classicsFooter;
     private TipLayoutView tipLayoutView;
     private IWrapAdapter wrapAdapter;
+
+    private OnRefreshListener onRefreshListener;
     private OnReloadListener onReloadListener;
 
     private LayoutStatus layoutStatus = LayoutStatus.LAYOUT_STATUS_EMPTY;          // 默认的布局状态
@@ -276,8 +279,16 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         tipLayoutView.showNetError();
     }
 
-    public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
-        smartRefreshLayout.setOnRefreshListener(onRefreshListener);
+    public void setOnRefreshListener(final OnRefreshListener onRefreshListener) {
+        this.onRefreshListener = onRefreshListener;
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                if (onRefreshListener != null) {
+                    onRefreshListener.onRefresh(refreshLayout);
+                }
+            }
+        });
     }
 
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
@@ -338,6 +349,10 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         tipLayoutView.showLoading();
         if (onReloadListener != null) {
             onReloadListener.onReload();
+        } else {
+            if (onRefreshListener != null) {
+                onRefreshListener.onRefresh(smartRefreshLayout);
+            }
         }
     }
 
