@@ -48,4 +48,6 @@ public interface CommonApi {
     @GET("/manager/product/getListVenue")
     Single<HttpResult<HttpListResult<Empty>>> test3(@Query("username") String username);
 
+    @GET("/manager/product/getListVenue")
+    Single<HttpResult<HttpListResult<Empty>>> test4();
 }
