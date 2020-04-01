@@ -236,7 +236,7 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
                     methodBuilder.addStatement("$T requestBody = ApiHelper.getInstance().createRequestBody(params)", Utils.getType("okhttp3.RequestBody"));
                 }
             }
-
+            paramsString = paramsString == "" ? "" : paramsString.substring(0, paramsString.length() - 1);
             methodBuilder.addStatement(
                     "return $T.getInstance()" +
                             ".get$L().$L($L)" +
@@ -245,7 +245,7 @@ public class ApiFactoryProcessor extends BaseProcessor<ApiFactory> {
                     , ApiHelper
                     , apiFactoryModel.getElement().getSimpleName().toString()
                     , apiFactoryModel.getChildElement().getSimpleName().toString()
-                    , apiParams == null ? paramsString.substring(0, paramsString.length() - 1) : apiParams.request() == ApiRequestType.APPLICATIONJSON ? "requestBody" : paramsString.substring(0, paramsString.length() - 1)
+                    , apiParams == null ? paramsString : apiParams.request() == ApiRequestType.APPLICATIONJSON ? "requestBody" : paramsString
                     , apiParams == null ? ResultTransformer : apiParams.response() == ApiResponseType.JSONObject ? ResultJsonTransformer : apiParams.response() == ApiResponseType.JSONArray ? ResultJsonListTransformer : ResultTransformer
                     , Taker);
 
