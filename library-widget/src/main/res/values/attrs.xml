@@ -55,6 +55,30 @@
 
     <declare-styleable name="RefreshRecyclerView">
         <attr name="rrv_header_progressColor" format="color" />
+    </declare-styleable>
 
+    <declare-styleable name="ycy_ToolBarView">
+        <attr name="tb_toolbar_background_color" format="color" />
+        <attr name="tb_toolbar_background_bar_color" format="color" />
+        <attr name="tb_toolbar_title_text_color" format="color" />
+        <attr name="tb_toolbar_subtitle_text_color" format="color" />
+
+        <attr name="tb_navigationIcon" format="reference|color" />
+
+        <attr name="tb_titleTextColor" format="color" />
+        <attr name="tb_titleTextSize" format="dimension" />
+<!--        <attr name="tb_titleTextStyle" format="enum">-->
+<!--            <flag name="normal" value="0" />-->
+<!--            <flag name="bold" value="1" />-->
+<!--            <flag name="italic" value="2" />-->
+<!--        </attr>-->
+
+        <attr name="tb_rightTextColor" format="color" />
+        <attr name="tb_rightTextSize" format="dimension" />
+<!--        <attr name="tb_rightTextStyle" format="enum">-->
+<!--            <flag name="normal" value="0" />-->
+<!--            <flag name="bold" value="1" />-->
+<!--            <flag name="italic" value="2" />-->
+<!--        </attr>-->
     </declare-styleable>
 </resources>
