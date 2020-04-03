@@ -31,6 +31,4 @@ viewbinding
 
 
 ## 待修复
-fix:apt参数为空异常
-fix:recycle重新获取接口处理默认
 

@@ -57,6 +57,11 @@
         <attr name="rrv_header_progressColor" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="TipLayoutView">
+        <attr name="tlv_loading_nowifi" format="reference" />
+        <attr name="tlv_loading_datanull" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="ycy_ToolBarView">
         <attr name="tb_toolbar_background_color" format="color" />
         <attr name="tb_toolbar_background_bar_color" format="color" />
