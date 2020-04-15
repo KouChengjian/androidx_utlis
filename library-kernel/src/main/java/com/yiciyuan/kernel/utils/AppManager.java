@@ -4,6 +4,12 @@ import android.app.Activity;
 
 import java.util.Stack;
 
+/**
+ * Created with Android Studio.
+ * User: kcj
+ * Date: 2018/8/24 10:00
+ * Description: activity任务栈，记录activity打开记录
+ */
 public class AppManager {
 
     private static final Stack<Activity> activityStack = new Stack<>();

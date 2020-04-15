@@ -58,11 +58,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     def androidDependencies = rootProject.ext.androidDependencies
     api androidDependencies.appcompat
     api androidDependencies.recyclerview
-
     def httpDependencies = rootProject.ext.httpDependencies
     api httpDependencies.rxlifecycle // okhttp请求生命周期
 

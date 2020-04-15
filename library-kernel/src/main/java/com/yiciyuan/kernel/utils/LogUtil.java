@@ -3,9 +3,11 @@ package com.yiciyuan.kernel.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-
 /**
- * Created by Administrator on 2017/5/9.
+ * Created with Android Studio.
+ * User: kcj
+ * Date: 2018/8/24 10:00
+ * Description: log输出日志
  */
 public class LogUtil {
     private static String customTagPrefix = "x_log";

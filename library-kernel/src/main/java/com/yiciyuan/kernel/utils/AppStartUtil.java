@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
  * Created with Android Studio.
  * User: kcj
  * Date: 2018/7/14 11:24
- * Description:
+ * Description: 打开activity工具类
  */
 public class AppStartUtil {
 
