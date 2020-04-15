@@ -76,7 +76,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'], exclude: '*.bak')
 
 //    implementation project(':library-annotation')
-    implementation project(':library-kernel')
+//    implementation project(':library-kernel')
     implementation project(':library-tools')
 //    annotationProcessor project(':library-apt')
 
@@ -91,8 +91,8 @@ dependencies {
     implementation httpDependencies.rxlifecycle
 
     def toolDependencies = rootProject.ext.toolDependencies
-//    implementation toolDependencies.ycy_kernel
-//    implementation toolDependencies.ycy_widget
+    implementation toolDependencies.ycy_kernel
+//    implementation toolDependencies.ycy_tools
     implementation toolDependencies.ycy_annotation
     annotationProcessor toolDependencies.ycy_apt
 }

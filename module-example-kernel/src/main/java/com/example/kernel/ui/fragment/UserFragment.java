@@ -3,12 +3,11 @@ package com.example.kernel.ui.fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.kernel.R;
 import com.example.kernel.databinding.FragmentUserBinding;
 import com.example.kernel.ui.base.BaseDaggerFragment;
 import com.example.kernel.ui.contract.UserContract;
 import com.example.kernel.ui.presenter.UserPresenter;
-import com.yiciyuan.kernel.ui.fragment.BaseMvpFragment;
+import com.yiciyuan.utils.glide.GlideUtil;
 
 
 /**
@@ -33,6 +32,8 @@ public class UserFragment extends BaseDaggerFragment<UserPresenter, FragmentUser
     @Override
     protected void created(Bundle savedInstanceState) {
         super.created(savedInstanceState);
+        String url = "https://private-app.shangyizhijia.com/bangshou/shopping/goods/15671364090007253219.jpg?sign=1892e4a12fa5ff34b150f0c181f30fb3&t=5e9683ee";
+        GlideUtil.load(url, viewBinding.ivCover);
     }
 
     @Override

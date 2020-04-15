@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.yiciyuan.kernel.BuildConfig;
 import com.yiciyuan.kernel.app.BaseApp;
+import com.yiciyuan.utils.glide.GlideUtil;
 
 /**
  * Created with Android Studio.
@@ -18,5 +19,7 @@ public class AppApplication extends Application {
         super.onCreate();
         BaseApp.Ext.init(this);
         BaseApp.Ext.setDebug(BuildConfig.DEBUG);
+        GlideUtil.Ext.init(this);
+        GlideUtil.Ext.setReferer("https://t-app.shangyizhijia.com"); // 防盗链
     }
 }
