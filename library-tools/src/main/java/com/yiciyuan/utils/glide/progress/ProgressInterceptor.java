@@ -67,7 +67,7 @@ public class ProgressInterceptor implements Interceptor {
     }
 
     @Override
-    public Response intercept(Interceptor.Chain chain) throws IOException {
+    public Response intercept(Chain chain) throws IOException {
         if (chain.call().isCanceled()) {
             throw new IOException("Canceled");
         }

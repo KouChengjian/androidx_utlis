@@ -19,7 +19,6 @@ import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.util.ContentLengthInputStream;
 import com.yiciyuan.utils.CacheUtil;
-import com.yiciyuan.utils.Util;
 import com.yiciyuan.utils.glide.progress.ProgressInterceptor;
 
 import java.io.File;
@@ -27,6 +26,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import androidx.annotation.NonNull;
 import okhttp3.Cache;
@@ -36,10 +42,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.internal.http.HttpHeaders;
 
 /**
  * A {@link GlideModule} implementation to replace Glide's default
- * {@link java.net.HttpURLConnection} based {@link com.bumptech.glide.load.model.ModelLoader} with an OkHttp based
+ * {@link java.net} based {@link com.bumptech.glide.load.model.ModelLoader} with an OkHttp based
  * {@link com.bumptech.glide.load.model.ModelLoader}.
  * <p/>
  * <p>
@@ -53,18 +60,15 @@ import okhttp3.ResponseBody;
 public class OKHttpGlideModule extends AppGlideModule {
 
     @Override
-    public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
+    public void applyOptions( Context context,  GlideBuilder builder) {
         // Do nothing.//配置缓存
         //builder.setLogLevel(Log.VERBOSE);
     }
 
     @Override
-    public void registerComponents(@NonNull Context context, @NonNull Glide glide,
-                                   @NonNull Registry registry) {
-
+    public void registerComponents( Context context,  Glide glide, Registry registry) {
 //        registry.prepend(ByteBuffer.class, Bitmap.class, new CMSResourceDecoder());
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlFactory());
-
     }
 
     @Override
@@ -82,12 +86,16 @@ public class OKHttpGlideModule extends AppGlideModule {
         private static int AUTO_INDEX = 0;
         private static volatile Call.Factory[] OK_HTTP_CLIENT;
 
+        private static TrustManager trustAllCerts = createTrustAllCerts();
+        private static javax.net.ssl.SSLSocketFactory sslSocketFactory = createSSLSocketFactory();
+        private static HostnameVerifier hostnameVerifier = createHostnameVerifier();
+
+
         public OkHttpUrlFactory() {
         }
 
         @Override
-        @NonNull
-        public ModelLoader<GlideUrl, InputStream> build(@NonNull MultiModelLoaderFactory multiFactory) {
+        public ModelLoader<GlideUrl, InputStream> build( MultiModelLoaderFactory multiFactory) {
             return new OkHttpUrlLoader();
         }
 
@@ -105,7 +113,7 @@ public class OKHttpGlideModule extends AppGlideModule {
                 }
                 requestBuilder.addHeader(key, headerEntry.getValue());
             }
-//            requestBuilder.addHeader("referer", Constant.RefererType.INSTANCE.getReferer());
+            requestBuilder.addHeader("referer", GlideUtil.Ext.getReferer());
             Request request = requestBuilder.build();
 
             return client.newCall(request);
@@ -116,7 +124,7 @@ public class OKHttpGlideModule extends AppGlideModule {
             if (OK_HTTP_CLIENT == null) {
                 OK_HTTP_CLIENT = new Call.Factory[MAX_OK_HTTP_CLIENT_COUNT];
 
-                File dir = CacheUtil.getExternalCacheDirectory(Util.INSTANCE.getContext(),"sy_img_cache");
+                File dir = CacheUtil.getExternalCacheDirectory(GlideUtil.getContext(),"sy_img_cache");
                 int cacheSize = 100 * 1024 * 1024; // 100 MiB
                 Cache cache = new Cache(dir, cacheSize);
 
@@ -125,6 +133,8 @@ public class OKHttpGlideModule extends AppGlideModule {
                         .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)//设置读取超时时间
                         .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)//设置写的超时时间
                         .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)//设置连接超时时间
+                        .sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts)
+                        .hostnameVerifier(hostnameVerifier)
                         .addInterceptor(new ProgressInterceptor());
 
                     if (dir != null) {
@@ -135,8 +145,49 @@ public class OKHttpGlideModule extends AppGlideModule {
             }
 
             ++AUTO_INDEX;
-            return OK_HTTP_CLIENT[AUTO_INDEX % MAX_OK_HTTP_CLIENT_COUNT];
+//            return OK_HTTP_CLIENT[AUTO_INDEX % MAX_OK_HTTP_CLIENT_COUNT];
+            return OK_HTTP_CLIENT[0];
         }
+
+        private static TrustManager createTrustAllCerts() {
+            return
+                new X509TrustManager() {
+                    @Override
+                    public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                    }
+
+                    @Override
+                    public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                    }
+
+                    @Override
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return new java.security.cert.X509Certificate[]{};
+                    }
+                };
+        }
+
+        private static SSLSocketFactory createSSLSocketFactory() {
+            SSLContext sslContext = null;
+            try {
+                sslContext = SSLContext.getInstance("SSL");
+                sslContext.init(null, new TrustManager[]{trustAllCerts}, new java.security.SecureRandom());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return sslContext == null ? null : sslContext.getSocketFactory();
+        }
+
+        private static HostnameVerifier createHostnameVerifier() {
+            return new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+        }
+
 
         class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
             @Override
@@ -162,7 +213,6 @@ public class OKHttpGlideModule extends AppGlideModule {
 
             @Override
             public void loadData(@NonNull Priority priority, @NonNull final DataFetcher.DataCallback<? super InputStream> callback) {
-
                 this.mCallback = callback;
                 if(!checkGlideUrl(mGlideUrl)) {
                     if (this.mCallback != null) {
@@ -202,6 +252,16 @@ public class OKHttpGlideModule extends AppGlideModule {
                             this.mCallback.onLoadFailed(new HttpException(response.message(), response.code()));
                             response.close();
                         }
+                    } else if (HttpHeaders.hasBody(response)) { //isGzip
+                        try {
+                            this.mCallback.onDataReady(responseBody.byteStream());
+                        } catch (Exception ex) {
+                            this.mCallback.onLoadFailed(new HttpException(response.message(), response.code()));
+                            response.close();
+                        }
+                    } else {
+                        this.mCallback.onLoadFailed(new HttpException(response.message(), response.code()));
+                        response.close();
                     }
                 } else {
                     this.mCallback.onLoadFailed(new HttpException(response.message(), response.code()));
@@ -252,10 +312,7 @@ public class OKHttpGlideModule extends AppGlideModule {
                 }
 
                 HttpUrl parsed = HttpUrl.parse(url);
-                if (parsed == null) {
-                    return false;
-                }
-                return true;
+                return parsed != null;
             }
         }
     }

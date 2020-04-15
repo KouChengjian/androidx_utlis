@@ -2,7 +2,6 @@
 
 //include ':library-annotation'
 //include ':library-apt'
-//include ':library-kernel' // 核心代码二
-//include ':library-utils'
-include ':library-widget'
+include ':library-kernel'
+include ':library-tools'
 include ':module-example-kernel'

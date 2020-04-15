@@ -1,5 +1,6 @@
 package com.yiciyuan.utils.glide;
 
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -26,40 +27,134 @@ import com.bumptech.glide.request.target.CustomViewTarget;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.yiciyuan.utils.R;
-import com.yiciyuan.utils.Util;
 import com.yiciyuan.utils.glide.transform.BlurTransformation;
 import com.yiciyuan.utils.glide.transform.MatrixTransformation;
+import com.yiciyuan.widget.R;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-
-
 public abstract class GlideUtil {
+
+    public static class Ext {
+        private static Application app;
+        private static String referer = "";
+
+        private Ext() {
+        }
+
+        public static void init(Application app) {
+            if (Ext.app == null) {
+                Ext.app = app;
+            }
+        }
+
+        public static String getReferer() {
+            return referer;
+        }
+
+        public static void setReferer(String ref) {
+            referer = ref;
+        }
+    }
 
     private static RequestOptions mRequestOptions = new RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(R.mipmap.bg_default_image)
             .error(R.mipmap.bg_default_load_error);
 
-
     public static Context getContext() {
-        Context context = Util.INSTANCE.getContext();
+        Context context = Ext.app;
         if (context == null) {
-            throw new NullPointerException("library-utils context is null ,please setContext()");
+            throw new RuntimeException("请初始化 GlideUtil.Ext.init");
         }
         return context;
     }
 
+    public static Object getModel(String url) {
+        final Map<String, String> header = new HashMap<>();
+        return getModel(url, header);
+    }
+
+    public static Object getModel(String url, final Map<String, String> headerMap) {
+        if (TextUtils.isEmpty(url)) return url;
+        if (url.startsWith("/")) return url;
+        headerMap.put("referer", GlideUtil.Ext.getReferer());
+        Headers headers = () -> headerMap;
+        return new GlideUrlNoParams(url, headers);
+    }
+
+    public static Object getModel2(String url, final Map<String, String> headerMap) {
+        if (TextUtils.isEmpty(url)) return url;
+        if (url.startsWith("/")) return url;
+        headerMap.put("referer", GlideUtil.Ext.getReferer());
+        Headers headers = () -> headerMap;
+        return new GlideUrl(url, headers);
+    }
+
+    public static void pause(Context context) {
+        getRequestManager().pauseRequests();
+    }
+
+    public static void resume(Context context) {
+        getRequestManager().resumeRequests();
+    }
+
+    public static Glide getGlideWithContext() {
+        return Glide.get(getContext());
+    }
+
     public static RequestManager getRequestManager() {
-        return Glide.with(getContext());
+        return getRequestManager(getContext());
+    }
+
+    public static RequestManager getRequestManager(Context context) {
+        return Glide.with(context);
     }
 
     public static RequestOptions getDefaultRequestOptions() {
         return mRequestOptions.clone();
+    }
+
+    public static RequestBuilder<Bitmap> loadAsBitMap(String url, Map<String, String> headerMap) {
+        return getRequestManager().asBitmap().load(getModel(url, headerMap));
+    }
+
+    public static RequestBuilder<Bitmap> loadAsBitMap(Context context, String url, Map<String, String> headerMap) {
+        return getRequestManager(context).asBitmap().load(getModel(url, headerMap));
+    }
+
+    public static RequestBuilder<GifDrawable> loadAsGif(String url, Map<String, String> headerMap) {
+        return getRequestManager().asGif().load(getModel(url, headerMap));
+    }
+
+    public static RequestBuilder<GifDrawable> loadAsGif(Context context, String url, Map<String, String> headerMap) {
+        return getRequestManager(context).asGif().load(getModel(url, headerMap));
+    }
+
+    public static RequestBuilder<Drawable> loadAsDrawable(String url) {
+        return getRequestManager().load(getModel(url));
+    }
+
+    public static RequestBuilder<Drawable> loadAsDrawable(Context context, String url) {
+        return getRequestManager(context).load(getModel(url));
+    }
+
+    public static RequestBuilder<Drawable> loadAsDrawable(String url, Map<String, String> headerMap) {
+        return getRequestManager().load(getModel(url, headerMap));
+    }
+
+    public static RequestBuilder<Drawable> loadAsDrawable(Context context, String url, Map<String, String> headerMap) {
+        return getRequestManager(context).load(getModel(url, headerMap));
+    }
+
+    private static RequestBuilder<Bitmap> loadAsBitmap(String url) {
+        return getRequestManager().asBitmap().load(getModel(url));
+    }
+
+    private static RequestBuilder<Bitmap> loadAsBitmap(Context context, String url) {
+        return getRequestManager(context).asBitmap().load(getModel(url));
     }
 
     /**
@@ -82,45 +177,66 @@ public abstract class GlideUtil {
         }).start();
     }
 
-    //预加载图片
-    public static void preload1(String url) {
-        RequestOptions requestOptions = mRequestOptions
-                .clone();
-        loadAsDrawable(url)
-                .apply(requestOptions)
-                .preload();
-    }
+    /**
+     * ------------------------------- 图片加载 -------------------------------------------
+     */
 
     //预加载图片
     public static void preload(String url) {
         preload(url, new HashMap<String, String>(), null);
     }
 
-    public static void preload(String url, @NonNull final Map<String, String> headerMap) {
+    public static void preload(String url, final Map<String, String> headerMap) {
         preload(url, headerMap, null);
     }
 
-    public static void preload(String url, @NonNull final Map<String, String> headerMap, RequestListener<File> listener) {
-        RequestBuilder<File> builder = getRequestManager()
-                .downloadOnly()
-                .load(getModel(url, headerMap));
+    public static void preload(String url, final Map<String, String> headerMap, RequestListener<File> listener) {
+        preload(getContext(), url, headerMap, listener);
+    }
+
+    public static void preload(Context context, String url) {
+        preload(context, url, new HashMap<String, String>(), null);
+    }
+
+    public static void preload(Context context, String url, final Map<String, String> headerMap) {
+        preload(context, url, headerMap, null);
+    }
+
+    public static void preload(Context context, String url, final Map<String, String> headerMap, RequestListener<File> listener) {
+        RequestBuilder<File> builder = Glide.with(context).downloadOnly().load(getModel(url, headerMap));
         builder.addListener(listener);
         builder.preload();
     }
 
-    //普通加载到图片
     public static void load(String url, ImageView imageView) {
-        RequestOptions requestOptions = getDefaultRequestOptions();
-        loadAsDrawable(url)
-                .apply(requestOptions)
-                .into(imageView);
+        load(getContext(), url, imageView);
+    }
+
+    public static void load(Context context, String url, ImageView imageView) {
+        load(context, url, imageView, 0, 0);
+    }
+
+    public static void load(String url, ImageView imageView, int placeholderResId) {
+        load(getContext(), url, imageView, placeholderResId, 0);
+    }
+
+    public static void load(Context context, String url, ImageView imageView, int placeholderResId) {
+        load(context, url, imageView, placeholderResId, 0);
     }
 
     public static void load(String url, ImageView imageView, int placeholderResId, int errorResId) {
-        RequestOptions requestOptions = getDefaultRequestOptions()
-                .placeholder(placeholderResId)
-                .error(errorResId);
-        loadAsDrawable(url)
+        load(getContext(), url, imageView, placeholderResId, errorResId);
+    }
+
+    public static void load(Context context, String url, ImageView imageView, int placeholderResId, int errorResId) {
+        RequestOptions requestOptions = getDefaultRequestOptions();
+        if (placeholderResId != 0) {
+            requestOptions.placeholder(placeholderResId);
+        }
+        if (errorResId != 0) {
+            requestOptions.error(errorResId);
+        }
+        loadAsDrawable(context, url)
                 .apply(requestOptions)
                 .into(imageView);
     }
@@ -358,77 +474,5 @@ public abstract class GlideUtil {
         loadAsBitmap(url)
                 .apply(requestOptions)
                 .into(transformation);
-    }
-
-    public static void releaseImageViewResource(ImageView imageView) {
-        if (imageView == null) {
-            return;
-        }
-        imageView.setImageBitmap(null);
-        imageView.setImageDrawable(null);
-    }
-
-    public static void pause(Context context) {
-        Glide.with(context).pauseRequests();
-    }
-
-    public static void resume(Context context) {
-        Glide.with(context).resumeRequests();
-    }
-
-    public static Glide getGlideWithContext() {
-        return Glide.get(getContext());
-    }
-
-    public static RequestBuilder<Bitmap> loadAsBitMap(String url, Map<String, String> headerMap) {
-        return getRequestManager().asBitmap().load(getModel(url, headerMap));
-    }
-
-    public static RequestBuilder<GifDrawable> loadAsGif(String url, Map<String, String> headerMap) {
-        return getRequestManager().asGif().load(getModel(url, headerMap));
-    }
-
-
-    public static RequestBuilder<Drawable> loadAsDrawable(String url) {
-        return getRequestManager().load(getModel(url));
-    }
-
-    public static RequestBuilder<Drawable> loadAsDrawable(String url, Map<String, String> headerMap) {
-        return getRequestManager().load(getModel(url, headerMap));
-    }
-
-    private static RequestBuilder<Bitmap> loadAsBitmap(String url) {
-        return getRequestManager().asBitmap().load(getModel(url));
-    }
-
-    public static Object getModel(String url) {
-        final Map<String, String> header = new HashMap<>();
-        return getModel(url, header);
-    }
-
-    public static Object getModel(String url, @NonNull final Map<String, String> headerMap) {
-        if (TextUtils.isEmpty(url)) return url;
-        if (url.startsWith("/")) return url;
-//        headerMap.put("referer", Constant.RefererType.INSTANCE.getReferer());
-        Headers headers = new Headers() {
-            @Override
-            public Map<String, String> getHeaders() {
-                return headerMap;
-            }
-        };
-        return new GlideUrlNoParams(url, headers);
-    }
-
-    public static Object getModel2(String url, @NonNull final Map<String, String> headerMap) {
-        if (TextUtils.isEmpty(url)) return url;
-        if (url.startsWith("/")) return url;
-//        headerMap.put("referer", Constant.RefererType.INSTANCE.getReferer());
-        Headers headers = new Headers() {
-            @Override
-            public Map<String, String> getHeaders() {
-                return headerMap;
-            }
-        };
-        return new GlideUrl(url, headers);
     }
 }
