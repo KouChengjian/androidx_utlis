@@ -8,14 +8,14 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import io.reactivex.Flowable;
+import androidx.room.Update;
 import io.reactivex.Single;
 
 @Dao
-public interface  UserDao {
+public interface UserDao {
 
     @Query("SELECT * FROM user")
-    List<UserEntity> getAll();
+    Single<List<UserEntity>> getAll();
 
     @Query("SELECT * FROM user WHERE uid IN (:userIds)")
     List<UserEntity> loadAllByIds(int[] userIds);
@@ -24,12 +24,12 @@ public interface  UserDao {
             "last_name LIKE :last LIMIT 1")
     UserEntity findByName(String first, String last);
 
-//    @Insert
-//    Single<Long> insertAll(UserEntity... users);
-
     @Insert
-    void insertAll(UserEntity... users);
+    Single<Long> insert(UserEntity userBean);
+
+    @Update
+    Single<Integer> update(UserEntity userBean);
 
     @Delete
-    void delete(UserEntity user);
+    Single<Integer> delete(UserEntity userBean);
 }

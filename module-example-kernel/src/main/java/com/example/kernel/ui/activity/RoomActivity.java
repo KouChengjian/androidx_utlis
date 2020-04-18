@@ -4,21 +4,19 @@ package com.example.kernel.ui.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.kernel.app.AppApplication;
 import com.example.kernel.cache.AppDatabase;
-import com.example.kernel.cache.dao.UserDao;
+import com.example.kernel.cache.RoomObserver;
 import com.example.kernel.databinding.ActivityRoomBinding;
 import com.example.kernel.entity.po.UserEntity;
 import com.example.kernel.ui.base.BaseDaggerActivity;
 import com.example.kernel.ui.contract.RoomContract;
 import com.example.kernel.ui.presenter.RoomPresenter;
+import com.google.gson.Gson;
 import com.yiciyuan.kernel.utils.LogUtil;
 
 import java.util.List;
 
-import androidx.room.Room;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -30,7 +28,6 @@ import io.reactivex.schedulers.Schedulers;
 public class RoomActivity extends BaseDaggerActivity<RoomPresenter, ActivityRoomBinding> implements RoomContract.View {
 
     UserEntity userEntity;
-    private AppDatabase mAppDatabase;
 
     @Override
     protected View getLayoutView() {
@@ -42,13 +39,8 @@ public class RoomActivity extends BaseDaggerActivity<RoomPresenter, ActivityRoom
     protected void created(Bundle savedInstanceState) {
         super.created(savedInstanceState);
 
-        mAppDatabase = Room.databaseBuilder(this, AppDatabase.class, "android_room_dev.db")
-                .allowMainThreadQueries()
-//                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
-                .build();
-
-
         userEntity = new UserEntity();
+        userEntity.uid = 2;
         userEntity.firstName = "xxxxxxxx";
         userEntity.lastName = "qqqqqqqqq";
     }
@@ -57,25 +49,57 @@ public class RoomActivity extends BaseDaggerActivity<RoomPresenter, ActivityRoom
     protected void bindEvent() {
         super.bindEvent();
         viewBinding.btnInsert.setOnClickListener(v -> {
-//            mAppDatabase.userDao().insertAll(userEntity);
-//            mAppDatabase.userDao()
-//                    .insertAll(userEntity)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Consumer<Integer>() {
-//                        @Override
-//                        public void accept(Integer entities) {
-//                            LogUtil.e(entities+"================");
-//                        }
-//                    });
+            AppDatabase.getDatabase(getContext())
+                    .userDao()
+                    .insert(userEntity)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RoomObserver<Long>() {
+                        @Override
+                        public void onSuccess(Long aLong) {
+                            LogUtil.e(aLong + "================");
+                        }
+                    });
+        });
+        viewBinding.btnUpdate.setOnClickListener(v -> {
+            userEntity.firstName = "iOS大计算机啊";
+            AppDatabase.getDatabase(getContext())
+                    .userDao()
+                    .update(userEntity)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RoomObserver<Integer>() {
+                        @Override
+                        public void onSuccess(Integer aLong) {
+                            LogUtil.e(aLong + "================");
+                        }
+                    });
         });
         viewBinding.btnDelete.setOnClickListener(v -> {
-            mAppDatabase.userDao().delete(userEntity);
+            AppDatabase.getDatabase(getContext())
+                    .userDao()
+                    .delete(userEntity)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RoomObserver<Integer>() {
+                        @Override
+                        public void onSuccess(Integer aLong) {
+                            LogUtil.e(aLong + "================");
+                        }
+                    });
         });
         viewBinding.btnQueryAll.setOnClickListener(v -> {
-
-            List<UserEntity> userEntities =  mAppDatabase.userDao().getAll();
-            LogUtil.e(userEntities.toString());
+            AppDatabase.getDatabase(getContext())
+                    .userDao()
+                    .getAll()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RoomObserver<List<UserEntity>>() {
+                        @Override
+                        public void onSuccess(List<UserEntity> userEntities) {
+                            LogUtil.e(new Gson().toJson(userEntities));
+                        }
+                    });
         });
     }
 

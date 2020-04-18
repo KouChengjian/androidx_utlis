@@ -2,6 +2,6 @@
 
 //include ':library-annotation'
 //include ':library-apt'
-include ':library-kernel'
+//include ':library-kernel'
 include ':library-tools'
 include ':module-example-kernel'

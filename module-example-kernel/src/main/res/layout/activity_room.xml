@@ -10,6 +10,12 @@
         android:text="Insert"
         android:textAllCaps="false" />
     <Button
+        android:id="@+id/btn_Update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:textAllCaps="false" />
+    <Button
         android:id="@+id/btn_Delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
