@@ -15,6 +15,10 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath = true
+                arguments = [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
             }
         }
     }
@@ -95,4 +99,7 @@ dependencies {
 //    implementation toolDependencies.ycy_tools
     implementation toolDependencies.ycy_annotation
     annotationProcessor toolDependencies.ycy_apt
+    implementation toolDependencies.room
+//    implementation toolDependencies.room_rxjava2
+    annotationProcessor toolDependencies.room_compiler
 }

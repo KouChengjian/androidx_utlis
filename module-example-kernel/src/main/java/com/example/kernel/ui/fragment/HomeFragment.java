@@ -1,11 +1,11 @@
 package com.example.kernel.ui.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.kernel.databinding.FragmentHomeBinding;
 import com.example.kernel.ui.activity.RecyclerTestActivity;
+import com.example.kernel.ui.activity.RoomActivity;
 import com.example.kernel.ui.activity.TiplayoutActivity;
 import com.example.kernel.ui.base.BaseDaggerFragment;
 import com.example.kernel.ui.contract.HomeContract;
@@ -44,6 +44,9 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter, FragmentHome
         });
         viewBinding.btnTiplayout.setOnClickListener(v -> {
             startAnimActivity(TiplayoutActivity.class);
+        });
+        viewBinding.btnRoom.setOnClickListener(v -> {
+            startAnimActivity(RoomActivity.class);
         });
     }
 

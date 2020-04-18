@@ -3,27 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <Button
-        android:id="@+id/btn_recycler"
+        android:id="@+id/btn_Insert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="recycler"
+        android:text="Insert"
         android:textAllCaps="false" />
-
     <Button
-        android:id="@+id/btn_tiplayout"
+        android:id="@+id/btn_Delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="tipLayout"
+        android:text="Delete"
         android:textAllCaps="false" />
-
     <Button
-        android:id="@+id/btn_room"
+        android:id="@+id/btn_QueryAll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="room"
+        android:text="Query All"
         android:textAllCaps="false" />
-
-
 </LinearLayout>
