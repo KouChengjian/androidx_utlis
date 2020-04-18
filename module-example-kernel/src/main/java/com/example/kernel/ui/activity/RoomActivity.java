@@ -43,6 +43,8 @@ public class RoomActivity extends BaseDaggerActivity<RoomPresenter, ActivityRoom
         userEntity.uid = 2;
         userEntity.firstName = "xxxxxxxx";
         userEntity.lastName = "qqqqqqqqq";
+        userEntity.userName = "我是测试的";
+        userEntity.password = "123654";
     }
 
     @Override
