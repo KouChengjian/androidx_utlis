@@ -21,4 +21,5 @@ viewbinding
 https://blog.csdn.net/l540675759/article/details/82931785
 
 ## bug待修复
+Toastor 部分手机不显示问题
 
