@@ -79,6 +79,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'], exclude: '*.bak')
 
+//    implementation project(':module-flutter')
 //    implementation project(':library-annotation')
 //    implementation project(':library-kernel')
     implementation project(':library-tools')

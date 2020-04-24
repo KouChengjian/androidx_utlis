@@ -5,3 +5,7 @@
 //include ':library-kernel'
 include ':library-tools'
 include ':module-example-kernel'
+//setBinding(new Binding([gradle: this]))
+//evaluate(new File(
+//settingsDir, 'module_flutter/.android/include_flutter.groovy'
+//))
