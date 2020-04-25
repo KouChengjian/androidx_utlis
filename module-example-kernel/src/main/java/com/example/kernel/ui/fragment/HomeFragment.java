@@ -48,6 +48,9 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter, FragmentHome
         viewBinding.btnRoom.setOnClickListener(v -> {
             startAnimActivity(RoomActivity.class);
         });
+        viewBinding.btnFlutter.setOnClickListener(v -> {
+//            startActivity(FlutterActivity.createDefaultIntent(getContext()));
+        });
     }
 
     @Override

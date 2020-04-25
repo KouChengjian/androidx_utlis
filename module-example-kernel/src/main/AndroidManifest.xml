@@ -13,6 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialSheetFab"
         tool:ignore="LockedOrientationActivity">
+
+<!--        <activity-->
+<!--            android:name="io.flutter.embedding.android.FlutterActivity"-->
+<!--            android:theme="@style/Theme.MaterialSheetFab.SwipeBackLayout"-->
+<!--            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"-->
+<!--            android:hardwareAccelerated="true"-->
+<!--            android:windowSoftInputMode="adjustResize"-->
+<!--            />-->
         <activity
             android:name=".ui.activity.RoomActivity"
             android:screenOrientation="portrait"

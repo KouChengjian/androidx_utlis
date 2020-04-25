@@ -21,6 +21,9 @@ android {
                         "room.expandProjection":"true"]
             }
         }
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64'
+        }
     }
     buildTypes {
         release {
@@ -79,7 +82,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'], exclude: '*.bak')
 
-//    implementation project(':module-flutter')
 //    implementation project(':library-annotation')
 //    implementation project(':library-kernel')
     implementation project(':library-tools')
