@@ -34,6 +34,7 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter, FragmentHome
     @Override
     protected void created(Bundle savedInstanceState) {
         super.created(savedInstanceState);
+        viewBinding.toolBarView.setToolbarTitle("首页");
     }
 
     @Override

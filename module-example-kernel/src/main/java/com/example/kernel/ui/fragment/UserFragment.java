@@ -32,6 +32,7 @@ public class UserFragment extends BaseDaggerFragment<UserPresenter, FragmentUser
     @Override
     protected void created(Bundle savedInstanceState) {
         super.created(savedInstanceState);
+        viewBinding.toolBarView.setToolbarTitle("我的");
         String url = "https://private-app.shangyizhijia.com/bangshou/shopping/goods/15671364090007253219.jpg?sign=1892e4a12fa5ff34b150f0c181f30fb3&t=5e9683ee";
         GlideUtil.load(url, viewBinding.ivCover);
     }

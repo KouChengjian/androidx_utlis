@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {UserEntity.class}, version = 2)
+@Database(entities = {UserEntity.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
@@ -35,6 +35,7 @@ public abstract class AppDatabase extends RoomDatabase {
 //    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
 //        @Override
 //        public void migrate(SupportSQLiteDatabase database) {
+//            database.execSQL("ALTER TABLE user ADD COLUMN user_name INTEGER");
 //            database.execSQL("ALTER TABLE user ADD COLUMN user_name TEXT");
 //        }
 //    };

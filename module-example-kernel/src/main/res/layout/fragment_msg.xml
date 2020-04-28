@@ -2,6 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
+    <com.yiciyuan.widget.ToolBarView
+        android:id="@+id/toolBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tb_toolbar_background_color="@color/theme_body"
+        app:tb_toolbar_background_bar_color="@color/theme_body" />
 </LinearLayout>

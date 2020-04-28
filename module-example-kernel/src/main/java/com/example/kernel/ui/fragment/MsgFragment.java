@@ -33,6 +33,7 @@ public class MsgFragment extends BaseDaggerFragment<MsgPresenter, FragmentMsgBin
     @Override
     protected void created(Bundle savedInstanceState) {
         super.created(savedInstanceState);
+        viewBinding.toolBarView.setToolbarTitle("消息");
     }
 
     @Override
