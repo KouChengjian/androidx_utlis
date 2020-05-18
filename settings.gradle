@@ -3,7 +3,7 @@
 //include ':library-annotation'
 //include ':library-apt'
 //include ':library-kernel'
-include ':library-tools'
+//include ':library-tools'
 include ':module-example-kernel'
 
 //setBinding(new Binding([gradle: this]))

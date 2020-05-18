@@ -11,6 +11,12 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+/**
+ * Created with Android Studio.
+ * User: kcj
+ * Date: 2020/04/28 14:30
+ * Description: 修改以下实体类，都需要修改数据库版本迁移
+ */
 @Database(entities = {UserEntity.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
 

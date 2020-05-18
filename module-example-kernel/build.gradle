@@ -95,7 +95,7 @@ dependencies {
 
 //    implementation project(':library-annotation')
 //    implementation project(':library-kernel')
-    implementation project(':library-tools')
+//    implementation project(':library-tools')
 //    annotationProcessor project(':library-apt')
 
     def httpDependencies = rootProject.ext.httpDependencies
@@ -110,7 +110,7 @@ dependencies {
 
     def toolDependencies = rootProject.ext.toolDependencies
     implementation toolDependencies.ycy_kernel
-//    implementation toolDependencies.ycy_tools
+    implementation toolDependencies.ycy_tools
     implementation toolDependencies.ycy_annotation
     annotationProcessor toolDependencies.ycy_apt
     implementation toolDependencies.room
