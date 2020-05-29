@@ -20,6 +20,6 @@ public class AppApplication extends Application {
         BaseApp.Ext.init(this);
         BaseApp.Ext.setDebug(BuildConfig.DEBUG);
         GlideUtil.Ext.init(this);
-        GlideUtil.Ext.setReferer("https://t-app.shangyizhijia.com"); // 防盗链
+        GlideUtil.Ext.setReferer("https://acg12.club"); // 防盗链
     }
 }

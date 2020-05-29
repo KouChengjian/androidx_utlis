@@ -14,6 +14,16 @@
         android:theme="@style/Theme.MaterialSheetFab"
         tool:ignore="LockedOrientationActivity">
 
+        <provider
+            android:name=".utlis.AppFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
+
 <!--        <activity-->
 <!--            android:name="io.flutter.embedding.android.FlutterActivity"-->
 <!--            android:theme="@style/Theme.MaterialSheetFab.SwipeBackLayout"-->

@@ -20,7 +20,7 @@ public class AppConfig {
     public static ServerUrl SERVER = null;
     public final static List<ServerUrl> DefaultServerUrlList = new ArrayList<>();
     public final static ServerUrl URL_SERVER_PROP_TEST = new ServerUrl(
-            "https://t-market.shangyizhijia.com/app/marketing/"
+            "https://acg12.club/"
     );
 
     static {
