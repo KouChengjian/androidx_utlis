@@ -1,22 +1,22 @@
 apply plugin: 'java-library'
 
-apply plugin: 'com.novoda.bintray-release'//添加
-
-publish{
-    userOrg = 'hui793114465'//bintray.com的用户名
-    repoName = 'yiciyuan'//远程仓库名字,不指明，默认是上传到maven
-    groupId = 'com.yiciyuan'//一个唯一值，默认包名,生成的gradle依赖前缀
-    artifactId = 'apt'//远程仓库包名称
-    publishVersion = '1.0.8'//版本号
-    desc = 'This is a simple custom tab library for Android'//描述，不重要
-    website = 'https://github.com/KouChengjian/androidx_utlis'//引用github主页
-}
-
-tasks.withType(Javadoc) {//防止编码问题
-    options.addStringOption('Xdoclint:none', '-quiet')
-    options.addStringOption('encoding', 'UTF-8')
-    options.addStringOption('charSet', 'UTF-8')
-}
+//apply plugin: 'com.novoda.bintray-release'//添加
+//
+//publish{
+//    userOrg = 'hui793114465'//bintray.com的用户名
+//    repoName = 'yiciyuan'//远程仓库名字,不指明，默认是上传到maven
+//    groupId = 'com.yiciyuan'//一个唯一值，默认包名,生成的gradle依赖前缀
+//    artifactId = 'apt'//远程仓库包名称
+//    publishVersion = '1.0.8'//版本号
+//    desc = 'This is a simple custom tab library for Android'//描述，不重要
+//    website = 'https://github.com/KouChengjian/androidx_utlis'//引用github主页
+//}
+//
+//tasks.withType(Javadoc) {//防止编码问题
+//    options.addStringOption('Xdoclint:none', '-quiet')
+//    options.addStringOption('encoding', 'UTF-8')
+//    options.addStringOption('charSet', 'UTF-8')
+//}
 
 dependencies {
     // auto-service这个和gradle版本有关 rc2需要3.1.4 4.6

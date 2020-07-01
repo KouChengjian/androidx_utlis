@@ -56,7 +56,7 @@ import okhttp3.internal.http.HttpHeaders;
  * </p>
  */
 //@Excludes(value = OkHttpLibraryGlideModule.class)
-@GlideModule
+//@GlideModule
 public class OKHttpGlideModule extends AppGlideModule {
 
     @Override
