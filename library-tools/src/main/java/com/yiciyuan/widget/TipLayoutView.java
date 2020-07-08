@@ -2,6 +2,7 @@ package com.yiciyuan.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,8 +30,15 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
     private BGButton mReloadButton;
     private OnReloadClick mOnReloadClick;
 
-    private int mLoadingNoWifi = R.mipmap.bg_loading_no_wifi;
-    private int mLoadingDataNull = R.mipmap.bg_loading_data_null;
+    private int loadingColor;
+    private String loadingText = "加载中...";
+    private int errorImage = R.mipmap.bg_loading_no_wifi;
+    private String errorText;
+    private String errorReload;
+    private int emptyImage = R.mipmap.bg_loading_data_null;
+    private String emptyText;
+    private String emptyReload;
+
 
     public TipLayoutView(Context context) {
         this(context, null);
@@ -43,8 +51,14 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
     public TipLayoutView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TipLayoutView);
-        mLoadingNoWifi = ta.getColor(R.styleable.TipLayoutView_tlv_loading_nowifi, mLoadingNoWifi);
-        mLoadingDataNull = ta.getColor(R.styleable.TipLayoutView_tlv_loading_datanull, mLoadingDataNull);
+        loadingColor = ta.getColor(R.styleable.TipLayoutView_tlv_loading_color, loadingColor);
+        loadingText = ta.getString(R.styleable.TipLayoutView_tlv_loading_text);
+        errorImage = ta.getInteger(R.styleable.TipLayoutView_tlv_error_image, errorImage);
+        errorText = ta.getString(R.styleable.TipLayoutView_tlv_error_text);
+        errorReload = ta.getString(R.styleable.TipLayoutView_tlv_error_reload);
+        emptyImage = ta.getInteger(R.styleable.TipLayoutView_tlv_empty_image, emptyImage);
+        emptyText = ta.getString(R.styleable.TipLayoutView_tlv_empty_text);
+        emptyReload = ta.getString(R.styleable.TipLayoutView_tlv_empty_reload);
         ta.recycle();
         initView(context);
     }
@@ -73,22 +87,20 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
     public void showEmpty() {
         this.inflateErrorLayout();
         this.resetErrorLayout();
-        mTvTipViewErrorPic.setImageResource(mLoadingDataNull);
-        mTvTipViewErrorMsg.setText("");
-        mTvTipViewErrorMsg.setVisibility(View.GONE);
+        mTvTipViewErrorPic.setImageResource(emptyImage);
+        if (TextUtils.isEmpty(emptyText)) {
+            mTvTipViewErrorMsg.setVisibility(View.GONE);
+        } else {
+            mTvTipViewErrorMsg.setText(emptyText);
+            mTvTipViewErrorMsg.setVisibility(View.VISIBLE);
+        }
         mReloadButton.setVisibility(View.GONE);
     }
 
-    /**
-     * 显示空数据且存在刷新按钮
-     */
     public void showEmptyOrRefresh() {
         showEmptyOrRefresh(false);
     }
 
-    /**
-     * 显示空数据且存在刷新按钮
-     */
     public void showEmptyOrRefresh(boolean isTop) {
         this.inflateErrorLayout();
         this.resetErrorLayout();
@@ -96,18 +108,22 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
             mLLTipViewError.setGravity(Gravity.CENTER | Gravity.TOP);
             mLLTipViewError.setPadding(0, 100, 0, 0);
         }
-        mTvTipViewErrorPic.setImageResource(mLoadingDataNull);
-        mTvTipViewErrorMsg.setText("");
-        mTvTipViewErrorMsg.setVisibility(View.GONE);
-        mReloadButton.setText("点击加载");
+        mTvTipViewErrorPic.setImageResource(emptyImage);
+        if (TextUtils.isEmpty(emptyText)) {
+            mTvTipViewErrorMsg.setVisibility(View.GONE);
+        } else {
+            mTvTipViewErrorMsg.setText(emptyText);
+            mTvTipViewErrorMsg.setVisibility(View.VISIBLE);
+        }
+        mReloadButton.setText(TextUtils.isEmpty(emptyReload) ? "点击加载" : emptyReload);
     }
 
     public void showNetError() {
         this.inflateErrorLayout();
         this.resetErrorLayout();
-        mTvTipViewErrorPic.setImageResource(mLoadingNoWifi);
-        mTvTipViewErrorMsg.setText("加载失败，请检查网络");
-        mReloadButton.setText("点击加载");
+        mTvTipViewErrorPic.setImageResource(errorImage);
+        mTvTipViewErrorMsg.setText(TextUtils.isEmpty(errorText) ? "加载失败，请检查网络" : errorText);
+        mReloadButton.setText(TextUtils.isEmpty(errorReload) ? "点击加载" : errorReload);
         mReloadButton.setVisibility(View.VISIBLE);
     }
 
@@ -182,9 +198,6 @@ public class TipLayoutView extends RelativeLayout implements View.OnClickListene
         mReloadButton.setOnClickListener(this);
     }
 
-    /**
-     * 重新加载点击事件
-     */
     public void setOnReloadClick(OnReloadClick onReloadClick) {
         this.mOnReloadClick = onReloadClick;
     }

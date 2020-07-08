@@ -58,8 +58,14 @@
     </declare-styleable>
 
     <declare-styleable name="TipLayoutView">
-        <attr name="tlv_loading_nowifi" format="reference" />
-        <attr name="tlv_loading_datanull" format="reference" />
+        <attr name="tlv_loading_color" format="reference" />
+        <attr name="tlv_loading_text" format="string" />
+        <attr name="tlv_error_image" format="reference" />
+        <attr name="tlv_error_text" format="string" />
+        <attr name="tlv_error_reload" format="string" />
+        <attr name="tlv_empty_image" format="reference" />
+        <attr name="tlv_empty_text" format="string" />
+        <attr name="tlv_empty_reload" format="string" />
     </declare-styleable>
 
     <declare-styleable name="ycy_ToolBarView">
