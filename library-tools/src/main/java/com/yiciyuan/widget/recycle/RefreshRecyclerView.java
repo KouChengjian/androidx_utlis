@@ -97,6 +97,10 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
         return recyclerView;
     }
 
+    public TipLayoutView getTipLayoutView() {
+        return tipLayoutView;
+    }
+
     public LinearLayoutManager initLinearLayoutManager() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -320,10 +324,8 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 //之所以再用ItemClickSupport.OnItemClickListener报装一层就是为了不能点到FooterView(目前是加载更多提示)
-                if (position < wrapAdapter.getItemCount() - wrapAdapter.getHeadersCount()) {
-                    if (mPresenter != null) {
-                        mPresenter.onItemClicked(recyclerView, position - wrapAdapter.getHeadersCount(), v);
-                    }
+                if (mPresenter != null) {
+                    mPresenter.onItemClicked(recyclerView, position - wrapAdapter.getHeadersCount(), v);
                 }
             }
         });
@@ -334,10 +336,8 @@ public class RefreshRecyclerView extends FrameLayout implements TipLayoutView.On
             @Override
             public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
                 //之所以再用ItemClickSupport.OnItemClickListener报装一层就是就是为了不能点到FooterView(目前是加载更多提示)
-                if (position < wrapAdapter.getItemCount() - wrapAdapter.getHeadersCount()) {
-                    if (mPresenter != null) {
-                        return mPresenter.onItemLongClicked(recyclerView, position - wrapAdapter.getHeadersCount(), v);
-                    }
+                if (mPresenter != null) {
+                    return mPresenter.onItemLongClicked(recyclerView, position - wrapAdapter.getHeadersCount(), v);
                 }
                 return false;
             }
