@@ -17,6 +17,8 @@ viewbinding
 
 ## bug待修复
 Toastor 部分手机不显示问题
+RecycleView setOnItemClickListener 判断问题
+TipLayoutView 添加属性修改样式 包括recycleview
 
 ## 关于flutter
 
