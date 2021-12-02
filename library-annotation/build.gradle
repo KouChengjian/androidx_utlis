@@ -18,6 +18,9 @@ apply plugin: 'java-library'
 //    options.addStringOption('charSet', 'UTF-8')
 //}
 
+
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
@@ -25,4 +28,7 @@ dependencies {
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
+
+
+
 
