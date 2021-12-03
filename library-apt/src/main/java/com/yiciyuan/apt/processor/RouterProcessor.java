@@ -7,10 +7,10 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import com.yiciyuan.annotation.apt.Extra;
-import com.yiciyuan.annotation.apt.Router;
-import com.yiciyuan.annotation.apt.SceneTransition;
 import com.yiciyuan.apt.BaseProcessor;
+import com.yiciyuan.apt.annotation.Extra;
+import com.yiciyuan.apt.annotation.Router;
+import com.yiciyuan.apt.annotation.SceneTransition;
 import com.yiciyuan.apt.helper.RouterActivityModel;
 import com.yiciyuan.apt.utils.Utils;
 
@@ -40,7 +40,7 @@ import static javax.lang.model.element.Modifier.VOLATILE;
 
 @AutoService(Processor.class)//自动生成 javax.annotation.processing.IProcessor 文件
 @SupportedSourceVersion(SourceVersion.RELEASE_8)//java版本支持
-public class RouterProcessor extends BaseProcessor<com.yiciyuan.annotation.apt.Router> {
+public class RouterProcessor extends BaseProcessor<Router> {
     private static final Class<Router> Router = Router.class;
     private List<ClassName> mList = new ArrayList<>();
     private List<RouterActivityModel> mRouterActivityModels = new ArrayList<>();

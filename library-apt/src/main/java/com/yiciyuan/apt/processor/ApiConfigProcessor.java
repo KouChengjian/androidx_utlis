@@ -8,8 +8,8 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
-import com.yiciyuan.annotation.apt.ApiConfig;
 import com.yiciyuan.apt.BaseProcessor;
+import com.yiciyuan.apt.annotation.ApiConfig;
 import com.yiciyuan.apt.helper.ApiConfigModel;
 import com.yiciyuan.apt.utils.Utils;
 
