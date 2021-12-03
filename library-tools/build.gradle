@@ -23,6 +23,7 @@ ext {
     PUBLISH_GROUP_ID = "io.github.kouchengjian"		//项目包名
     PUBLISH_ARTIFACT_ID = 'tools'			//项目名
     PUBLISH_VERSION = '0.0.1'					//版本号
+    PUBLISH_TYPE = 'android'                  // 项目类型
 }
 
 android {
