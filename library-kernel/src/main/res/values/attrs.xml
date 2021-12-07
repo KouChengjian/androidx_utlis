@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BGButton">
+        <!--圆角-->
+        <attr name="topLeftRadius" format="dimension" />
+        <attr name="topRightRadius" format="dimension" />
+        <attr name="bottomLeftRadius" format="dimension" />
+        <attr name="bottomRightRadius" format="dimension" />
+        <attr name="radii" format="dimension" />
+        <!--正常填充色-->
+        <attr name="normalSolid" format="color" />
+        <!--按下填充色-->
+        <attr name="pressedSolid" format="color" />
+        <!--边框颜色，大小-->
+        <attr name="normalStrokeWidth" format="dimension" />
+        <attr name="normalStrokeColor" format="color" />
+        <attr name="pressedStrokeWidth" format="dimension" />
+        <attr name="pressedStrokeColor" format="color" />
+        <!--文字按下颜色-->
+        <attr name="pressedTextColor" format="color" />
+        <attr name="normalTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundTextView">
+        <attr name="rv_backgroundColor" format="color" />
+        <attr name="rv_backgroundPressColor" format="color" />
+        <attr name="rv_cornerRadius" format="dimension" />
+        <attr name="rv_strokeWidth" format="dimension"/>
+        <attr name="rv_strokeColor" format="color"/>
+        <attr name="rv_strokePressColor" format="color"/>
+        <attr name="rv_textPressColor" format="color"/>
+        <attr name="rv_isRadiusHalfHeight" format="dimension"/>
+        <attr name="rv_isWidthHeightEqual" format="dimension"/>
+        <attr name="rv_cornerRadius_TL" format="dimension" />
+        <attr name="rv_cornerRadius_TR" format="dimension"/>
+        <attr name="rv_cornerRadius_BL" format="dimension"/>
+        <attr name="rv_cornerRadius_BR" format="dimension"/>
+        <attr name="rv_isRippleEnable" format="boolean"/>
+    </declare-styleable>
+    <!-- RoundTriangleView -->
+    <declare-styleable name="RoundTriangleView">
+        <attr name="rt_fillColor" format="color" />
+        <attr name="rt_textColor" format="color" />
+        <attr name="rt_textSize" format="dimension" />
+        <attr name="rt_text" format="string" />
+        <attr name="rt_roundRadius" format="integer" />
+        <attr name="rt_type" format="enum">
+            <enum name="leftTop" value="0" />
+            <enum name="rightTop" value="1" />
+            <enum name="rightBottom" value="2" />
+            <enum name="leftBottom" value="3" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RefreshRecyclerView">
+        <attr name="rrv_header_progressColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="TipLayoutView">
+        <attr name="tlv_loading_color" format="reference" />
+        <attr name="tlv_loading_text" format="string" />
+        <attr name="tlv_error_image" format="reference" />
+        <attr name="tlv_error_text" format="string" />
+        <attr name="tlv_error_reload" format="string" />
+        <attr name="tlv_empty_image" format="reference" />
+        <attr name="tlv_empty_text" format="string" />
+        <attr name="tlv_empty_reload" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="ycy_ToolBarView">
+        <attr name="tb_toolbar_background_color" format="color" />
+        <attr name="tb_toolbar_background_bar_color" format="color" />
+        <attr name="tb_toolbar_title_text_color" format="color" />
+        <attr name="tb_toolbar_subtitle_text_color" format="color" />
+
+        <attr name="tb_navigationIcon" format="reference|color" />
+
+        <attr name="tb_titleTextColor" format="color" />
+        <attr name="tb_titleTextSize" format="dimension" />
+<!--        <attr name="tb_titleTextStyle" format="enum">-->
+<!--            <flag name="normal" value="0" />-->
+<!--            <flag name="bold" value="1" />-->
+<!--            <flag name="italic" value="2" />-->
+<!--        </attr>-->
+
+        <attr name="tb_rightTextColor" format="color" />
+        <attr name="tb_rightTextSize" format="dimension" />
+<!--        <attr name="tb_rightTextStyle" format="enum">-->
+<!--            <flag name="normal" value="0" />-->
+<!--            <flag name="bold" value="1" />-->
+<!--            <flag name="italic" value="2" />-->
+<!--        </attr>-->
+    </declare-styleable>
+</resources>

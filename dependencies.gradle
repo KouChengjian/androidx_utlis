@@ -12,8 +12,8 @@ ext {
     glideVersion = '4.11.0'
 
     androidDependencies = [
-            appcompat       : "androidx.appcompat:appcompat:1.1.0",
-            recyclerview    : "androidx.recyclerview:recyclerview:1.1.0",
+            appcompat       : "androidx.appcompat:appcompat:1.4.0",
+            recyclerview    : "androidx.recyclerview:recyclerview:1.2.1",
             material        : "com.google.android.material:material:1.0.0",
             constraintlayout: "androidx.constraintlayout:constraintlayout:1.1.3",
     ]

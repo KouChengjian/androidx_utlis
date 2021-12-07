@@ -1,23 +1,11 @@
 apply plugin: 'com.android.library'
 
-//apply plugin: 'com.novoda.bintray-release'//添加
-//
-//publish {
-//    userOrg = 'hui793114465'//bintray.com的用户名
-//    repoName = 'yiciyuan'//远程仓库名字,不指明，默认是上传到maven
-//    groupId = 'com.yiciyuan'//一个唯一值，默认包名,生成的gradle依赖前缀
-//    artifactId = 'kernel'//远程仓库包名称
-//    publishVersion = '1.0.4'//版本号
-//    desc = 'This is a simple custom tab library for Android'//描述，不重要
-//    website = 'https://github.com/KouChengjian/androidx_utlis'//引用github主页
-//}
-//
-//tasks.withType(Javadoc) {//防止编码问题
-//    failOnError false
-//    options.addStringOption('Xdoclint:none', '-quiet')
-//    options.addStringOption('encoding', 'UTF-8')
-//    options.addStringOption('charSet', 'UTF-8')
-//}
+ext {
+    PUBLISH_GROUP_ID = "io.github.kouchengjian"		//项目包名
+    PUBLISH_ARTIFACT_ID = 'tools'			        //项目名
+    PUBLISH_TYPE = 'android'                        // 项目类型
+    PUBLISH_VERSION = '0.0.1'					    //版本号
+}
 
 android {
 
@@ -47,8 +35,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     viewBinding {
@@ -60,10 +48,19 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     def androidDependencies = rootProject.ext.androidDependencies
     api androidDependencies.appcompat
+    api androidDependencies.appcompat
     api androidDependencies.recyclerview
+
     def httpDependencies = rootProject.ext.httpDependencies
     api httpDependencies.rxlifecycle // okhttp请求生命周期
+    api httpDependencies.okhttp3
 
-//    def toolDependencies = rootProject.ext.toolDependencies
-//    api toolDependencies.ycy_annotation
+    def toolDependencies = rootProject.ext.toolDependencies
+    api toolDependencies.glide
+    annotationProcessor toolDependencies.glide_compiler
+    
+    def uiDependencies = rootProject.ext.uiDependencies
+    api uiDependencies.refresh_core
+    api uiDependencies.refresh_footer
+    api uiDependencies.refresh_header
 }

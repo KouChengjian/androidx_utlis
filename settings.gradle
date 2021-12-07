@@ -1,10 +1,10 @@
 //rootProject.name='My Application'
 
-include ':library-annotation'
+//include ':library-annotation'
 include ':library-apt'
 include ':library-kernel'
-include ':library-tools'
-include ':module-example-kernel'
+//include ':library-tools'
+//include ':example'
 
 //setBinding(new Binding([gradle: this]))
 ////println settingsDir.parentFile

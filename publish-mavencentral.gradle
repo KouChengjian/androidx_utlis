@@ -78,8 +78,6 @@ publishing {
     repositories {
         maven {
             name = "Releases"
-            println(ossrhUsername)
-            println(ossrhPassword)
             credentials {
                 username ossrhUsername
                 password ossrhPassword
