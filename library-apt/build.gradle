@@ -2,9 +2,9 @@ apply plugin: 'java-library'
 
 ext {
     PUBLISH_GROUP_ID = "io.github.kouchengjian"		//项目包名
-    PUBLISH_ARTIFACT_ID = 'ycy-apt'			            //项目名
+    PUBLISH_ARTIFACT_ID = 'ycy-apt'			        //项目名
     PUBLISH_TYPE = 'java'                           //项目类型
-    PUBLISH_VERSION = '0.0.1'					    //版本号
+    PUBLISH_VERSION = '1.0.0'					    //版本号
 }
 
 dependencies {

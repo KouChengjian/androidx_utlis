@@ -1,15 +1,12 @@
 ext {
-    androidCompileSdkVersion = 29
-    androidBuildToolsVersion = "29.0.2"
+    androidCompileSdkVersion = 30
+    androidBuildToolsVersion = "30.0.3"
     androidApplicationId = "com.example.kernel"
     androidMinSdkVersion = 19
-    androidTargetSdkVersion = 29
+    androidTargetSdkVersion = 30
 
     androidVersionName = "1.0.0"
     androidVersionCode = 10000001
-
-
-    glideVersion = '4.11.0'
 
     androidDependencies = [
             appcompat       : "androidx.appcompat:appcompat:1.1.0",
@@ -41,8 +38,8 @@ ext {
             eventbus_apt            : "org.greenrobot:eventbus-annotation-processor:3.1.1",
             butterKnife             : "com.jakewharton:butterknife:8.4.0",
             butterKnife_apt         : "com.jakewharton:butterknife-compiler:8.4.0",
-            glide                   : "com.github.bumptech.glide:glide:${glideVersion}",
-            glide_compiler          : "com.github.bumptech.glide:compiler:${glideVersion}",
+            glide                   : "com.github.bumptech.glide:glide:4.11.0",
+            glide_compiler          : "com.github.bumptech.glide:compiler:4.11.0",
     ]
 
     uiDependencies = [
