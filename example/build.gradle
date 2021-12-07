@@ -12,23 +12,18 @@ android {
         versionCode globalConfiguration.getAt("androidVersionCode")
         versionName globalConfiguration.getAt("androidVersionName")
 
-//        javaCompileOptions {
-//            annotationProcessorOptions {
-//                includeCompileClasspath = true
-//                arguments = [
-//                        "room.schemaLocation":"$projectDir/schemas".toString(),
-//                        "room.incremental":"true",
-//                        "room.expandProjection":"true"]
-//            }
-//        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+                arguments = [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
+
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64'
-        }
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -85,18 +80,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'], exclude: '*.bak')
-//    testImplementation 'junit:junit:4.12'
-//    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
-//    testImplementation "androidx.room:room-testing:2.2.3"
-//    implementation "android.arch.persistence.room:runtime:2.2.3"
-//    annotationProcessor "android.arch.persistence.room:compiler:2.2.3"
-//    androidTestImplementation "android.arch.persistence.room:testing:2.2.3"
-
-//    implementation project(':library-annotation')
-//    implementation project(':library-kernel')
+    implementation project(':library-apt')
+    implementation project(':library-kernel')
 //    implementation project(':library-tools')
-//    annotationProcessor project(':library-apt')
+    annotationProcessor project(':library-apt')
 
     def httpDependencies = rootProject.ext.httpDependencies
     implementation httpDependencies.okhttp3
@@ -109,10 +96,10 @@ dependencies {
     implementation httpDependencies.rxlifecycle
 
     def toolDependencies = rootProject.ext.toolDependencies
-    implementation toolDependencies.ycy_kernel
-    implementation toolDependencies.ycy_tools
-    implementation toolDependencies.ycy_annotation
-    annotationProcessor toolDependencies.ycy_apt
+//    implementation toolDependencies.ycy_kernel
+//    implementation toolDependencies.ycy_tools
+//    implementation toolDependencies.ycy_annotation
+//    annotationProcessor toolDependencies.ycy_apt
     implementation toolDependencies.room
     implementation toolDependencies.room_rxjava2
     annotationProcessor toolDependencies.room_compiler

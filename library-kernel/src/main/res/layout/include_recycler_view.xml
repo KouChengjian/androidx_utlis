@@ -26,7 +26,7 @@
             android:layout_height="wrap_content" />
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-    <com.yiciyuan.widget.TipLayoutView
+    <com.yiciyuan.kernel.widget.TipLayoutView
         android:id="@+id/tip_layout_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

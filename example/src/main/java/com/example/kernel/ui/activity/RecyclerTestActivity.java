@@ -16,9 +16,9 @@ import com.example.kernel.ui.presenter.RecyclerTestPresenter;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.yiciyuan.annotation.apt.Router;
-import com.yiciyuan.widget.recycle.ItemClickSupport;
-import com.yiciyuan.widget.recycle.listener.OnReloadListener;
+import com.yiciyuan.apt.annotation.Router;
+import com.yiciyuan.kernel.widget.recycle.ItemClickSupport;
+import com.yiciyuan.kernel.widget.recycle.listener.OnReloadListener;
 
 import java.util.ArrayList;
 import java.util.List;

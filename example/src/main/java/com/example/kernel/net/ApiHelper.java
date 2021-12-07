@@ -5,7 +5,6 @@ import com.example.kernel.net.api.CommonApi;
 import com.example.kernel.net.api.UserApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.yiciyuan.annotation.apt.ApiConfig;
 import com.yiciyuan.kernel.app.BaseApp;
 
 import org.json.JSONException;

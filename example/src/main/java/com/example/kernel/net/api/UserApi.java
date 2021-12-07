@@ -2,10 +2,6 @@ package com.example.kernel.net.api;
 
 
 import com.example.kernel.BuildConfig;
-import com.yiciyuan.annotation.apt.ApiFactory;
-import com.yiciyuan.annotation.apt.ApiParams;
-import com.yiciyuan.annotation.enums.ApiRequestType;
-import com.yiciyuan.annotation.enums.ApiResponseType;
 //import com.yiciyuan.apt.net.result.Empty;
 //import com.yiciyuan.apt.net.result.HttpListResult;
 //import com.yiciyuan.apt.net.result.HttpResult;

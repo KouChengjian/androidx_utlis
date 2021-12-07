@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kernel.R;
-import com.yiciyuan.widget.recycle.BaseRecyclerAdapter;
-import com.yiciyuan.widget.recycle.BaseRecyclerViewHolder;
+import com.yiciyuan.kernel.widget.recycle.BaseRecyclerAdapter;
+import com.yiciyuan.kernel.widget.recycle.BaseRecyclerViewHolder;
 
 import java.util.List;
 

@@ -5,10 +5,10 @@ import com.example.kernel.BuildConfig;
 import com.example.kernel.net.result.Empty;
 import com.example.kernel.net.result.HttpListResult;
 import com.example.kernel.net.result.HttpResult;
-import com.yiciyuan.annotation.apt.ApiFactory;
-import com.yiciyuan.annotation.apt.ApiParams;
-import com.yiciyuan.annotation.enums.ApiRequestType;
-import com.yiciyuan.annotation.enums.ApiResponseType;
+import com.yiciyuan.apt.annotation.ApiFactory;
+import com.yiciyuan.apt.annotation.ApiParams;
+import com.yiciyuan.apt.enums.ApiRequestType;
+import com.yiciyuan.apt.enums.ApiResponseType;
 
 import io.reactivex.Single;
 import okhttp3.RequestBody;

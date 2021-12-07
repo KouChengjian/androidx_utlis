@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 ext {
     PUBLISH_GROUP_ID = "io.github.kouchengjian"		//项目包名
-    PUBLISH_ARTIFACT_ID = 'tools'			        //项目名
+    PUBLISH_ARTIFACT_ID = 'ycy-kernel'			        //项目名
     PUBLISH_TYPE = 'android'                        // 项目类型
     PUBLISH_VERSION = '0.0.1'					    //版本号
 }
@@ -58,7 +58,7 @@ dependencies {
     def toolDependencies = rootProject.ext.toolDependencies
     api toolDependencies.glide
     annotationProcessor toolDependencies.glide_compiler
-    
+
     def uiDependencies = rootProject.ext.uiDependencies
     api uiDependencies.refresh_core
     api uiDependencies.refresh_footer

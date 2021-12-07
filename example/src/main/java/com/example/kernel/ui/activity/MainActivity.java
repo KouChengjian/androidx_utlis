@@ -13,7 +13,7 @@ import com.example.kernel.ui.fragment.MsgFragment;
 import com.example.kernel.ui.fragment.UserFragment;
 import com.example.kernel.ui.presenter.MainPresenter;
 import com.example.kernel.utlis.FragmentUtil;
-import com.yiciyuan.annotation.apt.Router;
+import com.yiciyuan.apt.annotation.Router;
 import com.yiciyuan.kernel.utils.LogUtil;
 import com.yiciyuan.kernel.utils.PresenterHelper;
 

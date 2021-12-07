@@ -27,7 +27,7 @@
         android:textSize="15dp" />
 
 
-    <com.yiciyuan.widget.BGButton
+    <com.yiciyuan.kernel.widget.BGButton
         android:id="@+id/btn_refush"
         android:layout_width="120dp"
         android:layout_height="35dp"

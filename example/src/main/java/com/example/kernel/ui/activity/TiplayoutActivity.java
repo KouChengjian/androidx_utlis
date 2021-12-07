@@ -9,7 +9,7 @@ import com.example.kernel.databinding.ActivityTiplayoutBinding;
 import com.example.kernel.ui.base.BaseDaggerActivity;
 import com.example.kernel.ui.contract.TiplayoutContract;
 import com.example.kernel.ui.presenter.TiplayoutPresenter;
-import com.yiciyuan.widget.TipLayoutView;
+import com.yiciyuan.kernel.widget.TipLayoutView;
 
 /**
  * Created with Android Studio.

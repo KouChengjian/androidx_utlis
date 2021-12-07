@@ -1,6 +1,7 @@
 package com.example.kernel.net.result;
 
-import com.yiciyuan.annotation.apt.ApiConfig;
+
+import com.yiciyuan.apt.annotation.ApiConfig;
 
 @ApiConfig(resultCode = "resCode1", resultMsg = "resMsg1", resultData = "data1")
 public class HttpResult<T> {

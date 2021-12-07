@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.yiciyuan.widget.ToolBarView
+    <com.yiciyuan.kernel.widget.ToolBarView
         android:id="@+id/toolBarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         app:tb_rightTextColor="@color/black"
         app:tb_navigationIcon="@mipmap/ic_action_break"/>
 
-    <com.yiciyuan.widget.recycle.RefreshRecyclerView
+    <com.yiciyuan.kernel.widget.recycle.RefreshRecyclerView
         android:id="@+id/refreshRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -4,7 +4,7 @@
 include ':library-apt'
 include ':library-kernel'
 //include ':library-tools'
-//include ':example'
+include ':example'
 
 //setBinding(new Binding([gradle: this]))
 ////println settingsDir.parentFile

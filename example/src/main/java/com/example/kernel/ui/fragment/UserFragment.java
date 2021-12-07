@@ -7,7 +7,7 @@ import com.example.kernel.databinding.FragmentUserBinding;
 import com.example.kernel.ui.base.BaseDaggerFragment;
 import com.example.kernel.ui.contract.UserContract;
 import com.example.kernel.ui.presenter.UserPresenter;
-import com.yiciyuan.utils.glide.GlideUtil;
+import com.yiciyuan.kernel.utils.glide.GlideUtil;
 
 
 /**

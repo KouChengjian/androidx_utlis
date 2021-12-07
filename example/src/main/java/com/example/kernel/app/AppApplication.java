@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.yiciyuan.kernel.BuildConfig;
 import com.yiciyuan.kernel.app.BaseApp;
-import com.yiciyuan.utils.glide.GlideUtil;
+import com.yiciyuan.kernel.utils.glide.GlideUtil;
 
 /**
  * Created with Android Studio.
